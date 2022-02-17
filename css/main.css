@@ -1169,7 +1169,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #98ff4f;
+  background: #f1e0ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2166,7 +2166,7 @@ ul.breadcrumb li + li:last-child {
   color: var(--link-hover-color) !important;
 }
 body {
-  background: url("https://raw.githubusercontent.com/bcYng-w/images/main/background.png");
+  background: url("https://raw.githubusercontent.com/bcYng-w/images/main/background1.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;
@@ -2320,7 +2320,7 @@ embed {
   white-space: nowrap;
 }
 body {
-  background: url("https://raw.githubusercontent.com/bcYng-w/images/main/background.png");
+  background: url("https://raw.githubusercontent.com/bcYng-w/images/main/background1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
