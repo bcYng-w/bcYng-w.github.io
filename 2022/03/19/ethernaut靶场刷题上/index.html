@@ -33,15 +33,15 @@
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/736d2070-9614-4bf2-8a15-7abd5b1864f7.png">
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/01e70a02-577a-4100-95bc-5201d17f18f5.png">
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/16d5f4a3-eee1-41d9-be37-72e59794ccf9.png">
-<meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/be0e64d5-9233-474c-b27d-22e49fa36ac7.png">
-<meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/748d8dc2-c3c5-45e9-9c80-33936f46043d.png">
-<meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/b5974b3f-e34a-4d64-a2b4-d20f0666d40d.png">
+<meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/50fd76c3-bf36-4b06-8e28-c606be9be0e1.png">
+<meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/3a7d62b8-2060-4b90-b6c3-79be27d2f591.png">
+<meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/d4ee4b39-2255-439e-8ed1-a667e169139c.png">
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/b9fdad65-5bf9-4bb4-bd2c-9c75e0916166.png">
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/2a90113e-a2c0-4a57-9f90-1e827d50c6bd.png">
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/b0f94b2b-ba04-4413-8316-6e963ff74339.png">
 <meta property="og:image" content="https://storage.tttang.com/media/attachment/2022/04/08/47eb5c7e-35f3-4776-9037-84c4b22f27fc.png">
 <meta property="article:published_time" content="2022-03-18T16:34:03.852Z">
-<meta property="article:modified_time" content="2022-04-08T15:26:25.256Z">
+<meta property="article:modified_time" content="2022-04-08T16:49:53.660Z">
 <meta property="article:author" content="bcYng">
 <meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-08 23:26:25" itemprop="dateModified" datetime="2022-04-08T23:26:25+08:00">2022-04-08</time>
+                <time title="修改时间：2022-04-09 00:49:53" itemprop="dateModified" datetime="2022-04-09T00:49:53+08:00">2022-04-09</time>
               </span>
 
           
@@ -282,15 +282,15 @@
 <li>callcode: 调用后内置变量 msg 的值会修改为调用者，但执行环境为调用者的运行环境。+</li>
 </ul>
 <hr>
-<p><img src="https://storage.tttang.com/media/attachment/2022/04/08/be0e64d5-9233-474c-b27d-22e49fa36ac7.png" alt="image.png"></p>
+<p><img src="https://storage.tttang.com/media/attachment/2022/04/08/50fd76c3-bf36-4b06-8e28-c606be9be0e1.png" alt="Untitled.png"></p>
 <p>情况 1：call<br>A合约：<br>temp1 &#x3D; 0<br>temp2 &#x3D; 0</p>
 <p>B合约：<br>temp1 &#x3D; A合约地址<br>temp2 &#x3D; 100</p>
 <p>说明：call调用后内置变量 msg 的值会修改为调用者（A合约地址），执行环境为被调用者（B合约）的运行环境(运行环境指合约的 storage)</p>
 <hr>
-<p><img src="https://storage.tttang.com/media/attachment/2022/04/08/748d8dc2-c3c5-45e9-9c80-33936f46043d.png" alt="image.png"></p>
+<p><img src="https://storage.tttang.com/media/attachment/2022/04/08/3a7d62b8-2060-4b90-b6c3-79be27d2f591.png" alt="Untitled1.png"></p>
 <p>情况 2：delegatecall<br>A合约：<br>temp1 &#x3D; 调用A合约的以太坊账号地址<br>temp2 &#x3D; 100</p>
 <p>B合约：<br>temp1 &#x3D; 0<br>temp2 &#x3D; 0</p>
-<p>说明：delegatecall调用后内置变量 msg 的值不会修改为调用者（A合约地址），但执行环境为调用者（A合约）的运行环境<img src="https://storage.tttang.com/media/attachment/2022/04/08/b5974b3f-e34a-4d64-a2b4-d20f0666d40d.png" alt="image.png"></p>
+<p>说明：delegatecall调用后内置变量 msg 的值不会修改为调用者（A合约地址），但执行环境为调用者（A合约）的运行环境<img src="https://storage.tttang.com/media/attachment/2022/04/08/d4ee4b39-2255-439e-8ed1-a667e169139c.png" alt="Untitled2.png"></p>
 <p><strong>情况 3：callcode</strong><br>A合约：<br>temp1 &#x3D; A合约地址<br>temp2 &#x3D; 100</p>
 <p>B合约：<br>temp1 &#x3D; 0<br>temp2 &#x3D; 0</p>
 <p>说明：callcode调用后内置变量 msg 的值会修改为调用者（A合约地址），但执行环境为调用者（A合约）的运行环境。</p>
