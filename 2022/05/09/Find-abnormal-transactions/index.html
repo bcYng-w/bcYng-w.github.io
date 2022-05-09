@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bcYng-w/images/main/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/bcYng-w/images/main/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bcyng-w.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":4},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一道新颖的区块链安全方向ctf题目，交易详情：https:&#x2F;&#x2F;kovan.etherscan.io&#x2F;address&#x2F;0x16537776395108789FE5cC5420545CAb210a7D30">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Find abnormal transactions">
+<meta property="og:url" content="http://bcyng-w.github.io/2022/05/09/Find-abnormal-transactions/index.html">
+<meta property="og:site_name" content="until">
+<meta property="og:description" content="一道新颖的区块链安全方向ctf题目，交易详情：https:&#x2F;&#x2F;kovan.etherscan.io&#x2F;address&#x2F;0x16537776395108789FE5cC5420545CAb210a7D30">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091316461.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091318209.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091317840.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319210.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319962.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091322122.png">
+<meta property="article:published_time" content="2022-05-09T05:32:57.763Z">
+<meta property="article:modified_time" content="2022-05-09T05:32:25.466Z">
+<meta property="article:author" content="bcYng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091316461.png">
+
+<link rel="canonical" href="http://bcyng-w.github.io/2022/05/09/Find-abnormal-transactions/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Find abnormal transactions | until</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">until</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bcyng-w.github.io/2022/05/09/Find-abnormal-transactions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+      <meta itemprop="name" content="bcYng">
+      <meta itemprop="description" content="前程似锦">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="until">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Find abnormal transactions
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-09 13:32:57 / 修改时间：13:32:25" itemprop="dateCreated datePublished" datetime="2022-05-09T13:32:57+08:00">2022-05-09</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一道新颖的区块链安全方向ctf题目，交易详情：<a target="_blank" rel="noopener" href="https://kovan.etherscan.io/address/0x16537776395108789FE5cC5420545CAb210a7D30">https://kovan.etherscan.io/address/0x16537776395108789FE5cC5420545CAb210a7D30</a></p>
+<span id="more"></span>
+
+<h1 id="code"><a href="#code" class="headerlink" title="code"></a>code</h1><p>题目描述：</p>
+<p>The funds are lost somewhere on this platform. Find the missing funds from draftdown labs. We need it to fund our mission. Use our script to validate the transaction.<br>Note: No brute force or fuzzing is needed for the search! Just use your eyes.<br>Use CYBERLEAGUE{} flag format</p>
+<p>Our motherland have engaged a vendor to develop smart contract embedded in our fuel tank. We wanna make sure that the amount of fuel is recorded in an immutable blockchain. (In russian) Chert by pobral etikh idiotov! The smart contract is broken and our funds are stolen. Investigate and find out the culprite immediately! \r\nSmart contract link: <a target="_blank" rel="noopener" href="https://kovan.etherscan.io/address/0x16537776395108789FE5cC5420545CAb210a7D30&quot;">https://kovan.etherscan.io/address/0x16537776395108789FE5cC5420545CAb210a7D30&quot;</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface IERC20 &#123;</span><br><span class="line">    function totalSupply() external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    function balanceOf(address account) external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    function transfer(address to, uint256 amount) external returns (bool);</span><br><span class="line"></span><br><span class="line">    function allowance(address owner, address spender) external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    function approve(address spender, uint256 amount) external returns (bool);</span><br><span class="line"></span><br><span class="line">    function transferFrom(</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 amount</span><br><span class="line">    ) external returns (bool);</span><br><span class="line"></span><br><span class="line">    event Transfer(address indexed from, address indexed to, uint256 value);</span><br><span class="line"></span><br><span class="line">    event Approval(address indexed owner, address indexed spender, uint256 value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">library Address &#123;</span><br><span class="line"></span><br><span class="line">    function isContract(address account) internal view returns (bool) &#123;</span><br><span class="line">        return account.code.length &gt; 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function sendValue(address payable recipient, uint256 amount) internal &#123;</span><br><span class="line">        require(address(this).balance &gt;= amount, &quot;Address: insufficient balance&quot;);</span><br><span class="line"></span><br><span class="line">        (bool success, ) = recipient.call&#123;value: amount&#125;(&quot;&quot;);</span><br><span class="line">        require(success, &quot;Address: unable to send value, recipient may have reverted&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionCall(address target, bytes memory data) internal returns (bytes memory) &#123;</span><br><span class="line">        return functionCall(target, data, &quot;Address: low-level call failed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionCall(</span><br><span class="line">        address target,</span><br><span class="line">        bytes memory data,</span><br><span class="line">        string memory errorMessage</span><br><span class="line">    ) internal returns (bytes memory) &#123;</span><br><span class="line">        return functionCallWithValue(target, data, 0, errorMessage);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionCallWithValue(</span><br><span class="line">        address target,</span><br><span class="line">        bytes memory data,</span><br><span class="line">        uint256 value</span><br><span class="line">    ) internal returns (bytes memory) &#123;</span><br><span class="line">        return functionCallWithValue(target, data, value, &quot;Address: low-level call with value failed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionCallWithValue(</span><br><span class="line">        address target,</span><br><span class="line">        bytes memory data,</span><br><span class="line">        uint256 value,</span><br><span class="line">        string memory errorMessage</span><br><span class="line">    ) internal returns (bytes memory) &#123;</span><br><span class="line">        require(address(this).balance &gt;= value, &quot;Address: insufficient balance for call&quot;);</span><br><span class="line">        require(isContract(target), &quot;Address: call to non-contract&quot;);</span><br><span class="line"></span><br><span class="line">        (bool success, bytes memory returndata) = target.call&#123;value: value&#125;(data);</span><br><span class="line">        return verifyCallResult(success, returndata, errorMessage);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) &#123;</span><br><span class="line">        return functionStaticCall(target, data, &quot;Address: low-level static call failed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionStaticCall(</span><br><span class="line">        address target,</span><br><span class="line">        bytes memory data,</span><br><span class="line">        string memory errorMessage</span><br><span class="line">    ) internal view returns (bytes memory) &#123;</span><br><span class="line">        require(isContract(target), &quot;Address: static call to non-contract&quot;);</span><br><span class="line"></span><br><span class="line">        (bool success, bytes memory returndata) = target.staticcall(data);</span><br><span class="line">        return verifyCallResult(success, returndata, errorMessage);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) &#123;</span><br><span class="line">        return functionDelegateCall(target, data, &quot;Address: low-level delegate call failed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    function functionDelegateCall(</span><br><span class="line">        address target,</span><br><span class="line">        bytes memory data,</span><br><span class="line">        string memory errorMessage</span><br><span class="line">    ) internal returns (bytes memory) &#123;</span><br><span class="line">        require(isContract(target), &quot;Address: delegate call to non-contract&quot;);</span><br><span class="line"></span><br><span class="line">        (bool success, bytes memory returndata) = target.delegatecall(data);</span><br><span class="line">        return verifyCallResult(success, returndata, errorMessage);</span><br><span class="line">    &#125;</span><br><span class="line">    function verifyCallResult(</span><br><span class="line">        bool success,</span><br><span class="line">        bytes memory returndata,</span><br><span class="line">        string memory errorMessage</span><br><span class="line">    ) internal pure returns (bytes memory) &#123;</span><br><span class="line">        if (success) &#123;</span><br><span class="line">            return returndata;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // Look for revert reason and bubble it up if present</span><br><span class="line">            if (returndata.length &gt; 0) &#123;</span><br><span class="line">                // The easiest way to bubble the revert reason is using memory via assembly</span><br><span class="line"></span><br><span class="line">                assembly &#123;</span><br><span class="line">                    let returndata_size := mload(returndata)</span><br><span class="line">                    revert(add(32, returndata), returndata_size)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                revert(errorMessage);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">library SafeERC20 &#123;</span><br><span class="line">    using Address for address;</span><br><span class="line"></span><br><span class="line">    function safeTransfer(</span><br><span class="line">        IERC20 token,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 value</span><br><span class="line">    ) internal &#123;</span><br><span class="line">        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function safeTransferFrom(</span><br><span class="line">        IERC20 token,</span><br><span class="line">        address from,</span><br><span class="line">        address to,</span><br><span class="line">        uint256 value</span><br><span class="line">    ) internal &#123;</span><br><span class="line">        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));</span><br><span class="line">    &#125;</span><br><span class="line">    function safeApprove(</span><br><span class="line">        IERC20 token,</span><br><span class="line">        address spender,</span><br><span class="line">        uint256 value</span><br><span class="line">    ) internal &#123;</span><br><span class="line">        require(</span><br><span class="line">            (value == 0) || (token.allowance(address(this), spender) == 0),</span><br><span class="line">            &quot;SafeERC20: approve from non-zero to non-zero allowance&quot;</span><br><span class="line">        );</span><br><span class="line">        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function safeIncreaseAllowance(</span><br><span class="line">        IERC20 token,</span><br><span class="line">        address spender,</span><br><span class="line">        uint256 value</span><br><span class="line">    ) internal &#123;</span><br><span class="line">        uint256 newAllowance = token.allowance(address(this), spender) + value;</span><br><span class="line">        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function safeDecreaseAllowance(</span><br><span class="line">        IERC20 token,</span><br><span class="line">        address spender,</span><br><span class="line">        uint256 value</span><br><span class="line">    ) internal &#123;</span><br><span class="line">        unchecked &#123;</span><br><span class="line">            uint256 oldAllowance = token.allowance(address(this), spender);</span><br><span class="line">            require(oldAllowance &gt;= value, &quot;SafeERC20: decreased allowance below zero&quot;);</span><br><span class="line">            uint256 newAllowance = oldAllowance - value;</span><br><span class="line">            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function _callOptionalReturn(IERC20 token, bytes memory data) private &#123;</span><br><span class="line"></span><br><span class="line">        bytes memory returndata = address(token).functionCall(data, &quot;SafeERC20: low-level call failed&quot;);</span><br><span class="line">        if (returndata.length &gt; 0) &#123;</span><br><span class="line">            // Return data is optional</span><br><span class="line">            require(abi.decode(returndata, (bool)), &quot;SafeERC20: ERC20 operation did not succeed&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">abstract contract Context &#123;</span><br><span class="line">    function _msgSender() internal view virtual returns (address) &#123;</span><br><span class="line">        return msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _msgData() internal view virtual returns (bytes calldata) &#123;</span><br><span class="line">        return msg.data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract contract Pausable is Context &#123;</span><br><span class="line">    event Paused(address account);</span><br><span class="line">    event Unpaused(address account);</span><br><span class="line"></span><br><span class="line">    bool private _paused;</span><br><span class="line">    constructor() &#123;</span><br><span class="line">        _paused = false;</span><br><span class="line">    &#125;</span><br><span class="line">    function paused() public view virtual returns (bool) &#123;</span><br><span class="line">        return _paused;</span><br><span class="line">    &#125;</span><br><span class="line">    modifier whenNotPaused() &#123;</span><br><span class="line">        require(!paused(), &quot;Pausable: paused&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line">    modifier whenPaused() &#123;</span><br><span class="line">        require(paused(), &quot;Pausable: not paused&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line">    function _pause() internal virtual whenNotPaused &#123;</span><br><span class="line">        _paused = true;</span><br><span class="line">        emit Paused(_msgSender());</span><br><span class="line">    &#125;</span><br><span class="line">    function _unpause() internal virtual whenPaused &#123;</span><br><span class="line">        _paused = false;</span><br><span class="line">        emit Unpaused(_msgSender());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IOracle &#123;</span><br><span class="line">    function getTokenPrice(address token) external view returns (uint, uint);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Market is Pausable &#123;</span><br><span class="line">    using SafeERC20 for IERC20;</span><br><span class="line"></span><br><span class="line">    struct Position &#123;</span><br><span class="line">        uint locked;</span><br><span class="line">        address lockedToken;</span><br><span class="line">        uint borrowed;</span><br><span class="line">        address borrowedToken;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    address public owner;</span><br><span class="line">    address public oracle;</span><br><span class="line">    uint public liquidationThreshold; // in bps</span><br><span class="line">    uint public liquidationBonus; // in bps</span><br><span class="line">    address constant internal WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;</span><br><span class="line">    uint constant internal ONE = 10 ** 18;</span><br><span class="line">    mapping (address =&gt; bool) public allowedLockTokens;</span><br><span class="line">    mapping (address =&gt; bool) public allowedBorrowTokens;</span><br><span class="line">    mapping (address =&gt; uint8) public tokenDecimals;</span><br><span class="line">    mapping (address =&gt; Position[]) public positions;</span><br><span class="line"></span><br><span class="line">    event CreatePosition(address user, uint pid);</span><br><span class="line">    event Lock(address user, uint pid, address token, uint amount);</span><br><span class="line">    event Unlock(address user, uint pid, address token, uint amount);</span><br><span class="line">    event Borrow(address user, uint pid, address token, uint amount);</span><br><span class="line">    event Repay(address user, uint pid, address token, uint amount);</span><br><span class="line">    event Liquidated(address liquidator, address user, uint pid, address token, uint amount);</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;onlyOwner&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    constructor(address _oracle) &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">        oracle = _oracle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getTokenPrice(address token) internal view returns (uint) &#123;</span><br><span class="line">        if (token == address(0) || token == WETH) return ONE;</span><br><span class="line">        (uint price, ) = IOracle(oracle).getTokenPrice(token);</span><br><span class="line">        return price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getHealthFactor(Position storage position) internal view returns (uint) &#123;</span><br><span class="line">        uint lockedTokenPrice = getTokenPrice(position.lockedToken);</span><br><span class="line">        uint borrowedTokenPrice = getTokenPrice(position.borrowedToken);</span><br><span class="line">        uint scaledLocked = position.locked * 10 ** (18 - tokenDecimals[position.lockedToken]);</span><br><span class="line">        uint scaledBorrowed = position.borrowed * 10 ** (18 - tokenDecimals[position.borrowedToken]);</span><br><span class="line">        uint lockedValue = scaledLocked * lockedTokenPrice / ONE;</span><br><span class="line">        uint borrowedValue = scaledBorrowed * borrowedTokenPrice / ONE;</span><br><span class="line">        if (borrowedValue == 0) return ONE;</span><br><span class="line">        uint healthFactor = lockedValue * liquidationThreshold * ONE / (borrowedValue * 10000);</span><br><span class="line">        return healthFactor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getHealthFactor(address user, uint pid) public view returns (uint) &#123;</span><br><span class="line">        require(pid &lt; positions[user].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[user][pid];</span><br><span class="line">        return getHealthFactor(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isPositionSafe(Position storage position) internal view returns (bool) &#123;</span><br><span class="line">        uint healthFactor = getHealthFactor(position);</span><br><span class="line">        return healthFactor &gt;= ONE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isPositionSafe(address user, uint pid) public view returns (bool) &#123;</span><br><span class="line">        require(pid &lt; positions[user].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[user][pid];</span><br><span class="line">        return isPositionSafe(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createPosition(address lockedToken, address borrowedToken) public whenNotPaused &#123;</span><br><span class="line">        require(allowedLockTokens[lockedToken] &amp;&amp; allowedBorrowTokens[borrowedToken], &quot;InvalidToken&quot;);</span><br><span class="line">        uint pid = positions[msg.sender].length;</span><br><span class="line">        Position memory position = Position(&#123;</span><br><span class="line">            locked: 0,</span><br><span class="line">            lockedToken: lockedToken,</span><br><span class="line">            borrowed: 0,</span><br><span class="line">            borrowedToken: borrowedToken</span><br><span class="line">        &#125;);</span><br><span class="line">        positions[msg.sender].push(position);</span><br><span class="line">        emit CreatePosition(msg.sender, pid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function lock(uint pid, uint amount) public payable whenNotPaused &#123;</span><br><span class="line">        require(pid &lt; positions[msg.sender].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[msg.sender][pid];</span><br><span class="line">        position.locked += amount;</span><br><span class="line">        receiveToken(position.lockedToken, amount);</span><br><span class="line">        emit Lock(msg.sender, pid, position.lockedToken, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function unlock(uint pid, uint amount) public whenNotPaused &#123;</span><br><span class="line">        require(pid &lt; positions[msg.sender].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[msg.sender][pid];</span><br><span class="line">        position.locked -= amount;</span><br><span class="line">        sendToken(position.lockedToken, amount);</span><br><span class="line">        require(isPositionSafe(position), &quot;UnsafePosition&quot;);</span><br><span class="line">        emit Unlock(msg.sender, pid, position.lockedToken, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function borrow(uint pid, uint amount) public whenNotPaused &#123;</span><br><span class="line">        require(pid &lt; positions[msg.sender].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[msg.sender][pid];</span><br><span class="line">        position.borrowed += amount;</span><br><span class="line">        sendToken(position.borrowedToken, amount);</span><br><span class="line">        require(isPositionSafe(position), &quot;UnsafePosition&quot;);</span><br><span class="line">        emit Borrow(msg.sender, pid, position.borrowedToken, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function repay(uint pid, uint amount) public payable whenNotPaused &#123;</span><br><span class="line">        require(pid &lt; positions[msg.sender].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[msg.sender][pid];</span><br><span class="line">        position.borrowed -= amount;</span><br><span class="line">        receiveToken(position.borrowedToken, amount);</span><br><span class="line">        emit Repay(msg.sender, pid, position.borrowedToken, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function liquidate(address user, uint pid, uint amount) public whenNotPaused &#123;</span><br><span class="line">        require(pid &lt; positions[user].length, &quot;InvalidPID&quot;);</span><br><span class="line">        Position storage position = positions[user][pid];</span><br><span class="line">        require(!isPositionSafe(position), &quot;SafePosition&quot;);</span><br><span class="line">        uint borrowedTokenPrice = getTokenPrice(position.borrowedToken);</span><br><span class="line">        uint lockedTokenPrice = getTokenPrice(position.lockedToken);</span><br><span class="line">        uint scaledAmount = amount * 10 ** (18 - tokenDecimals[position.borrowedToken]);</span><br><span class="line">        uint borrowedValue = scaledAmount * borrowedTokenPrice / ONE;</span><br><span class="line">        uint scaledLiquidated = borrowedValue * (10000 + liquidationBonus) * ONE / (lockedTokenPrice * 10000);</span><br><span class="line">        uint liquidated = scaledLiquidated / 10 ** (18 - tokenDecimals[position.lockedToken]);</span><br><span class="line">        if (liquidated &gt; position.locked) liquidated = position.locked;</span><br><span class="line">        position.borrowed -= amount;</span><br><span class="line">        position.locked -= liquidated;</span><br><span class="line"></span><br><span class="line">        receiveToken(position.borrowedToken, amount);</span><br><span class="line">        sendToken(position.lockedToken, liquidated);</span><br><span class="line">        emit Liquidated(msg.sender, user, pid, position.lockedToken, liquidated);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function receiveToken(address token, uint amount) internal &#123;</span><br><span class="line">        if (token == address(0)) &#123;</span><br><span class="line">            require(msg.value &gt;= amount, &quot;NotEnoughFunds&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            IERC20(token).safeTransferFrom(msg.sender, address(this), amount);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function sendToken(address token, uint amount) internal &#123;</span><br><span class="line">        if (token == address(0)) &#123;</span><br><span class="line">            (bool success,) = msg.sender.call&#123;value: amount&#125;(&quot;&quot;);</span><br><span class="line">            require(success, &quot;SendETHError&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            IERC20(token).safeTransfer(msg.sender, amount);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function pause() public onlyOwner &#123;</span><br><span class="line">        _pause();</span><br><span class="line">    &#125;</span><br><span class="line">    function setAllowedLockToken(address token) public onlyOwner &#123;</span><br><span class="line">        allowedLockTokens[token] = true;</span><br><span class="line">    &#125;</span><br><span class="line">    function setAllowedBorrowToken(address token) public onlyOwner &#123;</span><br><span class="line">        allowedBorrowTokens[token] = true;</span><br><span class="line">    &#125;</span><br><span class="line">    function setTokenDecimals(address token, uint8 decimals) public onlyOwner &#123;</span><br><span class="line">        tokenDecimals[token] = decimals;</span><br><span class="line">    &#125;</span><br><span class="line">    function setLiquidationThreshold(uint _liquidationThreshold) public onlyOwner &#123;</span><br><span class="line">        liquidationThreshold = _liquidationThreshold;</span><br><span class="line">    &#125;</span><br><span class="line">    function setLiquidationBonus(uint _liquidationBonus) public onlyOwner &#123;</span><br><span class="line">        liquidationBonus = _liquidationBonus;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//  0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD dai  demical:18</span><br><span class="line">//  0x13512979ADE267AB5100878E2e0f485B568328a4 usdt demical:6</span><br><span class="line">//  0xad5ce863ae3e4e9394ab43d4ba0d80f419f61789 link demical:18</span><br><span class="line">//  0xd1b98b6607330172f1d991521145a22bce793277 btc demical:8</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h1><p>做这道题的时候简单学习了一下defi中关于清算的部分，虽然在做题的过程中基本用不到，但是对于理解代码总体的功能非常有帮助，参考：<a target="_blank" rel="noopener" href="https://new.qq.com/omn/20210223/20210223A0BIBO00.html">https://new.qq.com/omn/20210223/20210223A0BIBO00.html</a></p>
+<p>在给出的IOracle合约中可以获取代币价格，可以发现usdt的价格为0，所以在计算时borrowvalue就会一直是0，所以issafeposition会一直返回true，就可以一直进行borrow并且不用repay而不会被清算，所以凡是借出usdt的交易都是异常交易，同时，创建这些异常position的交易也属于异常交易。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function getHealthFactor(Position storage position) internal view returns (uint) &#123;</span><br><span class="line">       uint lockedTokenPrice = getTokenPrice(position.lockedToken);</span><br><span class="line">       uint borrowedTokenPrice = getTokenPrice(position.borrowedToken);</span><br><span class="line">       uint scaledLocked = position.locked * 10 ** (18 - tokenDecimals[position.lockedToken]);</span><br><span class="line">       uint scaledBorrowed = position.borrowed * 10 ** (18 - tokenDecimals[position.borrowedToken]);</span><br><span class="line">       uint lockedValue = scaledLocked * lockedTokenPrice / ONE;</span><br><span class="line">       uint borrowedValue = scaledBorrowed * borrowedTokenPrice / ONE;</span><br><span class="line">       if (borrowedValue == 0) return ONE;</span><br><span class="line">       uint healthFactor = lockedValue * liquidationThreshold * ONE / (borrowedValue * 10000);</span><br><span class="line">       return healthFactor;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   function getHealthFactor(address user, uint pid) public view returns (uint) &#123;</span><br><span class="line">       require(pid &lt; positions[user].length, &quot;InvalidPID&quot;);</span><br><span class="line">       Position storage position = positions[user][pid];</span><br><span class="line">       return getHealthFactor(position);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   function isPositionSafe(Position storage position) internal view returns (bool) &#123;</span><br><span class="line">       uint healthFactor = getHealthFactor(position);</span><br><span class="line">       return healthFactor &gt;= ONE;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   function isPositionSafe(address user, uint pid) public view returns (bool) &#123;</span><br><span class="line">       require(pid &lt; positions[user].length, &quot;InvalidPID&quot;);</span><br><span class="line">       Position storage position = positions[user][pid];</span><br><span class="line">       return isPositionSafe(position);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>分析这段代码可以看出来，只要borrow为0，结果将会一直返回true</p>
+<p>0xb09c603ea024b4435d74db07d1f728a80e6e36ae：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091316461.png" alt="image-20220509131627995"></p>
+<p>0x941c73fBB405a9024C08A52cBEeAF80D02d2B1A1：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091318209.png" alt="image-20220509131719202"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091317840.png" alt="image-20220509131758410"></p>
+<p>0x488daD0ce94f34e33069b8Ae5E16826b63f0F575：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319210.png" alt="image-20220509131900930"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319962.png" alt="image-20220509131922882"></p>
+<p>—0x13512979ADE267AB5100878E2e0f485B568328a4是usdt代币的合约地址—</p>
+<p>确定了异常posotion的user和pid，浏览hash判断参数就可以了。17个borrow+5个createPosition共22个hash</p>
+<h1 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">txs = [</span><br><span class="line"><span class="string">&#x27;0xf8cb1d747b53bbd4b4346eb8522fa3df36025dafedeb5b19bf54a9fff946ae8a&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x95bc3879debc5ffbe9932d5a60dd53146374e7dd553fef5f00152371bbb75f38&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x0635eeabe77d53672c227c0938f73f43c8f43b984e2c02d4e4a7b4e4d9740a09&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xcfb692d772f8acb90bc14a5da06f72c8ed9d871bbe76787ac0fa8a40e1ef11aa&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6ce3f133f0d925b125b6d8861b582cfd3b9abc8df4ce6ecd9607751b5fa6e796&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6287be53eb87e475cfdabfe85c7db800c5262a469a4c270e55b8ddf481b6dae3&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xdd588f3c2a9f25aa57d27e3257fe93882cf211470bd92e56b5271f95ab3c955f&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x8b0b5a0d65a1272d811f1db90cf7a24e43c64cf0d4767a78accf0dd9afce954c&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x3a109f0754113742eaae4bad747261aa7d9a1a9e2fb4d12704631b333b790006&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6b52684eda64076701e647911f55019fb18b30d980554dd2df5ee0e777506c3a&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xdb3f9da9cc6600ba9c2ca0685cd5c29818dae632fb3be65d530ef404b3ade202&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x13240bc2ce9333db092704b057083d23fa4e365b1b049ea839eb9955591ffd4d&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x657b24138cea98eca019de351d60c69210334926c46d9bfb7a59f5c0db5d16f4&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6705735d1d4c526cd5db6c5810de6b11ba196fb93715a67ae855d037bfeaeaec&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x8beb80929a026d68fe9e80d0e46dadf43f9b8c68dc1db7e53b996e9654a3c71c&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xea24903d0a72b56457b88bdfd842f4065b0371b9c118dae08aca8dadb43c81b4&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x99a5722bb73a73c6b47967f9b457e888d6503b0f9e1bf23fbf36de56ebad1522&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xef40506ae849c17dfbb75f97331860750217602f9c0a9c7718e50d04f0e233b8&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xc20e2ac5792a3350febd9a7e62527faccf4e07de2c1454572380e6f629ecca18&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xb1f54b9969ba60075775a3168d2ad16482e672cbf386ba4f9d6f433fe9d86fbe&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xcc8ff167cc6a1014f5c4b7445f26b17f68cc95bcc0c578c5330278dda8229d0b&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xf7a6068687cfd85a24c8fd169c3c95133ff7a957c843171733902925990b4b74&#x27;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">e.g.,</span></span><br><span class="line"><span class="string">txs = [</span></span><br><span class="line"><span class="string">    &#x27;0x0000000000000000000000000000000000000000000000000000000000000000&#x27;,</span></span><br><span class="line"><span class="string">    &#x27;0x0000000000000000000000000000000000000000000000000000000000000001&#x27;,</span></span><br><span class="line"><span class="string">    &#x27;0x0000000000000000000000000000000000000000000000000000000000000002&#x27;,</span></span><br><span class="line"><span class="string">    ...</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(txs))</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(txs) == <span class="number">22</span></span><br><span class="line">salt = <span class="string">b&#x27;hint: find abnormal transactions&#x27;</span></span><br><span class="line">m = hashlib.sha256()</span><br><span class="line"><span class="keyword">for</span> tx_hash <span class="keyword">in</span> <span class="built_in">sorted</span>(txs):</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(tx_hash) == <span class="number">66</span> <span class="keyword">and</span> tx_hash[:<span class="number">2</span>] == <span class="string">&#x27;0x&#x27;</span></span><br><span class="line">    m.update(salt + tx_hash.encode() + m.digest())</span><br><span class="line"><span class="built_in">print</span>(m.hexdigest())</span><br><span class="line"><span class="keyword">assert</span> m.hexdigest()[:<span class="number">16</span>] == <span class="string">&#x27;bf22a2d63563554c&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;flag&#123;&#x27;</span> + m.hexdigest() + <span class="string">&#x27;&#125;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行得到flag：flag{bf22a2d63563554c2073f9480867794e17297ce17c7ec4cc3502979828e4253f}</p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091322122.png" alt="image-20220509132255933"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>bcYng
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://bcyng-w.github.io/2022/05/09/Find-abnormal-transactions/" title="Find abnormal transactions">http://bcyng-w.github.io/2022/05/09/Find-abnormal-transactions/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/27/Defi%20Hack/" rel="prev" title="Defi Hack">
+      <i class="fa fa-chevron-left"></i> Defi Hack
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#code"><span class="nav-number">1.</span> <span class="nav-text">code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analyze"><span class="nav-number">2.</span> <span class="nav-text">analyze</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solve"><span class="nav-number">3.</span> <span class="nav-text">solve</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="bcYng"
+      src="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+  <p class="site-author-name" itemprop="name">bcYng</p>
+  <div class="site-description" itemprop="description">前程似锦</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bcYng-w" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bcYng-w" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2384417651@qq.com" title="E-Mail → https:&#x2F;&#x2F;mail.qq.com&#x2F;cgi-bin&#x2F;qm_share?t&#x3D;qm_mailme&amp;email&#x3D;2384417651@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-2-14 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bcYng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共47k字</span>
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
