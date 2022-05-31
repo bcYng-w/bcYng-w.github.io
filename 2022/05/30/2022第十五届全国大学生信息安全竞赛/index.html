@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="until">
 <meta property="og:description" content="周日打了一下2022国赛的区块链题目，拿出来分享一下">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205311538867.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202205311542169.png">
 <meta property="article:published_time" content="2022-05-30T09:49:55.917Z">
-<meta property="article:modified_time" content="2022-05-31T07:38:31.583Z">
+<meta property="article:modified_time" content="2022-05-31T07:42:49.922Z">
 <meta property="article:author" content="bcYng">
 <meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205311538867.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202205311542169.png">
 
 <link rel="canonical" href="http://bcyng-w.github.io/2022/05/30/2022%E7%AC%AC%E5%8D%81%E4%BA%94%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/">
 
@@ -185,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-05-31 15:38:31" itemprop="dateModified" datetime="2022-05-31T15:38:31+08:00">2022-05-31</time>
+                <time title="修改时间：2022-05-31 15:42:49" itemprop="dateModified" datetime="2022-05-31T15:42:49+08:00">2022-05-31</time>
               </span>
 
           
@@ -215,7 +215,7 @@
 <h1 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h1><p>漏洞是比较基础的delegatecall漏洞，<strong>就是调用外部代码，执行环境却是在本合约</strong>，详情参考我之前写过的基础漏洞汇总，链接：<a href="https://bcyng-w.github.io/2022/04/10/%E5%9F%BA%E7%A1%80%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/#more">https://bcyng-w.github.io/2022/04/10/%E5%9F%BA%E7%A1%80%E6%BC%8F%E6%B4%9E%E6%B1%87%E6%80%BB/#more</a></p>
 <p>调用两次setscore，第一次将lib转变为攻击合约，第二次调用攻击合约下的setscore修改对应slot1的值即可改变Hackme下owner的值。</p>
 <p>该题解锁钱包的方式比较特别，随机生成的账户没有私钥，而是用生成账户时的密码进行解锁账户，参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41907714/article/details/106640274">https://blog.csdn.net/qq_41907714/article/details/106640274</a></p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205311538867.png" alt="image-20220530153119652"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202205311542169.png"></p>
 <p>我在这里设置的密码是123</p>
 <p>使用的解锁方法</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w3.geth.personal.unlockAccount(<span class="string">&#x27;0x0D7c2FB2B185e6633FC027eE2A37138661934026&#x27;</span>,<span class="string">&#x27;123&#x27;</span>)</span><br></pre></td></tr></table></figure>
