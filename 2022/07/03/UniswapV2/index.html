@@ -33,6 +33,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040921738.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040921378.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040922566.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207050851966.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040922509.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040923946.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207041003857.png">
@@ -40,7 +41,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207041030043.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207041030843.png">
 <meta property="article:published_time" content="2022-07-03T10:49:37.605Z">
-<meta property="article:modified_time" content="2022-07-04T08:54:25.895Z">
+<meta property="article:modified_time" content="2022-07-05T00:55:05.779Z">
 <meta property="article:author" content="bcYng">
 <meta property="article:tag" content="区块链 ctf">
 <meta name="twitter:card" content="summary">
@@ -194,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-04 16:54:25" itemprop="dateModified" datetime="2022-07-04T16:54:25+08:00">2022-07-04</time>
+                <time title="修改时间：2022-07-05 08:55:05" itemprop="dateModified" datetime="2022-07-05T08:55:05+08:00">2022-07-05</time>
               </span>
 
           
@@ -265,8 +266,9 @@
 <p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040922566.png" alt="image-20220704092209302"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function _mintFee(uint112 _reserve0, uint112 _reserve1) private returns (bool feeOn) &#123;</span><br><span class="line">       address feeTo = IUniswapV2Factory(factory).feeTo();</span><br><span class="line">       feeOn = feeTo != address(0);</span><br><span class="line">       uint _kLast = kLast; // gas savings</span><br><span class="line">       if (feeOn) &#123;</span><br><span class="line">           if (_kLast != 0) &#123;</span><br><span class="line">               uint rootK = Math.sqrt(uint(_reserve0).mul(_reserve1));</span><br><span class="line">               uint rootKLast = Math.sqrt(_kLast);</span><br><span class="line">               if (rootK &gt; rootKLast) &#123;</span><br><span class="line">                   uint numerator = totalSupply.mul(rootK.sub(rootKLast));</span><br><span class="line">                   uint denominator = rootK.mul(5).add(rootKLast);</span><br><span class="line">                   uint liquidity = numerator / denominator;</span><br><span class="line">                   if (liquidity &gt; 0) _mint(feeTo, liquidity);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; else if (_kLast != 0) &#123;</span><br><span class="line">           kLast = 0;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p>mintfeee函数可用于判断平台是否收取手续费，因为每一笔交易都会有千分之三的手续费，那么<code>k</code>值也会随着缓慢增加，所以连续两个时刻之间的<code>k</code>值差值就是这段时间的手续费。即$\sqrt[2]{k2}-\sqrt[2]{k1}$，在进行流动性计算并且铸造给feeto</p>
-<p>公式为</p>
+<p>mintfeee函数可用于判断平台是否收取手续费，因为每一笔交易都会有千分之三的手续费，那么<code>k</code>值也会随着缓慢增加，所以连续两个时刻之间的<code>k</code>值差值就是这段时间的手续费。即</p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207050851966.png" alt="image-20220705084901929"></p>
+<p>再进行流动性计算并且铸造给feeto，公式为</p>
 <p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207040922509.png" alt="image-20220704092236481"></p>
 <p>.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private &#123;</span><br><span class="line">        require(balance0 &lt;= uint112(-1) &amp;&amp; balance1 &lt;= uint112(-1), &#x27;UniswapV2: OVERFLOW&#x27;);</span><br><span class="line">        uint32 blockTimestamp = uint32(block.timestamp % 2**32);</span><br><span class="line">        uint32 timeElapsed = blockTimestamp - blockTimestampLast; // overflow is desired</span><br><span class="line">        if (timeElapsed &gt; 0 &amp;&amp; _reserve0 != 0 &amp;&amp; _reserve1 != 0) &#123;</span><br><span class="line">            // * never overflows, and + overflow is desired</span><br><span class="line">            price0CumulativeLast += uint(UQ112x112.encode(_reserve1).uqdiv(_reserve0)) * timeElapsed;</span><br><span class="line">            price1CumulativeLast += uint(UQ112x112.encode(_reserve0).uqdiv(_reserve1)) * timeElapsed;</span><br><span class="line">        &#125;</span><br><span class="line">        reserve0 = uint112(balance0);</span><br><span class="line">        reserve1 = uint112(balance1);</span><br><span class="line">        blockTimestampLast = blockTimestamp;</span><br><span class="line">        emit Sync(reserve0, reserve1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -315,10 +317,10 @@
 <p>tokenA 和 tokenB 就是配对的两个代币，amountADesired和amountBDesired是预期准备为添加流动性付出的Token数量，amountAMin和amountBMin是用户可以接受的最小交易数量（根据滑点计算），to是LP-Token的接收地址，deadline是这笔交易的有效期，超过有效期还没有交易就会直接失效</p>
 <p>addLiquidity函数调用内部函数_addLiquidity首先检测对应的pair是否存在，如果不存在进行pair创建。获得两种Token的储备量，如果为0，那(amountA, amountB) &#x3D; (amountADesired, amountBDesired)，如果不都为0就计算amountBOptimal，比较是否小于amountBDesired如果小于则需要满足amountBOptimal &gt;&#x3D; amountBMin，此时(amountA, amountB) &#x3D; (amountADesired, amountBOptimal)，如果amountBOptimal &gt; amountBDesired就计算amountAOptimal，要求amountAOptimal &lt;&#x3D; amountADesired并且amountAOptimal &gt;&#x3D; amountAMin否则回滚交易，如果满足，此时的(amountA, amountB) &#x3D; (amountAOptimal, amountBDesired)</p>
 <p>最后再调用pair合约下的的mint函数就可以得到 LP-Token了</p>
-<p>addLiquidityETH与addLiquidity逻辑类似，不过就是将一个ERC-20变成了ETh，。预期支付的 ETH 金额也是直接从 msg.value 读取的，所以入参里也不需要 ETH 的 Desired 参数，实际上这里的ETH也是转变为wETh进行输入的</p>
+<p>addLiquidityETH与addLiquidity逻辑类似，不过就是将一个ERC-20变成了ETH，。预期支付的 ETH 金额也是直接从 msg.value 读取的，所以入参里也不需要 ETH 的 Desired 参数，实际上这里的ETH也是转变为WETH进行输入的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IWETH(WETH).deposit&#123;value: amountETH&#125;();</span><br></pre></td></tr></table></figure>
 
-<p>这行代码将用户的ETh转变为了wETH</p>
+<p>这行代码将用户的ETh转变为了WETH</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (msg.value &gt; amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);</span><br></pre></td></tr></table></figure>
 
 <p>将用户付出的多余的ETH进行回退</p>
@@ -330,7 +332,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function removeLiquidity(</span><br><span class="line">    address tokenA,</span><br><span class="line">    address tokenB,</span><br><span class="line">    uint liquidity,</span><br><span class="line">    uint amountAMin,</span><br><span class="line">    uint amountBMin,</span><br><span class="line">    address to,</span><br><span class="line">    uint deadline</span><br><span class="line">) public virtual override ensure(deadline) returns (uint amountA, uint amountB) &#123;</span><br><span class="line">    address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);</span><br><span class="line">    IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair</span><br><span class="line">    (uint amount0, uint amount1) = IUniswapV2Pair(pair).burn(to);</span><br><span class="line">    (address token0,) = UniswapV2Library.sortTokens(tokenA, tokenB);</span><br><span class="line">    (amountA, amountB) = tokenA == token0 ? (amount0, amount1) : (amount1, amount0);</span><br><span class="line">    require(amountA &gt;= amountAMin, &#x27;UniswapV2Router: INSUFFICIENT_A_AMOUNT&#x27;);</span><br><span class="line">    require(amountB &gt;= amountBMin, &#x27;UniswapV2Router: INSUFFICIENT_B_AMOUNT&#x27;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>逻辑比较简单，首先将LP-Token划转到pair合约下，在调用burn函数销毁流动性同时归还Token0和Token1，同时返回amountA 和 amountB，然后排序Token0和Token1从而确定amountA 和 amountB，最后检验是否满足滑点计算后的最小值.</p>
-<p>removeLiquidityETH 同理，因为pair实际存储的是wETH，所以调用removeLiquidity 时第二个参数为wETH，其余逻辑相同，最后调用wETH的withdraw函数将WETH转变为ETH，在调用safeTransferETH将ETh转给to地址</p>
+<p>removeLiquidityETH 同理，因为pair实际存储的是WETH，所以调用removeLiquidity 时第二个参数为wETH，其余逻辑相同，最后调用WETH的withdraw函数将WETH转变为ETH，在调用safeTransferETH将ETh转给to地址</p>
 <p>removeLiquidityWithPermit函数实际就是在调用removeLiquidity函数钱先调用permit函数进行授权，从而免去调用approve函数的操作，逻辑同上</p>
 <p>removeLiquidityETHWithPermit函数和removeLiquidityETH 同理，区别于也添加了调用permit函数使用签名进行授权的操作，从而换回Token+ETH</p>
 <p><code>removeLiquidityETHSupportingFeeOnTransferTokens</code>和<code>removeLiquidityETHWithPermitSupportingFeeOnTransferTokens</code>函数这里放在一起进行分析逻辑与之前的<code>removeLiquidityETH </code>和<code>removeLiquidityWithPermit</code>是一样的，前者需要提前进行approve，后者使用permit进行签名验证后调用前者</p>
