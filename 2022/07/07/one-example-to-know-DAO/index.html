@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bcYng-w/images/main/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/bcYng-w/images/main/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"bcyng-w.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":4},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="找一个DAO项目分析一下——–Moloch DAO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding DAO with an example">
+<meta property="og:url" content="http://bcyng-w.github.io/2022/07/07/one-example-to-know-DAO/index.html">
+<meta property="og:site_name" content="until">
+<meta property="og:description" content="找一个DAO项目分析一下——–Moloch DAO">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207061511248.png">
+<meta property="article:published_time" content="2022-07-07T05:38:31.101Z">
+<meta property="article:modified_time" content="2022-07-07T05:38:00.199Z">
+<meta property="article:author" content="bcYng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207061511248.png">
+
+<link rel="canonical" href="http://bcyng-w.github.io/2022/07/07/one-example-to-know-DAO/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Understanding DAO with an example | until</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">until</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bcyng-w.github.io/2022/07/07/one-example-to-know-DAO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+      <meta itemprop="name" content="bcYng">
+      <meta itemprop="description" content="前程似锦">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="until">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Understanding DAO with an example
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-07 13:38:31 / 修改时间：13:38:00" itemprop="dateCreated datePublished" datetime="2022-07-07T13:38:31+08:00">2022-07-07</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>找一个DAO项目分析一下——–Moloch DAO</p>
+<span id="more"></span>
+
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images1/img/202207061511248.png" alt="▷ Notre avis sur la marque DAO | Comme un camion"></p>
+<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><h2 id="What-is-DAO？"><a href="#What-is-DAO？" class="headerlink" title="What is DAO？"></a>What is DAO？</h2><p>DAO的英文全称为Decentralized A utonomous O rganization，常见的中文翻译为去中心化自治组织（社区），是一种以公开透明的计算机代码来体现的组织，其受控于股东，并不受中央政府影响。一个分布式自治组织的金融交易记录和程序规则是保存在区块链中的。目前分布式自治组织确切的法律地位还不清楚。</p>
+<h2 id="Why-DAO？"><a href="#Why-DAO？" class="headerlink" title="Why DAO？"></a>Why DAO？</h2><h3 id="DAO的优点"><a href="#DAO的优点" class="headerlink" title="DAO的优点"></a><strong>DAO的优点</strong></h3><p><strong>1、消除营私舞弊：</strong>DAO的资金都是按照公开透明的方式获得以及使用的，每一笔资金的来源与去向都十分清晰，不存在地下交易。 <strong>2、降低沟通成本：</strong>执行某一个决策没有商量的余地，只需要根据合约和投票得出的提案运行即可。 <strong>3、降低管理成本：</strong>DAO没有层级结构，没有CEO，没有经理，不需要付出管理成本。 <strong>4、平等：</strong>DAO没有层级结构，所有人都是平等的。 <strong>5、没有独裁：</strong>所有人都可以为组织提出方案并可能被使用。 <strong>6、团结：</strong>所有的参与者都持有DAO的通证，DAO运行得越好，通证就会越有价值。所有参与者会有相同的目标，即让DAO更好地运行。同时，提出提案以及投票都需要消耗一定量的通证。因此，投票人都会从DAO的角度出发，真心真意为DAO谋福利。</p>
+<h3 id="DAO组织的性质特点"><a href="#DAO组织的性质特点" class="headerlink" title="DAO组织的性质特点"></a><strong>DAO组织的性质特点</strong></h3><p><strong>1、分布式与去中心化：</strong>DAO 中不存在中心节点以及层级化的管理架构，它通过自下而上的网络节点之间的交互、竞争与协作来实现组织目标。因此，DAO中节点与节点之间、节点与组织之间的业务往来不再由行政隶属关系所决定，而是遵循平等、自愿、互惠、互利的原则，由彼此的资源禀赋、互补优势和利益共赢所驱动。每个组织节点都将根据自己的资源优势和才能资质，在通证的激励机制的作用下有效协作，从而产生强大的协同效应。 <strong>2、自主性与自动化：</strong>在一个理想状态的 DAO中，管理是代码化、程序化且自动化的。“代码即法律”，组织不再是金字塔式而是分布式，权力不再是中心化而是去中心化，管理不再是科层制而是社区自治，组织运行不再需要公司而是由高度自治的社区所替代。此外，由于 DAO运行在由利益相关者共同确定的运行标准和协作模式下，组织内部的共识和信任更易达成， 可以最大限度地降低组织的信任成本、沟通成本和交易成本。 <strong>3、组织化与有序性</strong>：依赖于智能合约，DAO中的运转规则、参与者的职责权利以及奖惩机制等均公开透明。此外，通过一系列高效的自治原则，相关参与者的权益得到精准分化与降维，即给那些付出劳动、做出贡献、承担责任的个体匹配相应的权利和收益，以促进产业分工以及权利、责任、利益均等，使得组织运转更加协调、有序。 <strong>4、智能化与通证化 ：</strong>DAO底层以封装了支持DAO（及其衍生应用的所有基础设施——互联网基础协议、区块链技术、人工智能、<a target="_blank" rel="noopener" href="https://cloud.tencent.com/solution/bigdata?from=10680">大数据</a>、物联网等为技术支撑，以数字化、智能化、链上链下协同治理为治理手段，改变了传统的科层制以及人为式管理方式，实现了组织的智能化管理。通证（token）作为DAO（岛）治理过程中的重要激励手段，将组织中的各个元素（例如人、组织、知识、事件、产品等）数字化、通证化，从而使得货币资本、人力资本以及其他要素资本充分融合，更好地激发组织的效能和实现价值流转。</p>
+<h3 id="DAO的优势"><a href="#DAO的优势" class="headerlink" title="DAO的优势"></a><strong>DAO的优势</strong></h3><p><strong>1、快速、无边界的业务决策：</strong>如果在A国的某人想跟B国、C国等国家的创始人一起创业，当前做个事情的过程非常复杂。不同的司法管辖区有不同的要求。决策所需的时间范围也有所不同。例如，假设A国的某人只需一天即可正式成立业务，而在B国的那位需要3个月时间来启动。显然，在B国的人并不拥有跟A国的那位一样的资源。 DAO则提供了一种解决方案，可以通过遵守一套标准规则，让每个人都可以在同等条件下工作，而不用考虑所在的地理位置。本质上说，创建DAO的一个主要原因之一是为组织的成立和运营提供平等的体系。 <strong>2、组织范围内的投票：</strong>很多公司都有董事会来做重要决策。这么做的问题是这些组织通常只对少数选出的问题进行投票，且并不一定代表组织的大多数。DAO可以改变这一点，它允许组织的任何人都可以就他们关心的问题进行投票。例如，A可能会关心问题A和问题C，但不怎么关心问题B。 通过DAO，A可以根据自己关心的程度来对提案进行相应比例的代币投票。DAO（岛）不会使用对组织内成员的输入忽略或不加计入的系统，而是确保所有投票都被统计并向所有人显示。 <strong>3、无法篡改规则：</strong>在任何组织内，政策和规则决定什么能做以及什么不能做。例如，在一家公司，不遵守规定的员工可能会遭受惩罚。如果某人上班迟到，这可能会也可能不会导致相应地扣减工资。这个决定可以通过时间戳来自动执行，但并非所有组织都会强制执行。 会议是形成想法和讨论想法的机会。DAO可以让远程组织更容易评估成员兴趣，更容易让想法从构想变为现实。</p>
+<p><strong>ps:Why is DAO 处内容来自:<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1944775">为什么DAO会成为资本市场的新战场？DAO的未来怎么样？</a></strong></p>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *Submitted for verification at Etherscan.io on 2019-02-18</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">pragma solidity ^0.5.3;</span><br><span class="line"></span><br><span class="line">contract Moloch &#123;</span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    /***************</span><br><span class="line">    GLOBAL CONSTANTS</span><br><span class="line">    ***************/</span><br><span class="line">    uint256 public periodDuration; // default = 17280 = 4.8 hours in seconds (5 periods per day)</span><br><span class="line">    uint256 public votingPeriodLength; // default = 35 periods (7 days)</span><br><span class="line">    uint256 public gracePeriodLength; // default = 35 periods (7 days)</span><br><span class="line">    uint256 public abortWindow; // default = 5 periods (1 day)</span><br><span class="line">    uint256 public proposalDeposit; // default = 10 ETH (~$1,000 worth of ETH at contract deployment)</span><br><span class="line">    uint256 public dilutionBound; // default = 3 - maximum multiplier a YES voter will be obligated to pay in case of mass ragequit</span><br><span class="line">    uint256 public processingReward; // default = 0.1 - amount of ETH to give to whoever processes a proposal</span><br><span class="line">    uint256 public summoningTime; // needed to determine the current period</span><br><span class="line"></span><br><span class="line">    IERC20 public approvedToken; // approved token contract reference; default = wETH</span><br><span class="line">    GuildBank public guildBank; // guild bank contract reference</span><br><span class="line"></span><br><span class="line">    // HARD-CODED LIMITS</span><br><span class="line">    // These numbers are quite arbitrary; they are small enough to avoid overflows when doing calculations</span><br><span class="line">    // with periods or shares, yet big enough to not limit reasonable use cases.</span><br><span class="line">    uint256 constant MAX_VOTING_PERIOD_LENGTH = 10**18; // maximum length of voting period</span><br><span class="line">    uint256 constant MAX_GRACE_PERIOD_LENGTH = 10**18; // maximum length of grace period</span><br><span class="line">    uint256 constant MAX_DILUTION_BOUND = 10**18; // maximum dilution bound</span><br><span class="line">    uint256 constant MAX_NUMBER_OF_SHARES = 10**18; // maximum number of shares that can be minted</span><br><span class="line"></span><br><span class="line">    /***************</span><br><span class="line">    EVENTS</span><br><span class="line">    ***************/</span><br><span class="line">    event SubmitProposal(uint256 proposalIndex, address indexed delegateKey, address indexed memberAddress, address indexed applicant, uint256 tokenTribute, uint256 sharesRequested);</span><br><span class="line">    event SubmitVote(uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);</span><br><span class="line">    event ProcessProposal(uint256 indexed proposalIndex, address indexed applicant, address indexed memberAddress, uint256 tokenTribute, uint256 sharesRequested, bool didPass);</span><br><span class="line">    event Ragequit(address indexed memberAddress, uint256 sharesToBurn);</span><br><span class="line">    event Abort(uint256 indexed proposalIndex, address applicantAddress);</span><br><span class="line">    event UpdateDelegateKey(address indexed memberAddress, address newDelegateKey);</span><br><span class="line">    event SummonComplete(address indexed summoner, uint256 shares);</span><br><span class="line"></span><br><span class="line">    /******************</span><br><span class="line">    INTERNAL ACCOUNTING</span><br><span class="line">    ******************/</span><br><span class="line">    uint256 public totalShares = 0; // total shares across all members</span><br><span class="line">    uint256 public totalSharesRequested = 0; // total shares that have been requested in unprocessed proposals</span><br><span class="line"></span><br><span class="line">    enum Vote &#123;</span><br><span class="line">        Null, // default value, counted as abstention</span><br><span class="line">        Yes,</span><br><span class="line">        No</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    struct Member &#123;</span><br><span class="line">        address delegateKey; // the key responsible for submitting proposals and voting - defaults to member address unless updated</span><br><span class="line">        uint256 shares; // the # of shares assigned to this member</span><br><span class="line">        bool exists; // always true once a member has been created</span><br><span class="line">        uint256 highestIndexYesVote; // highest proposal index # on which the member voted YES</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    struct Proposal &#123;</span><br><span class="line">        address proposer; // the member who submitted the proposal</span><br><span class="line">        address applicant; // the applicant who wishes to become a member - this key will be used for withdrawals</span><br><span class="line">        uint256 sharesRequested; // the # of shares the applicant is requesting</span><br><span class="line">        uint256 startingPeriod; // the period in which voting can start for this proposal</span><br><span class="line">        uint256 yesVotes; // the total number of YES votes for this proposal</span><br><span class="line">        uint256 noVotes; // the total number of NO votes for this proposal</span><br><span class="line">        bool processed; // true only if the proposal has been processed</span><br><span class="line">        bool didPass; // true only if the proposal passed</span><br><span class="line">        bool aborted; // true only if applicant calls &quot;abort&quot; fn before end of voting period</span><br><span class="line">        uint256 tokenTribute; // amount of tokens offered as tribute</span><br><span class="line">        string details; // proposal details - could be IPFS hash, plaintext, or JSON</span><br><span class="line">        uint256 maxTotalSharesAtYesVote; // the maximum # of total shares encountered at a yes vote on this proposal</span><br><span class="line">        mapping (address =&gt; Vote) votesByMember; // the votes on this proposal by each member</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    mapping (address =&gt; Member) public members;</span><br><span class="line">    mapping (address =&gt; address) public memberAddressByDelegateKey;</span><br><span class="line">    Proposal[] public proposalQueue;</span><br><span class="line"></span><br><span class="line">    /********</span><br><span class="line">    MODIFIERS</span><br><span class="line">    ********/</span><br><span class="line">    modifier onlyMember &#123;</span><br><span class="line">        require(members[msg.sender].shares &gt; 0, &quot;Moloch::onlyMember - not a member&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyDelegate &#123;</span><br><span class="line">        require(members[memberAddressByDelegateKey[msg.sender]].shares &gt; 0, &quot;Moloch::onlyDelegate - not a delegate&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /********</span><br><span class="line">    FUNCTIONS</span><br><span class="line">    ********/</span><br><span class="line">    constructor(</span><br><span class="line">        address summoner,</span><br><span class="line">        address _approvedToken,</span><br><span class="line">        uint256 _periodDuration,</span><br><span class="line">        uint256 _votingPeriodLength,</span><br><span class="line">        uint256 _gracePeriodLength,</span><br><span class="line">        uint256 _abortWindow,</span><br><span class="line">        uint256 _proposalDeposit,</span><br><span class="line">        uint256 _dilutionBound,</span><br><span class="line">        uint256 _processingReward</span><br><span class="line">    ) public &#123;</span><br><span class="line">        require(summoner != address(0), &quot;Moloch::constructor - summoner cannot be 0&quot;);</span><br><span class="line">        require(_approvedToken != address(0), &quot;Moloch::constructor - _approvedToken cannot be 0&quot;);</span><br><span class="line">        require(_periodDuration &gt; 0, &quot;Moloch::constructor - _periodDuration cannot be 0&quot;);</span><br><span class="line">        require(_votingPeriodLength &gt; 0, &quot;Moloch::constructor - _votingPeriodLength cannot be 0&quot;);</span><br><span class="line">        require(_votingPeriodLength &lt;= MAX_VOTING_PERIOD_LENGTH, &quot;Moloch::constructor - _votingPeriodLength exceeds limit&quot;);</span><br><span class="line">        require(_gracePeriodLength &lt;= MAX_GRACE_PERIOD_LENGTH, &quot;Moloch::constructor - _gracePeriodLength exceeds limit&quot;);</span><br><span class="line">        require(_abortWindow &gt; 0, &quot;Moloch::constructor - _abortWindow cannot be 0&quot;);</span><br><span class="line">        require(_abortWindow &lt;= _votingPeriodLength, &quot;Moloch::constructor - _abortWindow must be smaller than or equal to _votingPeriodLength&quot;);</span><br><span class="line">        require(_dilutionBound &gt; 0, &quot;Moloch::constructor - _dilutionBound cannot be 0&quot;);</span><br><span class="line">        require(_dilutionBound &lt;= MAX_DILUTION_BOUND, &quot;Moloch::constructor - _dilutionBound exceeds limit&quot;);</span><br><span class="line">        require(_proposalDeposit &gt;= _processingReward, &quot;Moloch::constructor - _proposalDeposit cannot be smaller than _processingReward&quot;);</span><br><span class="line"></span><br><span class="line">        approvedToken = IERC20(_approvedToken);</span><br><span class="line"></span><br><span class="line">        guildBank = new GuildBank(_approvedToken);</span><br><span class="line"></span><br><span class="line">        periodDuration = _periodDuration;</span><br><span class="line">        votingPeriodLength = _votingPeriodLength;</span><br><span class="line">        gracePeriodLength = _gracePeriodLength;</span><br><span class="line">        abortWindow = _abortWindow;</span><br><span class="line">        proposalDeposit = _proposalDeposit;</span><br><span class="line">        dilutionBound = _dilutionBound;</span><br><span class="line">        processingReward = _processingReward;</span><br><span class="line"></span><br><span class="line">        summoningTime = now;</span><br><span class="line"></span><br><span class="line">        members[summoner] = Member(summoner, 1, true, 0);</span><br><span class="line">        memberAddressByDelegateKey[summoner] = summoner;</span><br><span class="line">        totalShares = 1;</span><br><span class="line"></span><br><span class="line">        emit SummonComplete(summoner, 1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*****************</span><br><span class="line">    PROPOSAL FUNCTIONS</span><br><span class="line">    *****************/</span><br><span class="line"></span><br><span class="line">    function submitProposal(</span><br><span class="line">        address applicant,</span><br><span class="line">        uint256 tokenTribute,</span><br><span class="line">        uint256 sharesRequested,</span><br><span class="line">        string memory details</span><br><span class="line">    )</span><br><span class="line">        public</span><br><span class="line">        onlyDelegate</span><br><span class="line">    &#123;</span><br><span class="line">        require(applicant != address(0), &quot;Moloch::submitProposal - applicant cannot be 0&quot;);</span><br><span class="line"></span><br><span class="line">        // Make sure we won&#x27;t run into overflows when doing calculations with shares.</span><br><span class="line">        // Note that totalShares + totalSharesRequested + sharesRequested is an upper bound</span><br><span class="line">        // on the number of shares that can exist until this proposal has been processed.</span><br><span class="line">        require(totalShares.add(totalSharesRequested).add(sharesRequested) &lt;= MAX_NUMBER_OF_SHARES, &quot;Moloch::submitProposal - too many shares requested&quot;);</span><br><span class="line"></span><br><span class="line">        totalSharesRequested = totalSharesRequested.add(sharesRequested);</span><br><span class="line"></span><br><span class="line">        address memberAddress = memberAddressByDelegateKey[msg.sender];</span><br><span class="line"></span><br><span class="line">        // collect proposal deposit from proposer and store it in the Moloch until the proposal is processed</span><br><span class="line">        require(approvedToken.transferFrom(msg.sender, address(this), proposalDeposit), &quot;Moloch::submitProposal - proposal deposit token transfer failed&quot;);</span><br><span class="line"></span><br><span class="line">        // collect tribute from applicant and store it in the Moloch until the proposal is processed</span><br><span class="line">        require(approvedToken.transferFrom(applicant, address(this), tokenTribute), &quot;Moloch::submitProposal - tribute token transfer failed&quot;);</span><br><span class="line"></span><br><span class="line">        // compute startingPeriod for proposal</span><br><span class="line">        uint256 startingPeriod = max(</span><br><span class="line">            getCurrentPeriod(),</span><br><span class="line">            proposalQueue.length == 0 ? 0 : proposalQueue[proposalQueue.length.sub(1)].startingPeriod</span><br><span class="line">        ).add(1);</span><br><span class="line"></span><br><span class="line">        // create proposal ...</span><br><span class="line">        Proposal memory proposal = Proposal(&#123;</span><br><span class="line">            proposer: memberAddress,</span><br><span class="line">            applicant: applicant,</span><br><span class="line">            sharesRequested: sharesRequested,</span><br><span class="line">            startingPeriod: startingPeriod,</span><br><span class="line">            yesVotes: 0,</span><br><span class="line">            noVotes: 0,</span><br><span class="line">            processed: false,</span><br><span class="line">            didPass: false,</span><br><span class="line">            aborted: false,</span><br><span class="line">            tokenTribute: tokenTribute,</span><br><span class="line">            details: details,</span><br><span class="line">            maxTotalSharesAtYesVote: 0</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // ... and append it to the queue</span><br><span class="line">        proposalQueue.push(proposal);</span><br><span class="line"></span><br><span class="line">        uint256 proposalIndex = proposalQueue.length.sub(1);</span><br><span class="line">        emit SubmitProposal(proposalIndex, msg.sender, memberAddress, applicant, tokenTribute, sharesRequested);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function submitVote(uint256 proposalIndex, uint8 uintVote) public onlyDelegate &#123;</span><br><span class="line">        address memberAddress = memberAddressByDelegateKey[msg.sender];</span><br><span class="line">        Member storage member = members[memberAddress];</span><br><span class="line"></span><br><span class="line">        require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::submitVote - proposal does not exist&quot;);</span><br><span class="line">        Proposal storage proposal = proposalQueue[proposalIndex];</span><br><span class="line"></span><br><span class="line">        require(uintVote &lt; 3, &quot;Moloch::submitVote - uintVote must be less than 3&quot;);</span><br><span class="line">        Vote vote = Vote(uintVote);</span><br><span class="line"></span><br><span class="line">        require(getCurrentPeriod() &gt;= proposal.startingPeriod, &quot;Moloch::submitVote - voting period has not started&quot;);</span><br><span class="line">        require(!hasVotingPeriodExpired(proposal.startingPeriod), &quot;Moloch::submitVote - proposal voting period has expired&quot;);</span><br><span class="line">        require(proposal.votesByMember[memberAddress] == Vote.Null, &quot;Moloch::submitVote - member has already voted on this proposal&quot;);</span><br><span class="line">        require(vote == Vote.Yes || vote == Vote.No, &quot;Moloch::submitVote - vote must be either Yes or No&quot;);</span><br><span class="line">        require(!proposal.aborted, &quot;Moloch::submitVote - proposal has been aborted&quot;);</span><br><span class="line"></span><br><span class="line">        // store vote</span><br><span class="line">        proposal.votesByMember[memberAddress] = vote;</span><br><span class="line"></span><br><span class="line">        // count vote</span><br><span class="line">        if (vote == Vote.Yes) &#123;</span><br><span class="line">            proposal.yesVotes = proposal.yesVotes.add(member.shares);</span><br><span class="line"></span><br><span class="line">            // set highest index (latest) yes vote - must be processed for member to ragequit</span><br><span class="line">            if (proposalIndex &gt; member.highestIndexYesVote) &#123;</span><br><span class="line">                member.highestIndexYesVote = proposalIndex;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // set maximum of total shares encountered at a yes vote - used to bound dilution for yes voters</span><br><span class="line">            if (totalShares &gt; proposal.maxTotalSharesAtYesVote) &#123;</span><br><span class="line">                proposal.maxTotalSharesAtYesVote = totalShares;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; else if (vote == Vote.No) &#123;</span><br><span class="line">            proposal.noVotes = proposal.noVotes.add(member.shares);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        emit SubmitVote(proposalIndex, msg.sender, memberAddress, uintVote);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function processProposal(uint256 proposalIndex) public &#123;</span><br><span class="line">        require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::processProposal - proposal does not exist&quot;);</span><br><span class="line">        Proposal storage proposal = proposalQueue[proposalIndex];</span><br><span class="line">        require(getCurrentPeriod() &gt;= proposal.startingPeriod.add(votingPeriodLength).add(gracePeriodLength), &quot;Moloch::processProposal - proposal is not ready to be processed&quot;);</span><br><span class="line">        require(proposal.processed == false, &quot;Moloch::processProposal - proposal has already been processed&quot;);</span><br><span class="line">        require(proposalIndex == 0 || proposalQueue[proposalIndex.sub(1)].processed, &quot;Moloch::processProposal - previous proposal must be processed&quot;);</span><br><span class="line">        proposal.processed = true;</span><br><span class="line">        totalSharesRequested = totalSharesRequested.sub(proposal.sharesRequested);</span><br><span class="line">        bool didPass = proposal.yesVotes &gt; proposal.noVotes;</span><br><span class="line">        // Make the proposal fail if the dilutionBound is exceeded</span><br><span class="line">        if (totalShares.mul(dilutionBound) &lt; proposal.maxTotalSharesAtYesVote) &#123;</span><br><span class="line">            didPass = false;</span><br><span class="line">        &#125;</span><br><span class="line">        // PROPOSAL PASSED</span><br><span class="line">        if (didPass &amp;&amp; !proposal.aborted) &#123;</span><br><span class="line">            proposal.didPass = true;</span><br><span class="line">            // if the applicant is already a member, add to their existing shares</span><br><span class="line">            if (members[proposal.applicant].exists) &#123;</span><br><span class="line">                members[proposal.applicant].shares = members[proposal.applicant].shares.add(proposal.sharesRequested);</span><br><span class="line">            // the applicant is a new member, create a new record for them</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                // if the applicant address is already taken by a member&#x27;s delegateKey, reset it to their member address</span><br><span class="line">                if (members[memberAddressByDelegateKey[proposal.applicant]].exists) &#123;</span><br><span class="line">                    address memberToOverride = memberAddressByDelegateKey[proposal.applicant];</span><br><span class="line">                    memberAddressByDelegateKey[memberToOverride] = memberToOverride;</span><br><span class="line">                    members[memberToOverride].delegateKey = memberToOverride;</span><br><span class="line">                &#125;</span><br><span class="line">                // use applicant address as delegateKey by default</span><br><span class="line">                members[proposal.applicant] = Member(proposal.applicant, proposal.sharesRequested, true, 0);</span><br><span class="line">                memberAddressByDelegateKey[proposal.applicant] = proposal.applicant;</span><br><span class="line">            &#125;</span><br><span class="line">            // mint new shares</span><br><span class="line">            totalShares = totalShares.add(proposal.sharesRequested);</span><br><span class="line">            // transfer tokens to guild bank</span><br><span class="line">            require(</span><br><span class="line">                approvedToken.transfer(address(guildBank), proposal.tokenTribute),</span><br><span class="line">                &quot;Moloch::processProposal - token transfer to guild bank failed&quot;</span><br><span class="line">            );</span><br><span class="line">        // PROPOSAL FAILED OR ABORTED</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // return all tokens to the applicant</span><br><span class="line">            require(</span><br><span class="line">                approvedToken.transfer(proposal.applicant, proposal.tokenTribute),</span><br><span class="line">                &quot;Moloch::processProposal - failing vote token transfer failed&quot;</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        // send msg.sender the processingReward</span><br><span class="line">        require(</span><br><span class="line">            approvedToken.transfer(msg.sender, processingReward),</span><br><span class="line">            &quot;Moloch::processProposal - failed to send processing reward to msg.sender&quot;</span><br><span class="line">        );</span><br><span class="line">        // return deposit to proposer (subtract processing reward)</span><br><span class="line">        require(</span><br><span class="line">            approvedToken.transfer(proposal.proposer, proposalDeposit.sub(processingReward)),</span><br><span class="line">            &quot;Moloch::processProposal - failed to return proposal deposit to proposer&quot;</span><br><span class="line">        );</span><br><span class="line">        emit ProcessProposal(</span><br><span class="line">            proposalIndex,</span><br><span class="line">            proposal.applicant,</span><br><span class="line">            proposal.proposer,</span><br><span class="line">            proposal.tokenTribute,</span><br><span class="line">            proposal.sharesRequested,</span><br><span class="line">            didPass</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function ragequit(uint256 sharesToBurn) public onlyMember &#123;</span><br><span class="line">        uint256 initialTotalShares = totalShares;</span><br><span class="line"></span><br><span class="line">        Member storage member = members[msg.sender];</span><br><span class="line"></span><br><span class="line">        require(member.shares &gt;= sharesToBurn, &quot;Moloch::ragequit - insufficient shares&quot;);</span><br><span class="line"></span><br><span class="line">        require(canRagequit(member.highestIndexYesVote), &quot;Moloch::ragequit - cant ragequit until highest index proposal member voted YES on is processed&quot;);</span><br><span class="line"></span><br><span class="line">        // burn shares</span><br><span class="line">        member.shares = member.shares.sub(sharesToBurn);</span><br><span class="line">        totalShares = totalShares.sub(sharesToBurn);</span><br><span class="line"></span><br><span class="line">        // instruct guildBank to transfer fair share of tokens to the ragequitter</span><br><span class="line">        require(</span><br><span class="line">            guildBank.withdraw(msg.sender, sharesToBurn, initialTotalShares),</span><br><span class="line">            &quot;Moloch::ragequit - withdrawal of tokens from guildBank failed&quot;</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        emit Ragequit(msg.sender, sharesToBurn);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function abort(uint256 proposalIndex) public &#123;</span><br><span class="line">        require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::abort - proposal does not exist&quot;);</span><br><span class="line">        Proposal storage proposal = proposalQueue[proposalIndex];</span><br><span class="line"></span><br><span class="line">        require(msg.sender == proposal.applicant, &quot;Moloch::abort - msg.sender must be applicant&quot;);</span><br><span class="line">        require(getCurrentPeriod() &lt; proposal.startingPeriod.add(abortWindow), &quot;Moloch::abort - abort window must not have passed&quot;);</span><br><span class="line">        require(!proposal.aborted, &quot;Moloch::abort - proposal must not have already been aborted&quot;);</span><br><span class="line"></span><br><span class="line">        uint256 tokensToAbort = proposal.tokenTribute;</span><br><span class="line">        proposal.tokenTribute = 0;</span><br><span class="line">        proposal.aborted = true;</span><br><span class="line"></span><br><span class="line">        // return all tokens to the applicant</span><br><span class="line">        require(</span><br><span class="line">            approvedToken.transfer(proposal.applicant, tokensToAbort),</span><br><span class="line">            &quot;Moloch::processProposal - failed to return tribute to applicant&quot;</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        emit Abort(proposalIndex, msg.sender);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function updateDelegateKey(address newDelegateKey) public onlyMember &#123;</span><br><span class="line">        require(newDelegateKey != address(0), &quot;Moloch::updateDelegateKey - newDelegateKey cannot be 0&quot;);</span><br><span class="line"></span><br><span class="line">        // skip checks if member is setting the delegate key to their member address</span><br><span class="line">        if (newDelegateKey != msg.sender) &#123;</span><br><span class="line">            require(!members[newDelegateKey].exists, &quot;Moloch::updateDelegateKey - cant overwrite existing members&quot;);</span><br><span class="line">            require(!members[memberAddressByDelegateKey[newDelegateKey]].exists, &quot;Moloch::updateDelegateKey - cant overwrite existing delegate keys&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Member storage member = members[msg.sender];</span><br><span class="line">        memberAddressByDelegateKey[member.delegateKey] = address(0);</span><br><span class="line">        memberAddressByDelegateKey[newDelegateKey] = msg.sender;</span><br><span class="line">        member.delegateKey = newDelegateKey;</span><br><span class="line"></span><br><span class="line">        emit UpdateDelegateKey(msg.sender, newDelegateKey);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***************</span><br><span class="line">    GETTER FUNCTIONS</span><br><span class="line">    ***************/</span><br><span class="line"></span><br><span class="line">    function max(uint256 x, uint256 y) internal pure returns (uint256) &#123;</span><br><span class="line">        return x &gt;= y ? x : y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getCurrentPeriod() public view returns (uint256) &#123;</span><br><span class="line">        return now.sub(summoningTime).div(periodDuration);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getProposalQueueLength() public view returns (uint256) &#123;</span><br><span class="line">        return proposalQueue.length;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // can only ragequit if the latest proposal you voted YES on has been processed</span><br><span class="line">    function canRagequit(uint256 highestIndexYesVote) public view returns (bool) &#123;</span><br><span class="line">        require(highestIndexYesVote &lt; proposalQueue.length, &quot;Moloch::canRagequit - proposal does not exist&quot;);</span><br><span class="line">        return proposalQueue[highestIndexYesVote].processed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function hasVotingPeriodExpired(uint256 startingPeriod) public view returns (bool) &#123;</span><br><span class="line">        return getCurrentPeriod() &gt;= startingPeriod.add(votingPeriodLength);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getMemberProposalVote(address memberAddress, uint256 proposalIndex) public view returns (Vote) &#123;</span><br><span class="line">        require(members[memberAddress].exists, &quot;Moloch::getMemberProposalVote - member doesn&#x27;t exist&quot;);</span><br><span class="line">        require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::getMemberProposalVote - proposal doesn&#x27;t exist&quot;);</span><br><span class="line">        return proposalQueue[proposalIndex].votesByMember[memberAddress];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">interface IERC20 &#123;</span><br><span class="line">    function transfer(address to, uint256 value) external returns (bool);</span><br><span class="line"></span><br><span class="line">    function approve(address spender, uint256 value) external returns (bool);</span><br><span class="line"></span><br><span class="line">    function transferFrom(address from, address to, uint256 value) external returns (bool);</span><br><span class="line"></span><br><span class="line">    function totalSupply() external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    function balanceOf(address who) external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    function allowance(address owner, address spender) external view returns (uint256);</span><br><span class="line"></span><br><span class="line">    event Transfer(address indexed from, address indexed to, uint256 value);</span><br><span class="line"></span><br><span class="line">    event Approval(address indexed owner, address indexed spender, uint256 value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Ownable &#123;</span><br><span class="line">    address private _owner;</span><br><span class="line"></span><br><span class="line">    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev The Ownable constructor sets the original `owner` of the contract to the sender</span><br><span class="line">     * account.</span><br><span class="line">     */</span><br><span class="line">    constructor () internal &#123;</span><br><span class="line">        _owner = msg.sender;</span><br><span class="line">        emit OwnershipTransferred(address(0), _owner);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @return the address of the owner.</span><br><span class="line">     */</span><br><span class="line">    function owner() public view returns (address) &#123;</span><br><span class="line">        return _owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Throws if called by any account other than the owner.</span><br><span class="line">     */</span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(isOwner());</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @return true if `msg.sender` is the owner of the contract.</span><br><span class="line">     */</span><br><span class="line">    function isOwner() public view returns (bool) &#123;</span><br><span class="line">        return msg.sender == _owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Allows the current owner to relinquish control of the contract.</span><br><span class="line">     * @notice Renouncing to ownership will leave the contract without an owner.</span><br><span class="line">     * It will not be possible to call the functions with the `onlyOwner`</span><br><span class="line">     * modifier anymore.</span><br><span class="line">     */</span><br><span class="line">    function renounceOwnership() public onlyOwner &#123;</span><br><span class="line">        emit OwnershipTransferred(_owner, address(0));</span><br><span class="line">        _owner = address(0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Allows the current owner to transfer control of the contract to a newOwner.</span><br><span class="line">     * @param newOwner The address to transfer ownership to.</span><br><span class="line">     */</span><br><span class="line">    function transferOwnership(address newOwner) public onlyOwner &#123;</span><br><span class="line">        _transferOwnership(newOwner);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Transfers control of the contract to a newOwner.</span><br><span class="line">     * @param newOwner The address to transfer ownership to.</span><br><span class="line">     */</span><br><span class="line">    function _transferOwnership(address newOwner) internal &#123;</span><br><span class="line">        require(newOwner != address(0));</span><br><span class="line">        emit OwnershipTransferred(_owner, newOwner);</span><br><span class="line">        _owner = newOwner;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract GuildBank is Ownable &#123;</span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    IERC20 public approvedToken; // approved token contract reference</span><br><span class="line"></span><br><span class="line">    event Withdrawal(address indexed receiver, uint256 amount);</span><br><span class="line"></span><br><span class="line">    constructor(address approvedTokenAddress) public &#123;</span><br><span class="line">        approvedToken = IERC20(approvedTokenAddress);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(address receiver, uint256 shares, uint256 totalShares) public onlyOwner returns (bool) &#123;</span><br><span class="line">        uint256 amount = approvedToken.balanceOf(address(this)).mul(shares).div(totalShares);</span><br><span class="line">        emit Withdrawal(receiver, amount);</span><br><span class="line">        return approvedToken.transfer(receiver, amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">library SafeMath &#123;</span><br><span class="line">    /**</span><br><span class="line">     * @dev Multiplies two unsigned integers, reverts on overflow.</span><br><span class="line">     */</span><br><span class="line">    function mul(uint256 a, uint256 b) internal pure returns (uint256) &#123;</span><br><span class="line">        // Gas optimization: this is cheaper than requiring &#x27;a&#x27; not being zero, but the</span><br><span class="line">        // benefit is lost if &#x27;b&#x27; is also tested.</span><br><span class="line">        // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522</span><br><span class="line">        if (a == 0) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        uint256 c = a * b;</span><br><span class="line">        require(c / a == b);</span><br><span class="line"></span><br><span class="line">        return c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Integer division of two unsigned integers truncating the quotient, reverts on division by zero.</span><br><span class="line">     */</span><br><span class="line">    function div(uint256 a, uint256 b) internal pure returns (uint256) &#123;</span><br><span class="line">        // Solidity only automatically asserts when dividing by 0</span><br><span class="line">        require(b &gt; 0);</span><br><span class="line">        uint256 c = a / b;</span><br><span class="line">        // assert(a == b * c + a % b); // There is no case in which this doesn&#x27;t hold</span><br><span class="line"></span><br><span class="line">        return c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Subtracts two unsigned integers, reverts on overflow (i.e. if subtrahend is greater than minuend).</span><br><span class="line">     */</span><br><span class="line">    function sub(uint256 a, uint256 b) internal pure returns (uint256) &#123;</span><br><span class="line">        require(b &lt;= a);</span><br><span class="line">        uint256 c = a - b;</span><br><span class="line"></span><br><span class="line">        return c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Adds two unsigned integers, reverts on overflow.</span><br><span class="line">     */</span><br><span class="line">    function add(uint256 a, uint256 b) internal pure returns (uint256) &#123;</span><br><span class="line">        uint256 c = a + b;</span><br><span class="line">        require(c &gt;= a);</span><br><span class="line"></span><br><span class="line">        return c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @dev Divides two unsigned integers and returns the remainder (unsigned integer modulo),</span><br><span class="line">     * reverts when dividing by zero.</span><br><span class="line">     */</span><br><span class="line">    function mod(uint256 a, uint256 b) internal pure returns (uint256) &#123;</span><br><span class="line">        require(b != 0);</span><br><span class="line">        return a % b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze"></a>Analyze</h2><h3 id="变量注解"><a href="#变量注解" class="headerlink" title="变量注解"></a>变量注解</h3><p>periodDuration：默认值为4.8 hours</p>
+<p>votingPeriodLengthL：投票进行期限，默认为7 days</p>
+<p>gracePeriodLength：宽限期限，默认为7 days</p>
+<p>abortWindow：再star后的abortWindow时间内可以进行中止操作</p>
+<p>proposalDeposit：每提交一份提案就要像dao合约地址存入proposalDeposit，默认值为10ETH。</p>
+<p>dilutionBound：maxTotalSharesAtYesVote不能大于totalshares*dilutionBound，否则视为不通过，默认值为3</p>
+<p>processingReward：给处理提案人的奖励，默认值为0.1ETH</p>
+<p>summoningTime：部署时的时间</p>
+<h3 id="函数解析"><a href="#函数解析" class="headerlink" title="函数解析"></a>函数解析</h3><p>前段时间只有summoner满足onlydelegate条件，只有投票通过后才能成为member并将applicant添加到memberAddressByDelegateKey[proposal.applicant]同时将sharequest添加到member中去，才可以满足onlydelegate条件，所以前几个提案的只有一票（summoner的share只有1）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">function submitProposal(</span><br><span class="line">    address applicant,</span><br><span class="line">    uint256 tokenTribute,</span><br><span class="line">    uint256 sharesRequested,</span><br><span class="line">    string memory details</span><br><span class="line">)</span><br><span class="line">    public</span><br><span class="line">    onlyDelegate</span><br><span class="line">&#123;</span><br><span class="line">    require(applicant != address(0), &quot;Moloch::submitProposal - applicant cannot be 0&quot;);</span><br><span class="line"></span><br><span class="line">    // Make sure we won&#x27;t run into overflows when doing calculations with shares.</span><br><span class="line">    // Note that totalShares + totalSharesRequested + sharesRequested is an upper bound</span><br><span class="line">    // on the number of shares that can exist until this proposal has been processed.</span><br><span class="line">    require(totalShares.add(totalSharesRequested).add(sharesRequested) &lt;= MAX_NUMBER_OF_SHARES, &quot;Moloch::submitProposal - too many shares requested&quot;);</span><br><span class="line"></span><br><span class="line">    totalSharesRequested = totalSharesRequested.add(sharesRequested);</span><br><span class="line"></span><br><span class="line">    address memberAddress = memberAddressByDelegateKey[msg.sender];</span><br><span class="line"></span><br><span class="line">    // collect proposal deposit from proposer and store it in the Moloch until the proposal is processed</span><br><span class="line">    require(approvedToken.transferFrom(msg.sender, address(this), proposalDeposit), &quot;Moloch::submitProposal - proposal deposit token transfer failed&quot;);</span><br><span class="line"></span><br><span class="line">    // collect tribute from applicant and store it in the Moloch until the proposal is processed</span><br><span class="line">    require(approvedToken.transferFrom(applicant, address(this), tokenTribute), &quot;Moloch::submitProposal - tribute token transfer failed&quot;);</span><br><span class="line"></span><br><span class="line">    // compute startingPeriod for proposal</span><br><span class="line">    uint256 startingPeriod = max(</span><br><span class="line">        getCurrentPeriod(),</span><br><span class="line">        proposalQueue.length == 0 ? 0 : proposalQueue[proposalQueue.length.sub(1)].startingPeriod</span><br><span class="line">    ).add(1);</span><br><span class="line"></span><br><span class="line">    // create proposal ...</span><br><span class="line">    Proposal memory proposal = Proposal(&#123;</span><br><span class="line">        proposer: memberAddress,</span><br><span class="line">        applicant: applicant,</span><br><span class="line">        sharesRequested: sharesRequested,</span><br><span class="line">        startingPeriod: startingPeriod,</span><br><span class="line">        yesVotes: 0,</span><br><span class="line">        noVotes: 0,</span><br><span class="line">        processed: false,</span><br><span class="line">        didPass: false,</span><br><span class="line">        aborted: false,</span><br><span class="line">        tokenTribute: tokenTribute,</span><br><span class="line">        details: details,</span><br><span class="line">        maxTotalSharesAtYesVote: 0</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // ... and append it to the queue</span><br><span class="line">    proposalQueue.push(proposal);</span><br><span class="line"></span><br><span class="line">    uint256 proposalIndex = proposalQueue.length.sub(1);</span><br><span class="line">    emit SubmitProposal(proposalIndex, msg.sender, memberAddress, applicant, tokenTribute, sharesRequested);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>submitProposal函数用于提交一个提案，只能是delegate</p>
+<p>首先判断申请人是否为非零地址，再判断在总共股权加上总共的请求股权是否会超出最大值MAX_NUMBER_OF_SHARES，之后会从msg.sender向合约地址转账10ETH，并且从申请人向合约地址转账tokenTribute。</p>
+<p>起始期就是CurrentPeriod+1，然后将新的proposal添加到proposalQueue数组中去。</p>
+<p>之后进行投票，投票通过，applicant将会成为member</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">function submitVote(uint256 proposalIndex, uint8 uintVote) public onlyDelegate &#123;</span><br><span class="line">    address memberAddress = memberAddressByDelegateKey[msg.sender];</span><br><span class="line">    Member storage member = members[memberAddress];</span><br><span class="line"></span><br><span class="line">    require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::submitVote - proposal does not exist&quot;);</span><br><span class="line">    Proposal storage proposal = proposalQueue[proposalIndex];</span><br><span class="line"></span><br><span class="line">    require(uintVote &lt; 3, &quot;Moloch::submitVote - uintVote must be less than 3&quot;);</span><br><span class="line">    Vote vote = Vote(uintVote);</span><br><span class="line"></span><br><span class="line">    require(getCurrentPeriod() &gt;= proposal.startingPeriod, &quot;Moloch::submitVote - voting period has not started&quot;);</span><br><span class="line">    require(!hasVotingPeriodExpired(proposal.startingPeriod), &quot;Moloch::submitVote - proposal voting period has expired&quot;);</span><br><span class="line">    require(proposal.votesByMember[memberAddress] == Vote.Null, &quot;Moloch::submitVote - member has already voted on this proposal&quot;);</span><br><span class="line">    require(vote == Vote.Yes || vote == Vote.No, &quot;Moloch::submitVote - vote must be either Yes or No&quot;);</span><br><span class="line">    require(!proposal.aborted, &quot;Moloch::submitVote - proposal has been aborted&quot;);</span><br><span class="line"></span><br><span class="line">    // store vote</span><br><span class="line">    proposal.votesByMember[memberAddress] = vote;</span><br><span class="line"></span><br><span class="line">    // count vote</span><br><span class="line">    if (vote == Vote.Yes) &#123;</span><br><span class="line">        proposal.yesVotes = proposal.yesVotes.add(member.shares);</span><br><span class="line"></span><br><span class="line">        // set highest index (latest) yes vote - must be processed for member to ragequit</span><br><span class="line">        if (proposalIndex &gt; member.highestIndexYesVote) &#123;</span><br><span class="line">            member.highestIndexYesVote = proposalIndex;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // set maximum of total shares encountered at a yes vote - used to bound dilution for yes voters</span><br><span class="line">        if (totalShares &gt; proposal.maxTotalSharesAtYesVote) &#123;</span><br><span class="line">            proposal.maxTotalSharesAtYesVote = totalShares;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; else if (vote == Vote.No) &#123;</span><br><span class="line">        proposal.noVotes = proposal.noVotes.add(member.shares);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    emit SubmitVote(proposalIndex, msg.sender, memberAddress, uintVote);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>对应两个参数分别是提案编号以及所投的票类型（弃权，同意，否定），同时记录用户所投的票种</p>
+<p>如果为YES票，提案的YesVote将会加上member的所有股权，同时记录最近一次投yes票的提案编号（此次）</p>
+<p>如果为No票，提案的NoVote将会加上member的所有股权</p>
+<p>之后进入第三轮，处理提案</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">function processProposal(uint256 proposalIndex) public &#123;</span><br><span class="line">    require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::processProposal - proposal does not exist&quot;);</span><br><span class="line">    Proposal storage proposal = proposalQueue[proposalIndex];</span><br><span class="line">    require(getCurrentPeriod() &gt;= proposal.startingPeriod.add(votingPeriodLength).add(gracePeriodLength), &quot;Moloch::processProposal - proposal is not ready to be processed&quot;);</span><br><span class="line">    require(proposal.processed == false, &quot;Moloch::processProposal - proposal has already been processed&quot;);</span><br><span class="line">    require(proposalIndex == 0 || proposalQueue[proposalIndex.sub(1)].processed, &quot;Moloch::processProposal - previous proposal must be processed&quot;);</span><br><span class="line">    proposal.processed = true;</span><br><span class="line">    totalSharesRequested = totalSharesRequested.sub(proposal.sharesRequested);</span><br><span class="line">    bool didPass = proposal.yesVotes &gt; proposal.noVotes;</span><br><span class="line">    // Make the proposal fail if the dilutionBound is exceeded</span><br><span class="line">    if (totalShares.mul(dilutionBound) &lt; proposal.maxTotalSharesAtYesVote) &#123;</span><br><span class="line">        didPass = false;</span><br><span class="line">    &#125;</span><br><span class="line">    // PROPOSAL PASSED</span><br><span class="line">    if (didPass &amp;&amp; !proposal.aborted) &#123;</span><br><span class="line">        proposal.didPass = true;</span><br><span class="line">        // if the applicant is already a member, add to their existing shares</span><br><span class="line">        if (members[proposal.applicant].exists) &#123;</span><br><span class="line">            members[proposal.applicant].shares = members[proposal.applicant].shares.add(proposal.sharesRequested);</span><br><span class="line">        // the applicant is a new member, create a new record for them</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // if the applicant address is already taken by a member&#x27;s delegateKey, reset it to their member address</span><br><span class="line">            if (members[memberAddressByDelegateKey[proposal.applicant]].exists) &#123;</span><br><span class="line">                address memberToOverride = memberAddressByDelegateKey[proposal.applicant];</span><br><span class="line">                memberAddressByDelegateKey[memberToOverride] = memberToOverride;</span><br><span class="line">                members[memberToOverride].delegateKey = memberToOverride;</span><br><span class="line">            &#125;</span><br><span class="line">            // use applicant address as delegateKey by default</span><br><span class="line">            members[proposal.applicant] = Member(proposal.applicant, proposal.sharesRequested, true, 0);</span><br><span class="line">            memberAddressByDelegateKey[proposal.applicant] = proposal.applicant;</span><br><span class="line">        &#125;</span><br><span class="line">        // mint new shares</span><br><span class="line">        totalShares = totalShares.add(proposal.sharesRequested);</span><br><span class="line">        // transfer tokens to guild bank</span><br><span class="line">        require(</span><br><span class="line">            approvedToken.transfer(address(guildBank), proposal.tokenTribute),</span><br><span class="line">            &quot;Moloch::processProposal - token transfer to guild bank failed&quot;</span><br><span class="line">        );</span><br><span class="line">    // PROPOSAL FAILED OR ABORTED</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // return all tokens to the applicant</span><br><span class="line">        require(</span><br><span class="line">            approvedToken.transfer(proposal.applicant, proposal.tokenTribute),</span><br><span class="line">            &quot;Moloch::processProposal - failing vote token transfer failed&quot;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">    // send msg.sender the processingReward</span><br><span class="line">    require(</span><br><span class="line">        approvedToken.transfer(msg.sender, processingReward),</span><br><span class="line">        &quot;Moloch::processProposal - failed to send processing reward to msg.sender&quot;</span><br><span class="line">    );</span><br><span class="line">    // return deposit to proposer (subtract processing reward)</span><br><span class="line">    require(</span><br><span class="line">        approvedToken.transfer(proposal.proposer, proposalDeposit.sub(processingReward)),</span><br><span class="line">        &quot;Moloch::processProposal - failed to return proposal deposit to proposer&quot;</span><br><span class="line">    );</span><br><span class="line">    emit ProcessProposal(</span><br><span class="line">        proposalIndex,</span><br><span class="line">        proposal.applicant,</span><br><span class="line">        proposal.proposer,</span><br><span class="line">        proposal.tokenTribute,</span><br><span class="line">        proposal.sharesRequested,</span><br><span class="line">        didPass</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>任何人都可以处理，参数为所要处理的提案的编号，参数有所限制，此编号对应的上一个提案必须已被处理，要求当前时间大于开始时间+投票期限+宽限期限，只要提案的同意票数大于否定票数即视为通过</p>
+<h4 id="case0-false"><a href="#case0-false" class="headerlink" title="case0 false"></a>case0 false</h4><p>将申请者的tokenTribute原路退回</p>
+<h4 id="case1-true"><a href="#case1-true" class="headerlink" title="case1 true"></a>case1 true</h4><p>通过后如果申请人已经是member，则直接将申请人的股权加上申请的股权，否则如果申请者地址已经被成员的delegateKey占用，则将其重置为成员地址。之后铸造新的股权，并将tokenTribute转入guildbank</p>
+<p>最后，将会给处理提案的人processingReward数量的奖励，剩余的proposalDeposit发送给applicant。</p>
+<p>molochDAO的特色功能—-怒退</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function ragequit(uint256 sharesToBurn) public onlyMember &#123;</span><br><span class="line">    uint256 initialTotalShares = totalShares;</span><br><span class="line"></span><br><span class="line">    Member storage member = members[msg.sender];</span><br><span class="line"></span><br><span class="line">    require(member.shares &gt;= sharesToBurn, &quot;Moloch::ragequit - insufficient shares&quot;);</span><br><span class="line"></span><br><span class="line">    require(canRagequit(member.highestIndexYesVote), &quot;Moloch::ragequit - cant ragequit until highest index proposal member voted YES on is processed&quot;);</span><br><span class="line"></span><br><span class="line">    // burn shares</span><br><span class="line">    member.shares = member.shares.sub(sharesToBurn);</span><br><span class="line">    totalShares = totalShares.sub(sharesToBurn);</span><br><span class="line"></span><br><span class="line">    // instruct guildBank to transfer fair share of tokens to the ragequitter</span><br><span class="line">    require(</span><br><span class="line">        guildBank.withdraw(msg.sender, sharesToBurn, initialTotalShares),</span><br><span class="line">        &quot;Moloch::ragequit - withdrawal of tokens from guildBank failed&quot;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    emit Ragequit(msg.sender, sharesToBurn);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先检测是否满足可以ragequit的条件，满足则燃烧部分股权取回资产</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">function abort(uint256 proposalIndex) public &#123;</span><br><span class="line">    require(proposalIndex &lt; proposalQueue.length, &quot;Moloch::abort - proposal does not exist&quot;);</span><br><span class="line">    Proposal storage proposal = proposalQueue[proposalIndex];</span><br><span class="line"></span><br><span class="line">    require(msg.sender == proposal.applicant, &quot;Moloch::abort - msg.sender must be applicant&quot;);</span><br><span class="line">    require(getCurrentPeriod() &lt; proposal.startingPeriod.add(abortWindow), &quot;Moloch::abort - abort window must not have passed&quot;);</span><br><span class="line">    require(!proposal.aborted, &quot;Moloch::abort - proposal must not have already been aborted&quot;);</span><br><span class="line"></span><br><span class="line">    uint256 tokensToAbort = proposal.tokenTribute;</span><br><span class="line">    proposal.tokenTribute = 0;</span><br><span class="line">    proposal.aborted = true;</span><br><span class="line"></span><br><span class="line">    // return all tokens to the applicant</span><br><span class="line">    require(</span><br><span class="line">        approvedToken.transfer(proposal.applicant, tokensToAbort),</span><br><span class="line">        &quot;Moloch::processProposal - failed to return tribute to applicant&quot;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    emit Abort(proposalIndex, msg.sender);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>终止函数，终止指定编号的提案，只有applicant可执行此操作，同时返还所有tribute</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function updateDelegateKey(address newDelegateKey) public onlyMember &#123;</span><br><span class="line">    require(newDelegateKey != address(0), &quot;Moloch::updateDelegateKey - newDelegateKey cannot be 0&quot;);</span><br><span class="line"></span><br><span class="line">    // skip checks if member is setting the delegate key to their member address</span><br><span class="line">    if (newDelegateKey != msg.sender) &#123;</span><br><span class="line">        require(!members[newDelegateKey].exists, &quot;Moloch::updateDelegateKey - cant overwrite existing members&quot;);</span><br><span class="line">        require(!members[memberAddressByDelegateKey[newDelegateKey]].exists, &quot;Moloch::updateDelegateKey - cant overwrite existing delegate keys&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Member storage member = members[msg.sender];</span><br><span class="line">    memberAddressByDelegateKey[member.delegateKey] = address(0);</span><br><span class="line">    memberAddressByDelegateKey[newDelegateKey] = msg.sender;</span><br><span class="line">    member.delegateKey = newDelegateKey;</span><br><span class="line"></span><br><span class="line">    emit UpdateDelegateKey(msg.sender, newDelegateKey);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更新delegatekey，只有member可以操作。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>bcYng
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://bcyng-w.github.io/2022/07/07/one-example-to-know-DAO/" title="Understanding DAO with an example">http://bcyng-w.github.io/2022/07/07/one-example-to-know-DAO/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/03/UniswapV2/" rel="prev" title="Analysis of uniswapV2">
+      <i class="fa fa-chevron-left"></i> Analysis of uniswapV2
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-DAO%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">What is DAO？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-DAO%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">Why DAO？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DAO%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">DAO的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAO%E7%BB%84%E7%BB%87%E7%9A%84%E6%80%A7%E8%B4%A8%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.2.</span> <span class="nav-text">DAO组织的性质特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAO%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.2.3.</span> <span class="nav-text">DAO的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example"><span class="nav-number">2.</span> <span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">2.1.</span> <span class="nav-text">Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze"><span class="nav-number">2.2.</span> <span class="nav-text">Analyze</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.2.1.</span> <span class="nav-text">变量注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.2.</span> <span class="nav-text">函数解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#case0-false"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">case0 false</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case1-true"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">case1 true</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="bcYng"
+      src="https://raw.githubusercontent.com/bcYng-w/images/main/touxaing.png">
+  <p class="site-author-name" itemprop="name">bcYng</p>
+  <div class="site-description" itemprop="description">前程似锦</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/bcYng-w" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bcYng-w" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=2384417651@qq.com" title="E-Mail → https:&#x2F;&#x2F;mail.qq.com&#x2F;cgi-bin&#x2F;qm_share?t&#x3D;qm_mailme&amp;email&#x3D;2384417651@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://kamasammohana.github.io/" title="https:&#x2F;&#x2F;kamasammohana.github.io&#x2F;" rel="noopener" target="_blank">kama's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.lzhnb.site/" title="http:&#x2F;&#x2F;www.lzhnb.site&#x2F;" rel="noopener" target="_blank">scw's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://sycskye.xyz/" title="http:&#x2F;&#x2F;sycskye.xyz" rel="noopener" target="_blank">syc's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://canzik.github.io/" title="https:&#x2F;&#x2F;canzik.github.io&#x2F;" rel="noopener" target="_blank">Canzik's blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://vveelin.com.cn/" title="https:&#x2F;&#x2F;vveelin.com.cn&#x2F;" rel="noopener" target="_blank">vveelin's blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-2-14 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bcYng</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共86.4k字</span>
+</div>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+  </body>
+</html>
