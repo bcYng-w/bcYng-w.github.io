@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319962.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091322122.png">
 <meta property="article:published_time" content="2022-05-09T05:32:57.763Z">
-<meta property="article:modified_time" content="2022-05-09T05:32:25.466Z">
+<meta property="article:modified_time" content="2022-08-01T10:42:16.072Z">
 <meta property="article:author" content="bcYng">
 <meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
@@ -184,10 +184,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-05-09 13:32:57 / 修改时间：13:32:25" itemprop="dateCreated datePublished" datetime="2022-05-09T13:32:57+08:00">2022-05-09</time>
+              <time title="创建时间：2022-05-09 13:32:57" itemprop="dateCreated datePublished" datetime="2022-05-09T13:32:57+08:00">2022-05-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-01 18:42:16" itemprop="dateModified" datetime="2022-08-01T18:42:16+08:00">2022-08-01</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -221,19 +227,19 @@
 
 <p>分析这段代码可以看出来，只要borrow为0，结果将会一直返回true</p>
 <p>0xb09c603ea024b4435d74db07d1f728a80e6e36ae：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091316461.png" alt="image-20220509131627995"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091316461.png"></p>
 <p>0x941c73fBB405a9024C08A52cBEeAF80D02d2B1A1：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091318209.png" alt="image-20220509131719202"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091317840.png" alt="image-20220509131758410"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091318209.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091317840.png"></p>
 <p>0x488daD0ce94f34e33069b8Ae5E16826b63f0F575：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319210.png" alt="image-20220509131900930"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319962.png" alt="image-20220509131922882"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319210.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091319962.png"></p>
 <p>—0x13512979ADE267AB5100878E2e0f485B568328a4是usdt代币的合约地址—</p>
 <p>确定了异常posotion的user和pid，浏览hash判断参数就可以了。17个borrow+5个createPosition共22个hash</p>
 <h1 id="solve"><a href="#solve" class="headerlink" title="solve"></a>solve</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">txs = [</span><br><span class="line"><span class="string">&#x27;0xf8cb1d747b53bbd4b4346eb8522fa3df36025dafedeb5b19bf54a9fff946ae8a&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x95bc3879debc5ffbe9932d5a60dd53146374e7dd553fef5f00152371bbb75f38&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x0635eeabe77d53672c227c0938f73f43c8f43b984e2c02d4e4a7b4e4d9740a09&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xcfb692d772f8acb90bc14a5da06f72c8ed9d871bbe76787ac0fa8a40e1ef11aa&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6ce3f133f0d925b125b6d8861b582cfd3b9abc8df4ce6ecd9607751b5fa6e796&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6287be53eb87e475cfdabfe85c7db800c5262a469a4c270e55b8ddf481b6dae3&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xdd588f3c2a9f25aa57d27e3257fe93882cf211470bd92e56b5271f95ab3c955f&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x8b0b5a0d65a1272d811f1db90cf7a24e43c64cf0d4767a78accf0dd9afce954c&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x3a109f0754113742eaae4bad747261aa7d9a1a9e2fb4d12704631b333b790006&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6b52684eda64076701e647911f55019fb18b30d980554dd2df5ee0e777506c3a&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xdb3f9da9cc6600ba9c2ca0685cd5c29818dae632fb3be65d530ef404b3ade202&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x13240bc2ce9333db092704b057083d23fa4e365b1b049ea839eb9955591ffd4d&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x657b24138cea98eca019de351d60c69210334926c46d9bfb7a59f5c0db5d16f4&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x6705735d1d4c526cd5db6c5810de6b11ba196fb93715a67ae855d037bfeaeaec&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x8beb80929a026d68fe9e80d0e46dadf43f9b8c68dc1db7e53b996e9654a3c71c&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xea24903d0a72b56457b88bdfd842f4065b0371b9c118dae08aca8dadb43c81b4&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0x99a5722bb73a73c6b47967f9b457e888d6503b0f9e1bf23fbf36de56ebad1522&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xef40506ae849c17dfbb75f97331860750217602f9c0a9c7718e50d04f0e233b8&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xc20e2ac5792a3350febd9a7e62527faccf4e07de2c1454572380e6f629ecca18&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xb1f54b9969ba60075775a3168d2ad16482e672cbf386ba4f9d6f433fe9d86fbe&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xcc8ff167cc6a1014f5c4b7445f26b17f68cc95bcc0c578c5330278dda8229d0b&#x27;</span>,</span><br><span class="line"><span class="string">&#x27;0xf7a6068687cfd85a24c8fd169c3c95133ff7a957c843171733902925990b4b74&#x27;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">e.g.,</span></span><br><span class="line"><span class="string">txs = [</span></span><br><span class="line"><span class="string">    &#x27;0x0000000000000000000000000000000000000000000000000000000000000000&#x27;,</span></span><br><span class="line"><span class="string">    &#x27;0x0000000000000000000000000000000000000000000000000000000000000001&#x27;,</span></span><br><span class="line"><span class="string">    &#x27;0x0000000000000000000000000000000000000000000000000000000000000002&#x27;,</span></span><br><span class="line"><span class="string">    ...</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(txs))</span><br><span class="line"><span class="keyword">assert</span> <span class="built_in">len</span>(txs) == <span class="number">22</span></span><br><span class="line">salt = <span class="string">b&#x27;hint: find abnormal transactions&#x27;</span></span><br><span class="line">m = hashlib.sha256()</span><br><span class="line"><span class="keyword">for</span> tx_hash <span class="keyword">in</span> <span class="built_in">sorted</span>(txs):</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(tx_hash) == <span class="number">66</span> <span class="keyword">and</span> tx_hash[:<span class="number">2</span>] == <span class="string">&#x27;0x&#x27;</span></span><br><span class="line">    m.update(salt + tx_hash.encode() + m.digest())</span><br><span class="line"><span class="built_in">print</span>(m.hexdigest())</span><br><span class="line"><span class="keyword">assert</span> m.hexdigest()[:<span class="number">16</span>] == <span class="string">&#x27;bf22a2d63563554c&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;flag&#123;&#x27;</span> + m.hexdigest() + <span class="string">&#x27;&#125;&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
 <p>运行得到flag：flag{bf22a2d63563554c2073f9480867794e17297ce17c7ec4cc3502979828e4253f}</p>
-<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091322122.png" alt="image-20220509132255933"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/bcYng-w/images/img/202205091322122.png"></p>
 
     </div>
 
@@ -423,7 +429,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共106.2k字</span>
+  <span class="post-count">博客全站共106.1k字</span>
 </div>
 
 
